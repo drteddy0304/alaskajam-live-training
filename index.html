@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ecff62">
-  <meta name="description" content="Alaska Jam LIVE TRAINING — タップとスワイプでライブの一体感を練習。音源なしの体験版。">
+  <meta name="description" content="Alaska Jam LIVE TRAINING — タップとスワイプでライブの一体感を練習。音楽つきの体験版。">
   <title>Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="./app.js?v=audio1"></script>
 </head>
 <body>
   <div class="shell">
@@ -20,7 +20,7 @@
         <div class="hero-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="art-type">GET<br><i>READY!</i></span><span class="art-stamp">CLAP / WIPER<br>CALL / JUMP</span><span class="art-star">✳</span></div>
         <div class="event-strip"><strong>2026.12.02 <small>WED</small></strong><span>渋谷 CLUB QUATTRO</span></div>
         <button class="primary" id="try-demo" disabled>読み込み中…</button>
-        <p class="micro">約40秒 / 音源なし / 登録不要</p>
+        <p class="micro">曲の冒頭40秒 / 音が出ます / 登録不要</p>
         <p id="load-status" role="status"></p>
         <div class="section-heading"><h2>SETLIST</h2><span>08 TRACKS</span></div>
         <p class="section-note">まずは1曲で操作を体験。公式譜面は準備中。</p>
@@ -30,7 +30,7 @@
         <p class="notice">CALLは声を出さなくてもOK。マイクは使いません。JUMPは実際に跳ばず、画面のタップで遊べます。</p>
       </section>
       <section id="play" hidden aria-labelledby="play-title">
-        <div class="play-top"><span id="play-edition" class="eyebrow">SOUNDLESS DEMO</span><button id="pause" class="small-button">一時停止</button></div>
+        <div class="play-top"><span id="play-edition" class="eyebrow">MUSIC ON / DEMO CHART</span><button id="pause" class="small-button">一時停止</button></div>
         <h2 id="play-title">CAT WALK LIFE</h2><p id="chart-source" class="section-note">操作体験用ダミー譜面・実曲とは異なります</p>
         <div class="progress-meta"><span id="elapsed">0:00</span><span id="combo">0 COMBO</span><span id="duration">0:40</span></div>
         <progress id="progress" value="0" max="40" aria-label="練習の進み具合"></progress>
@@ -50,7 +50,7 @@
         <aside class="event-card"><span class="eyebrow">NEXT DESTINATION</span><h2>次は、ライブで。</h2><strong>2026.12.02 WED</strong><p>渋谷 CLUB QUATTRO</p><p class="micro">公演・チケット情報のリンクは準備中</p></aside>
       </section>
     </main>
-    <footer><b>ALASKA JAM LIVE TRAINING</b><span>音源・公式譜面未収録のプロトタイプ</span></footer>
+    <footer><b>ALASKA JAM LIVE TRAINING</b><span>音源あり・公式譜面未反映のプロトタイプ</span></footer>
   </div>
   <noscript>この練習にはJavaScriptを有効にしてください。</noscript>
 </body>

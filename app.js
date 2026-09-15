@@ -1,4 +1,5 @@
 import { Session, validateChart, WINDOWS } from './engine.js';
+import { Music } from './audio.js';
 
 const $ = id => document.getElementById(id);
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印の向きにスワイプ！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
@@ -10,10 +11,9 @@ function show(name) {
 }
 function clock() {
   const wall = (performance.now() - startAt) / 1000;
-  if (audio && wall >= 0 && audioStarted) return audio.currentTime - chart.audio.offset;
+  if (audio) return audio.time();
   return wall;
 }
-let audioStarted = false;
 function flash(result) {
   if (!result) return;
   $('feedback').textContent = result.grade;
@@ -30,10 +30,6 @@ function input(gesture) {
 function draw() {
   if (phase !== 'playing') return;
   const t = clock();
-  if (audio && t >= 0 && !audioStarted) {
-    audioStarted = true;
-    audio.play().catch(() => { pause(); document.querySelector('#pause-panel p').textContent = '音源を再生できませんでした。再開するか、曲一覧から再試行してください。'; });
-  }
   for (const missed of session.advance(t)) flash(missed);
   const progress = Math.max(0, Math.min(t, chart.duration));
   $('elapsed').textContent = `0:${String(Math.floor(progress)).padStart(2,'0')}`;
@@ -63,49 +59,58 @@ function draw() {
 async function start(song = null) {
   if (!chart || starting) return;
   starting = true;
+  $('load-status').textContent = '音源を読み込み中…';
+  $('try-demo').disabled = true; $('retry').disabled = true;
+  let music;
+  try { music = chart.audio ? new Music() : null; }
+  catch { starting = false; $('try-demo').disabled = false; $('retry').disabled = false; $('load-status').textContent = 'このブラウザでは音楽を再生できません。SafariまたはChromeでお試しください。'; show('home'); return; }
   if (song?.chart) {
     try { chart = validateChart(await json(song.chart)); }
-    catch { starting = false; $('load-status').textContent = '譜面を読み込めませんでした。接続を確認して再試行してください。'; home(); return; }
+    catch { music?.close(); starting = false; $('try-demo').disabled = false; $('retry').disabled = false; $('load-status').textContent = '譜面を読み込めませんでした。接続を確認して再試行してください。'; home(); return; }
   }
   cancelAnimationFrame(frame);
-  audio?.pause(); audio = null; audioStarted = false;
+  audio?.close(); audio = music;
   session = new Session(chart); pointer = null;
-  // When licensed audio is added, preload and unlock it in this user gesture.
-  if (chart.audio) {
-    audio = new Audio(chart.audio.src);
-    audio.preload = 'auto';
-    try { await audio.play(); audio.pause(); audio.currentTime = Math.max(0, chart.audio.offset); }
-    catch { audio = null; starting = false; $('load-status').textContent = '音源を読み込めませんでした。接続を確認してもう一度お試しください。'; show('home'); return; }
-    audio.addEventListener('waiting', pause);
-    audio.addEventListener('error', () => { pause(); document.querySelector('#pause-panel p').textContent = '音源の読み込みに失敗しました。曲一覧に戻って再試行してください。'; });
+  if (audio) {
+    try {
+      await audio.load(chart.audio.src);
+      if (document.hidden) throw new Error('画面を開いてもう一度お試しください');
+      audio.start(3, chart.audio.offset, chart.duration);
+    } catch {
+      audio?.close(); audio = null; starting = false; phase = 'home';
+      $('try-demo').disabled = false; $('retry').disabled = false;
+      $('load-status').textContent = '音源を再生できませんでした。画面を開き、接続を確認してもう一度お試しください。'; show('home'); return;
+    }
   }
+  $('load-status').textContent = ''; $('try-demo').disabled = false; $('retry').disabled = false;
   startAt = performance.now() + 3000;
   feedbackUntil = 0; phase = 'playing'; starting = false;
   $('pause-panel').hidden = true; $('pad').disabled = false; $('pause').disabled = false;
   $('play-title').textContent = chart.title; $('progress').max = chart.duration;
-  $('play-edition').textContent = chart.kind === 'demo' ? 'SOUNDLESS DEMO' : 'LIVE TRAINING';
+  $('play-edition').textContent = chart.kind === 'demo' ? (audio ? 'MUSIC ON / DEMO CHART' : 'SOUNDLESS DEMO') : 'LIVE TRAINING';
   $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : (chart.source?.name || '練習譜面');
   $('duration').textContent = `${Math.floor(chart.duration / 60)}:${String(Math.floor(chart.duration % 60)).padStart(2,'0')}`;
   $('combo').textContent = '0 COMBO';
+  if (audio) audio.context.onstatechange = () => { if (phase === 'playing' && audio && audio.context.state !== 'running') pause(); };
   show('play'); $('pause').focus({preventScroll:true}); draw();
 }
 function pause() {
   if (phase !== 'playing') return;
-  pausedAt = performance.now(); phase = 'paused'; cancelAnimationFrame(frame); audio?.pause(); pointer = null;
+  pausedAt = performance.now(); phase = 'paused'; cancelAnimationFrame(frame); audio?.pause().catch(() => {}); pointer = null;
   $('pad').disabled = true; $('pause').disabled = true;
   $('pause-panel').hidden = false; document.querySelector('#pause-panel p').textContent = '続きから再開できます。'; $('resume').focus();
 }
 async function resume() {
   if (phase !== 'paused') return;
-  if (audio && audioStarted) {
-    try { await audio.play(); } catch { document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; return; }
+  if (audio) {
+    try { await audio.resume(); } catch { document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; return; }
   }
   startAt += performance.now() - pausedAt;
   phase = 'playing'; $('pause-panel').hidden = true; $('pad').disabled = false; $('pause').disabled = false;
   $('pause').focus({preventScroll:true}); draw();
 }
 function finish() {
-  phase = 'result'; audio?.pause(); cancelAnimationFrame(frame);
+  phase = 'result'; audio?.close(); cancelAnimationFrame(frame);
   const result = session.summary();
   $('readiness').replaceChildren(document.createTextNode(result.readiness), Object.assign(document.createElement('span'), {textContent:'%'}));
   for (const grade of ['PERFECT','GOOD','MISS']) $(`${grade.toLowerCase()}-count`).textContent = result[grade];
@@ -116,7 +121,7 @@ function finish() {
   $('best').textContent = saved ? `この端末のベスト準備度 ${best}%` : 'このブラウザでは記録を保存できません';
   show('result'); $('result-title').tabIndex = -1; $('result-title').focus({preventScroll:true});
 }
-function home() { cancelAnimationFrame(frame); audio?.pause(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
+function home() { cancelAnimationFrame(frame); audio?.close(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
 $('try-demo').addEventListener('click', start); $('retry').addEventListener('click', start);
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('quit').addEventListener('click', home); $('back').addEventListener('click', home);
