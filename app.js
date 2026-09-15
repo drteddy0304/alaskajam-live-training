@@ -61,7 +61,7 @@ function draw() {
 async function start(song = null) {
   if (!chart || starting) return;
   starting = true;
-  $('guide-details').open = false; $('guide-video').src = 'about:blank';
+  $('guide-details').open = false;
   $('load-status').textContent = '音源を読み込み中…';
   $('try-demo').disabled = true; $('retry').disabled = true;
   let music;
@@ -128,7 +128,6 @@ function home() { cancelAnimationFrame(frame); audio?.close(); phase = 'home'; p
 $('try-demo').addEventListener('click', start); $('retry').addEventListener('click', start);
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('quit').addEventListener('click', home); $('back').addEventListener('click', home);
-$('guide-details').addEventListener('toggle', () => { $('guide-video').src = $('guide-details').open ? $('guide-video').dataset.src : 'about:blank'; });
 $('pad').addEventListener('pointerdown', e => { if (phase !== 'playing' || !e.isPrimary || e.button !== 0) return; pointer = {id:e.pointerId,x:e.clientX,y:e.clientY,t:performance.now()}; $('pad').setPointerCapture(e.pointerId); });
 $('pad').addEventListener('pointerup', e => {
   if (!pointer || pointer.id !== e.pointerId) return;
@@ -149,7 +148,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'full1');
+  url.searchParams.set('v', 'full2');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
