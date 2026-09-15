@@ -2,6 +2,7 @@ import { Session, validateChart, WINDOWS } from './engine.js';
 import { Music } from './audio.js';
 
 const $ = id => document.getElementById(id);
+const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印の向きにスワイプ！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
 let chart, session, audio = null, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false;
@@ -25,14 +26,14 @@ function input(gesture) {
   if (phase !== 'playing' || clock() < 0) return;
   const result = session.input(clock(), gesture);
   if (result) flash(result);
-  else { $('feedback').textContent = '合図を待とう'; $('feedback').dataset.grade = ''; feedbackUntil = performance.now() + 450; }
+  else { $('feedback').textContent = 'KEEP THE GROOVE'; $('feedback').dataset.grade = ''; feedbackUntil = performance.now() + 450; }
 }
 function draw() {
   if (phase !== 'playing') return;
   const t = clock();
   for (const missed of session.advance(t)) flash(missed);
   const progress = Math.max(0, Math.min(t, chart.duration));
-  $('elapsed').textContent = `0:${String(Math.floor(progress)).padStart(2,'0')}`;
+  $('elapsed').textContent = formatTime(progress);
   $('progress').value = progress;
   if (t >= chart.duration) { finish(); return; }
   const index = chart.notes.findIndex((note,i) => !session.results[i]);
@@ -44,12 +45,13 @@ function draw() {
     const delta = note.time - t;
     $('cue-label').textContent = delta <= WINDOWS.perfect ? 'NOW! 今！' : `あと ${Math.max(0, delta).toFixed(1)} 秒`;
     $('cue-action').textContent = note.action === 'WIPER' ? (note.direction === 'left' ? '← WIPER' : 'WIPER →') : note.action;
-    $('cue-hint').textContent = hints[note.action];
+    $('cue-hint').textContent = note.hint || hints[note.action];
     $('cue-fill').style.transform = `scaleX(${Math.max(0, Math.min(1, 1 - delta / chart.leadTime))})`;
     document.querySelector('.pad-icon').textContent = symbols[note.action];
   } else {
-    $('cue-label').textContent = 'KEEP THE GROOVE'; $('cue-action').textContent = 'READY';
-    $('cue-hint').textContent = note ? '次の合図を待とう' : 'ナイス！ 結果を集計中'; $('cue-fill').style.transform = 'scaleX(0)';
+    const section = chart.sections?.find(s => t >= s.start && t < s.end);
+    $('cue-label').textContent = section?.label || 'KEEP THE GROOVE'; $('cue-action').textContent = 'GROOVE';
+    $('cue-hint').textContent = '自由にノろう！ この間は採点なし'; $('cue-fill').style.transform = 'scaleX(0)';
   }
   const next = note && note.time - t <= chart.leadTime ? chart.notes[index+1] : note;
   $('next').textContent = `NEXT ${next ? next.action + (next.direction === 'left' ? ' ←' : next.direction === 'right' ? ' →' : '') : 'FINISH'}`;
@@ -59,6 +61,7 @@ function draw() {
 async function start(song = null) {
   if (!chart || starting) return;
   starting = true;
+  $('guide-details').open = false; $('guide-video').src = 'about:blank';
   $('load-status').textContent = '音源を読み込み中…';
   $('try-demo').disabled = true; $('retry').disabled = true;
   let music;
@@ -88,8 +91,8 @@ async function start(song = null) {
   $('pause-panel').hidden = true; $('pad').disabled = false; $('pause').disabled = false;
   $('play-title').textContent = chart.title; $('progress').max = chart.duration;
   $('play-edition').textContent = chart.kind === 'demo' ? (audio ? 'MUSIC ON / DEMO CHART' : 'SOUNDLESS DEMO') : 'LIVE TRAINING';
-  $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : (chart.source?.name || '練習譜面');
-  $('duration').textContent = `${Math.floor(chart.duration / 60)}:${String(Math.floor(chart.duration % 60)).padStart(2,'0')}`;
+  $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : 'Cheering Guide参考 / フル尺 / タイミングは調整中';
+  $('duration').textContent = formatTime(chart.duration);
   $('combo').textContent = '0 COMBO';
   if (audio) audio.context.onstatechange = () => { if (phase === 'playing' && audio && audio.context.state !== 'running') pause(); };
   show('play'); $('pause').focus({preventScroll:true}); draw();
@@ -125,6 +128,7 @@ function home() { cancelAnimationFrame(frame); audio?.close(); phase = 'home'; p
 $('try-demo').addEventListener('click', start); $('retry').addEventListener('click', start);
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('quit').addEventListener('click', home); $('back').addEventListener('click', home);
+$('guide-details').addEventListener('toggle', () => { $('guide-video').src = $('guide-details').open ? $('guide-video').dataset.src : 'about:blank'; });
 $('pad').addEventListener('pointerdown', e => { if (phase !== 'playing' || !e.isPrimary || e.button !== 0) return; pointer = {id:e.pointerId,x:e.clientX,y:e.clientY,t:performance.now()}; $('pad').setPointerCapture(e.pointerId); });
 $('pad').addEventListener('pointerup', e => {
   if (!pointer || pointer.id !== e.pointerId) return;
@@ -145,7 +149,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'audio2');
+  url.searchParams.set('v', 'full1');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
@@ -161,7 +165,7 @@ try {
     else end.className = 'coming';
     row.append(number,name,end); $('songs').append(row);
   }
-  chart = validateChart(await json(songs.find(song => song.status === 'demo').chart));
-  $('try-demo').disabled = false; $('try-demo').textContent = 'まずは体験する →';
+  chart = validateChart(await json(songs.find(song => song.chart).chart));
+  $('try-demo').disabled = false; $('try-demo').textContent = 'フル尺で練習する →';
   document.querySelectorAll('.song button').forEach(button => button.disabled = false);
 } catch (error) { $('try-demo').textContent = '読み込みできませんでした'; $('load-status').textContent = '接続を確認してページを再読み込みしてください。'; console.error(error); }

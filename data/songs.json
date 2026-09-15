@@ -1,5 +1,5 @@
 [
-  {"id":"cat-walk-life","title":"CAT WALK LIFE","chart":"./data/demo.json","status":"demo"},
+  {"id":"cat-walk-life","title":"CAT WALK LIFE","chart":"./data/cat-walk-life-full.json","status":"ready"},
   {"id":"pasta-festa","title":"Pasta Festa!!","status":"coming"},
   {"id":"pump-it-up","title":"PUMP IT UP","status":"coming"},
   {"id":"ghost-people","title":"ゴーストピーポー","status":"coming"},

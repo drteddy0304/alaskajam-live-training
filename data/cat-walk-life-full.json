@@ -1,0 +1,442 @@
+{
+  "version": 1,
+  "id": "cat-walk-life-guide-beta-v1",
+  "title": "CAT WALK LIFE",
+  "kind": "guide-beta",
+  "source": {
+    "name": "公式Cheering Guide参考・暫定練習譜面",
+    "url": "https://youtu.be/1y5b0upSCjM",
+    "revision": "2026-09-16-beta1",
+    "timingStatus": "provisional",
+    "notes": "動作の一部を動画で確認。区間境界・動画と音源の開始差・各判定時刻は暫定。公式の秒単位再現ではありません。左右はゲーム用の交互入力。"
+  },
+  "duration": 224.39,
+  "leadTime": 1.8,
+  "audio": {
+    "src": "./assets/audio/cat-walk-life.mp3",
+    "offset": 0
+  },
+  "notes": [
+    {
+      "time": 2.381,
+      "action": "CLAP"
+    },
+    {
+      "time": 3.357,
+      "action": "CLAP"
+    },
+    {
+      "time": 4.332,
+      "action": "CLAP"
+    },
+    {
+      "time": 5.308,
+      "action": "CLAP"
+    },
+    {
+      "time": 6.284,
+      "action": "CLAP"
+    },
+    {
+      "time": 7.259,
+      "action": "CLAP"
+    },
+    {
+      "time": 8.235,
+      "action": "CLAP"
+    },
+    {
+      "time": 9.21,
+      "action": "CLAP"
+    },
+    {
+      "time": 10.186,
+      "action": "CLAP"
+    },
+    {
+      "time": 51,
+      "action": "CALL"
+    },
+    {
+      "time": 60.918,
+      "action": "CLAP"
+    },
+    {
+      "time": 61.893,
+      "action": "CLAP"
+    },
+    {
+      "time": 62.869,
+      "action": "CLAP"
+    },
+    {
+      "time": 63.845,
+      "action": "CLAP"
+    },
+    {
+      "time": 64.82,
+      "action": "CLAP"
+    },
+    {
+      "time": 65.796,
+      "action": "CLAP"
+    },
+    {
+      "time": 66.771,
+      "action": "CLAP"
+    },
+    {
+      "time": 67.747,
+      "action": "CLAP"
+    },
+    {
+      "time": 68.723,
+      "action": "CLAP"
+    },
+    {
+      "time": 69.698,
+      "action": "CLAP"
+    },
+    {
+      "time": 70.674,
+      "action": "CLAP"
+    },
+    {
+      "time": 71.65,
+      "action": "CLAP"
+    },
+    {
+      "time": 72.625,
+      "action": "CLAP"
+    },
+    {
+      "time": 73.601,
+      "action": "CLAP"
+    },
+    {
+      "time": 77.503,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 78.479,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 79.454,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 80.43,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 81.406,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 82.381,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 83.357,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 84.332,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 85.308,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 86.284,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 87.259,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 88.235,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 89.21,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 90.186,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 91.162,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 101,
+      "action": "CALL"
+    },
+    {
+      "time": 109.698,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 110.674,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 111.65,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 112.625,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 113.601,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 114.576,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 115.552,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 116.528,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 117.503,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 118.479,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 119.454,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 120.43,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 121.406,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 122.381,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 123.357,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 163.357,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 164.332,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 165.308,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 166.284,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 167.259,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 168.235,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 169.21,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 170.186,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 171.162,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 172.137,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 173.113,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 174.089,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 175.064,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 176.04,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 177.015,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 177.991,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 178.967,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 179.942,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 180.918,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 181.893,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 182.869,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 183.845,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 184.82,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 207.259,
+      "action": "CLAP"
+    },
+    {
+      "time": 208.235,
+      "action": "CLAP"
+    },
+    {
+      "time": 209.21,
+      "action": "CLAP"
+    },
+    {
+      "time": 210.186,
+      "action": "CLAP"
+    },
+    {
+      "time": 211.162,
+      "action": "CLAP"
+    },
+    {
+      "time": 212.137,
+      "action": "CLAP"
+    },
+    {
+      "time": 213.113,
+      "action": "CLAP"
+    },
+    {
+      "time": 214.089,
+      "action": "CLAP"
+    },
+    {
+      "time": 215.064,
+      "action": "CLAP"
+    },
+    {
+      "time": 216.04,
+      "action": "CLAP"
+    },
+    {
+      "time": 217.015,
+      "action": "CLAP"
+    },
+    {
+      "time": 217.991,
+      "action": "CLAP"
+    },
+    {
+      "time": 218.967,
+      "action": "CLAP"
+    },
+    {
+      "time": 221,
+      "action": "CALL"
+    }
+  ]
+}
