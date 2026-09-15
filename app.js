@@ -143,7 +143,13 @@ document.addEventListener('keydown', e => {
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
 window.addEventListener('pagehide', pause);
-async function json(path) { const response = await fetch(path); if (!response.ok) throw new Error('読み込み失敗'); return response.json(); }
+async function json(path) {
+  const url = new URL(path, document.baseURI);
+  url.searchParams.set('v', 'audio2');
+  const response = await fetch(url, {cache:'no-store'});
+  if (!response.ok) throw new Error('読み込み失敗');
+  return response.json();
+}
 try {
   const songs = await json('./data/songs.json');
   for (const [index, song] of songs.entries()) {
