@@ -1,0 +1,6 @@
+{
+  "name": "alaskajam-live-training",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test tests/*.test.js", "start": "node server.js" }
+}

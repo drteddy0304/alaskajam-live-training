@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ecff62">
+  <meta name="description" content="Alaska Jam LIVE TRAINING — タップとスワイプでライブの一体感を練習。音源なしの体験版。">
+  <title>Alaska Jam LIVE TRAINING</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead"><a href="./" aria-label="Alaska Jam ホーム">AJ<span>ALASKA JAM<br>LIVE TRAINING</span></a><span class="edition">VOL. 01<br>DEMO EDITION</span></header>
+    <main>
+      <section id="home" aria-labelledby="hero-title">
+        <div class="eyebrow"><span class="dot"></span> ROAD TO SHIBUYA QUATTRO</div>
+        <h1 id="hero-title">その手で、<br>フロアを<span class="highlight">沸かせ。</span></h1>
+        <p class="lead">聴くだけじゃ、もったいない。<br>ライブの動きを、指先から。</p>
+        <div class="hero-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="art-type">GET<br><i>READY!</i></span><span class="art-stamp">CLAP / WIPER<br>CALL / JUMP</span><span class="art-star">✳</span></div>
+        <div class="event-strip"><strong>2026.12.02 <small>WED</small></strong><span>渋谷 CLUB QUATTRO</span></div>
+        <button class="primary" id="try-demo" disabled>読み込み中…</button>
+        <p class="micro">約40秒 / 音源なし / 登録不要</p>
+        <p id="load-status" role="status"></p>
+        <div class="section-heading"><h2>SETLIST</h2><span>08 TRACKS</span></div>
+        <p class="section-note">まずは1曲で操作を体験。公式譜面は準備中。</p>
+        <div id="songs" class="songs"></div>
+        <div class="section-heading"><h2>HOW TO JAM</h2><span>4 ACTIONS</span></div>
+        <div class="actions"><article><b>✳ <span>CLAP</span></b><p>合図に合わせてタップ</p></article><article><b>↔ <span>WIPER</span></b><p>矢印の向きにスワイプ</p></article><article><b>〰 <span>CALL</span></b><p>タップ＋声を出してみよう</p></article><article><b>↑ <span>JUMP</span></b><p>タップでジャンプ気分</p></article></div>
+        <p class="notice">CALLは声を出さなくてもOK。マイクは使いません。JUMPは実際に跳ばず、画面のタップで遊べます。</p>
+      </section>
+      <section id="play" hidden aria-labelledby="play-title">
+        <div class="play-top"><span id="play-edition" class="eyebrow">SOUNDLESS DEMO</span><button id="pause" class="small-button">一時停止</button></div>
+        <h2 id="play-title">CAT WALK LIFE</h2><p id="chart-source" class="section-note">操作体験用ダミー譜面・実曲とは異なります</p>
+        <div class="progress-meta"><span id="elapsed">0:00</span><span id="combo">0 COMBO</span><span id="duration">0:40</span></div>
+        <progress id="progress" value="0" max="40" aria-label="練習の進み具合"></progress>
+        <div class="cue-card"><span id="cue-label" class="eyebrow">READY?</span><strong id="cue-action">3</strong><p id="cue-hint">スマホを持って、準備しよう</p><div class="cue-meter"><span id="cue-fill"></span></div><small>バーが満ちたらアクション！</small></div>
+        <div class="feedback-line"><strong id="feedback" role="status" aria-live="polite">LET’S JAM</strong><span id="next">NEXT —</span></div>
+        <button id="pad" class="pad" aria-label="アクションパッド。タップ、または左右にスワイプ"><span class="pad-icon" aria-hidden="true">✳</span><b>ここでアクション</b><small>タップ / 左右にスワイプ</small></button>
+        <p class="micro">PC：Spaceでタップ / ← →でWIPER</p>
+        <div id="pause-panel" class="pause-panel" hidden><h3>ひと呼吸、入れよう。</h3><p>続きから再開できます。</p><button id="resume" class="primary">練習を再開 →</button><button id="quit" class="text-button">曲一覧に戻る</button></div>
+      </section>
+      <section id="result" hidden aria-labelledby="result-title">
+        <div class="eyebrow">TRAINING COMPLETE</div><h1 id="result-title" class="result-title">QUATTRO<br>参戦準備度</h1>
+        <div class="score-disc"><strong id="readiness">0<span>%</span></strong><span>READY FOR THE FLOOR</span></div>
+        <h2 id="result-message"></h2><p id="result-detail" class="section-note"></p>
+        <div class="stats"><div><span>PERFECT</span><b id="perfect-count">0</b></div><div><span>GOOD</span><b id="good-count">0</b></div><div><span>MISS</span><b id="miss-count">0</b></div></div>
+        <p class="best" id="best"></p><p class="micro">操作体験版のスコアです。実際のライブの習熟度を示すものではありません。</p>
+        <button id="retry" class="primary">もう一度、フロアへ →</button><button id="back" class="text-button">曲一覧に戻る</button>
+        <aside class="event-card"><span class="eyebrow">NEXT DESTINATION</span><h2>次は、ライブで。</h2><strong>2026.12.02 WED</strong><p>渋谷 CLUB QUATTRO</p><p class="micro">公演・チケット情報のリンクは準備中</p></aside>
+      </section>
+    </main>
+    <footer><b>ALASKA JAM LIVE TRAINING</b><span>音源・公式譜面未収録のプロトタイプ</span></footer>
+  </div>
+  <noscript>この練習にはJavaScriptを有効にしてください。</noscript>
+</body>
+</html>

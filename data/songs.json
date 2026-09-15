@@ -1,0 +1,10 @@
+[
+  {"id":"cat-walk-life","title":"CAT WALK LIFE","chart":"./data/demo.json","status":"demo"},
+  {"id":"pasta-festa","title":"Pasta Festa!!","status":"coming"},
+  {"id":"pump-it-up","title":"PUMP IT UP","status":"coming"},
+  {"id":"ghost-people","title":"ゴーストピーポー","status":"coming"},
+  {"id":"snack-snack","title":"SNACK SNACK","status":"coming"},
+  {"id":"backstreet-underdog","title":"バックストリートアンダードッグ","status":"coming"},
+  {"id":"shochu","title":"焼酎","status":"coming"},
+  {"id":"good-foot-monkeys","title":"GOOD FOOT MONKEYS","status":"coming"}
+]

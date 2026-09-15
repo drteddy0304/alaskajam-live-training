@@ -1,0 +1,31 @@
+{
+  "version":1,
+  "id":"cat-walk-life-demo-v1",
+  "title":"CAT WALK LIFE",
+  "kind":"demo",
+  "source":{"name":"操作体験用ダミー譜面（公式Cheering Guide未反映）","url":null,"revision":null},
+  "duration":40,
+  "leadTime":1.8,
+  "audio":null,
+  "notes":[
+    {"time":2,"action":"CLAP"},
+    {"time":4,"action":"CLAP"},
+    {"time":6,"action":"CLAP"},
+    {"time":8,"action":"CLAP"},
+    {"time":10,"action":"WIPER","direction":"left"},
+    {"time":12,"action":"WIPER","direction":"right"},
+    {"time":14,"action":"WIPER","direction":"left"},
+    {"time":16,"action":"WIPER","direction":"right"},
+    {"time":18,"action":"CALL"},
+    {"time":20,"action":"CALL"},
+    {"time":22,"action":"JUMP"},
+    {"time":24,"action":"JUMP"},
+    {"time":26,"action":"CLAP"},
+    {"time":28,"action":"WIPER","direction":"left"},
+    {"time":30,"action":"WIPER","direction":"right"},
+    {"time":32,"action":"CALL"},
+    {"time":34,"action":"JUMP"},
+    {"time":36,"action":"CLAP"},
+    {"time":38,"action":"CALL"}
+  ]
+}
