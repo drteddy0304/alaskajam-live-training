@@ -1,6 +1,7 @@
 import { Session, validateChart, WINDOWS } from './engine.js';
-import { Music } from './audio.js';
+import { Music } from './audio.js?v=mobile1';
 
+const charts = new Map();
 const $ = id => document.getElementById(id);
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印の向きにスワイプ！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
@@ -60,6 +61,11 @@ function draw() {
 }
 async function start(song = null) {
   if (!chart || starting) return;
+  if (song?.chart) {
+    const selected = charts.get(song.chart);
+    if (!selected) return;
+    chart = selected;
+  }
   starting = true;
   $('guide-details').open = false;
   $('load-status').textContent = '音源を読み込み中…';
@@ -67,10 +73,6 @@ async function start(song = null) {
   let music;
   try { music = chart.audio ? new Music() : null; }
   catch { starting = false; $('try-demo').disabled = false; $('retry').disabled = false; $('load-status').textContent = 'このブラウザでは音楽を再生できません。SafariまたはChromeでお試しください。'; show('home'); return; }
-  if (song?.chart) {
-    try { chart = validateChart(await json(song.chart)); }
-    catch { music?.close(); starting = false; $('try-demo').disabled = false; $('retry').disabled = false; $('load-status').textContent = '譜面を読み込めませんでした。接続を確認して再試行してください。'; home(); return; }
-  }
   cancelAnimationFrame(frame);
   audio?.close(); audio = music;
   session = new Session(chart); pointer = null;
@@ -82,7 +84,7 @@ async function start(song = null) {
     } catch {
       audio?.close(); audio = null; starting = false; phase = 'home';
       $('try-demo').disabled = false; $('retry').disabled = false;
-      $('load-status').textContent = '音源を再生できませんでした。画面を開き、接続を確認してもう一度お試しください。'; show('home'); return;
+      $('load-status').textContent = '音源を再生できませんでした。SafariまたはChromeで開き、もう一度開始してください。'; show('home'); return;
     }
   }
   $('load-status').textContent = ''; $('try-demo').disabled = false; $('retry').disabled = false;
@@ -94,7 +96,7 @@ async function start(song = null) {
   $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : 'Cheering Guide参考 / フル尺 / タイミングは調整中';
   $('duration').textContent = formatTime(chart.duration);
   $('combo').textContent = '0 COMBO';
-  if (audio) audio.context.onstatechange = () => { if (phase === 'playing' && audio && audio.context.state !== 'running') pause(); };
+  if (audio) audio.oninterrupt = () => { if (phase === 'playing') pause(); };
   show('play'); $('pause').focus({preventScroll:true}); draw();
 }
 function pause() {
@@ -106,7 +108,7 @@ function pause() {
 async function resume() {
   if (phase !== 'paused') return;
   if (audio) {
-    try { await audio.resume(); } catch { document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; return; }
+    try { await audio.resume(); if (document.hidden) { await audio.pause(); return; } } catch { document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; return; }
   }
   startAt += performance.now() - pausedAt;
   phase = 'playing'; $('pause-panel').hidden = true; $('pad').disabled = false; $('pause').disabled = false;
@@ -148,7 +150,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'full2');
+  url.searchParams.set('v', 'mobile1');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
@@ -164,7 +166,8 @@ try {
     else end.className = 'coming';
     row.append(number,name,end); $('songs').append(row);
   }
-  chart = validateChart(await json(songs.find(song => song.chart).chart));
+  await Promise.all(songs.filter(song => song.chart).map(async song => charts.set(song.chart, validateChart(await json(song.chart)))));
+  chart = charts.get(songs.find(song => song.chart).chart);
   $('try-demo').disabled = false; $('try-demo').textContent = 'フル尺で練習する →';
   document.querySelectorAll('.song button').forEach(button => button.disabled = false);
 } catch (error) { $('try-demo').textContent = '読み込みできませんでした'; $('load-status').textContent = '接続を確認してページを再読み込みしてください。'; console.error(error); }
