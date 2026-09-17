@@ -2,7 +2,7 @@ import { Session, validateChart, WINDOWS } from './engine.js';
 import { Music } from './audio.js?v=mobile1';
 import { lyricAt, validateLyrics } from './lyrics.js?v=lyrics1';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=lane1';
-import { GuidePlayback, iframeTransport } from './guide-video.js?v=lane1';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=guide2';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -10,7 +10,7 @@ const $ = id => document.getElementById(id);
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印の向きにスワイプ！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
-let chart, session, audio = null, guide = null, videoLoaded = false, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false;
+let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false;
 function drawLyrics(time) {
   const data = lyrics.get(chart.lyrics);
   const state = data ? lyricAt(data.cues, time, data.leadTime) : null;
@@ -23,13 +23,19 @@ function drawLyrics(time) {
 function configureGuide(mapping) {
   if (!mapping || mapping.provider !== 'youtube') { $('video-guide').hidden = true; return; }
   $('video-guide').hidden = false;
-  if ($('guide-player').dataset.videoId === mapping.videoId) return;
-  videoLoaded = false;
-  $('guide-player').dataset.videoId = mapping.videoId;
-  $('guide-player').src = `https://www.youtube.com/embed/${encodeURIComponent(mapping.videoId)}?enablejsapi=1&controls=1&playsinline=1&mute=1`;
-  $('video-status').textContent = mapping.syncStatus === 'verified' ? '動画はミュートです。確認済みの対応位置で連携します。' : '動画はミュートです。同期位置は未確認です。自動再生されない場合は動画内の再生ボタンを押してください。';
+  if (guide && guideVideoId === mapping.videoId) return;
+  guide?.stop(); guideVideoId = mapping.videoId;
+  $('video-status').textContent = '公式動画を読み込み中…'; delete $('video-status').dataset.error;
+  guide = new GuidePlayback(mapping, {
+    onReady: () => { $('video-status').textContent = mapping.syncStatus === 'verified' ? '動画はミュートです。確認済みの対応位置で連携します。' : '動画はミュートです。同期位置は未確認のため、お手本としてご覧ください。'; },
+    onFailure: videoFailed,
+    onAutoplayBlocked: () => { $('video-status').textContent = '動画の自動再生がブロックされました。動画内の再生ボタンを押すか、動画OFFで練習を続けてください。'; $('video-status').dataset.error = 'true'; }
+  });
+  guide.setEnabled(videoEnabled);
+  mountYouTubePlayer(guide, 'guide-player', mapping.videoId);
 }
 function show(name) {
+  document.body.dataset.page = name;
   for (const page of ['home','play','result']) $(page).hidden = page !== name;
   window.scrollTo(0, 0);
 }
@@ -98,7 +104,7 @@ function draw() {
   if (performance.now() > feedbackUntil) { $('feedback').textContent = 'FEEL THE GROOVE'; $('feedback').dataset.grade = ''; }
   frame = requestAnimationFrame(draw);
 }
-async function start(song = null, retry = false) {
+async function start(song = null) {
   if (!chart || starting) return;
   if (song?.chart) {
     const selected = charts.get(song.chart);
@@ -122,8 +128,7 @@ async function start(song = null, retry = false) {
       await audio.load(chart.audio.src);
       if (document.hidden) throw new Error('画面を開いてもう一度お試しください');
       audio.start(3, chart.audio.offset, chart.duration);
-      guide = chart.guideVideo ? new GuidePlayback(iframeTransport($('guide-player')), chart.guideVideo, videoFailed) : null;
-      guide?.start(0, retry);
+      guide?.start(0);
     } catch {
       audio?.close(); audio = null; starting = false; phase = 'home';
       $('try-demo').disabled = false; $('retry').disabled = false;
@@ -164,7 +169,7 @@ function finish() {
   $('readiness').replaceChildren(document.createTextNode(result.readiness), Object.assign(document.createElement('span'), {textContent:'%'}));
   for (const grade of ['PERFECT','GOOD','MISS']) $(`${grade.toLowerCase()}-count`).textContent = result[grade];
   $('result-message').textContent = result.readiness >= 85 ? 'フロアを沸かす準備、できてる！' : result.readiness >= 50 ? 'いい感じ！ その調子でいこう。' : 'ここから始まる、ライブの予習。';
-  $('result-detail').textContent = `最大 ${result.maxCombo} COMBO。${result.readiness >= 85 ? '次はライブ会場で、一緒に。' : 'バーが満ちる瞬間に合わせてみよう。'}`;
+  $('result-detail').textContent = `最大 ${result.maxCombo} COMBO。${result.readiness >= 85 ? '次はライブ会場で、一緒に。' : 'ノーツがAJ判定ラインに重なる瞬間を狙おう。'}`;
   let best = result.readiness, saved = false;
   try { const key = `aj-best:${chart.id}`; const previous = Number(localStorage.getItem(key)); best = Math.max(best, Number.isFinite(previous) && previous <= 100 ? previous : 0); localStorage.setItem(key, String(best)); saved = true; } catch {}
   $('best').textContent = saved ? `この端末のベスト準備度 ${best}%` : 'このブラウザでは記録を保存できません';
@@ -172,17 +177,14 @@ function finish() {
 }
 function home() { cancelAnimationFrame(frame); audio?.close(); guide?.stop(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
 function videoFailed() { $('video-status').textContent = '公式動画を再生できません。動画なしで練習を続けられます。'; $('video-status').dataset.error = 'true'; }
-$('guide-player').addEventListener('load', () => { videoLoaded = true; delete $('video-status').dataset.error; if (phase === 'playing') guide?.resume(clock()); });
-$('guide-player').addEventListener('error', videoFailed);
-setTimeout(() => { if (!videoLoaded) videoFailed(); }, 10000);
 $('video-toggle').addEventListener('click', () => {
-  const hidden = !$('video-wrap').hidden;
-  $('video-wrap').hidden = hidden;
-  $('video-toggle').textContent = hidden ? '動画 ON' : '動画 OFF';
-  $('video-toggle').setAttribute('aria-expanded', String(!hidden));
-  if (hidden) guide?.pause(); else if (phase === 'playing') guide?.resume(clock());
+  videoEnabled = !videoEnabled;
+  $('video-wrap').hidden = !videoEnabled;
+  $('video-toggle').textContent = videoEnabled ? '動画 OFF' : '動画 ON';
+  $('video-toggle').setAttribute('aria-expanded', String(videoEnabled));
+  guide?.setEnabled(videoEnabled);
 });
-$('try-demo').addEventListener('click', () => start()); $('retry').addEventListener('click', () => start(null, true));
+$('try-demo').addEventListener('click', () => start()); $('retry').addEventListener('click', () => start());
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('quit').addEventListener('click', home); $('back').addEventListener('click', home);
 $('pad').addEventListener('pointerdown', e => { if (phase !== 'playing' || !e.isPrimary || e.button !== 0) return; pointer = {id:e.pointerId,x:e.clientX,y:e.clientY,t:performance.now()}; $('pad').setPointerCapture(e.pointerId); });
