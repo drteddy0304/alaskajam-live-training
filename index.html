@@ -7,7 +7,7 @@
   <meta name="description" content="Alaska Jam LIVE TRAINING — タップとスワイプでライブの一体感を練習。音楽つきの体験版。">
   <title>Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js?v=mobile1"></script>
+  <script type="module" src="./app.js?v=lane1"></script>
 </head>
 <body>
   <div class="shell">
@@ -34,9 +34,16 @@
       <section id="play" hidden aria-labelledby="play-title">
         <div class="play-top"><span id="play-edition" class="eyebrow">MUSIC ON / DEMO CHART</span><button id="pause" class="small-button">一時停止</button></div>
         <h2 id="play-title">CAT WALK LIFE</h2><p id="chart-source" class="section-note">Cheering Guide参考・フル尺ベータ</p>
+        <section id="video-guide" class="video-guide" aria-labelledby="video-guide-title">
+          <div class="video-guide-head"><strong id="video-guide-title">OFFICIAL GUIDE</strong><button id="video-toggle" class="small-button" type="button" aria-expanded="true" aria-controls="video-wrap">動画 OFF</button></div>
+          <div id="video-wrap" class="video-wrap"><iframe id="guide-player" width="100%" height="220" src="about:blank" title="公式Cheering Guide" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <p id="video-status" class="video-status" role="status">動画はミュートです。同期位置は未確認のため、お手本としてご覧ください。</p>
+        </section>
         <div class="progress-meta"><span id="elapsed">0:00</span><span id="combo">0 COMBO</span><span id="duration">3:44</span></div>
         <progress id="progress" value="0" max="40" aria-label="練習の進み具合"></progress>
-        <div class="cue-card"><span id="cue-label" class="eyebrow">READY?</span><strong id="cue-action">3</strong><p id="cue-hint">スマホを持って、準備しよう</p><div class="cue-meter"><span id="cue-fill"></span></div><small>バーが満ちたらアクション！</small></div>
+        <div id="singalong" class="singalong" role="status" aria-live="polite" hidden><span id="singalong-label">まもなく一緒に！</span><strong id="singalong-text"></strong></div>
+        <div class="rhythm-lane" aria-label="右から左へ流れるアクションノーツ"><div class="lane-track"></div><div class="judge-line"><span>AJ</span><small>HIT</small></div><div id="lane-notes" class="lane-notes"></div></div>
+        <div class="cue-readout"><span id="cue-label" class="eyebrow">READY?</span><strong id="cue-action">3</strong><p id="cue-hint">スマホを持って、準備しよう</p><span id="next-time">NEXT —</span></div>
         <div class="feedback-line"><strong id="feedback" role="status" aria-live="polite">LET’S JAM</strong><span id="next">NEXT —</span></div>
         <button id="pad" class="pad" aria-label="アクションパッド。タップ、または左右にスワイプ"><span class="pad-icon" aria-hidden="true">✳</span><b>ここでアクション</b><small>タップ / 左右にスワイプ</small></button>
         <p class="micro">PC：Spaceでタップ / ← →でWIPER</p>

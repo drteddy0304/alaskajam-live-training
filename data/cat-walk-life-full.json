@@ -12,6 +12,14 @@
   },
   "duration": 224.39,
   "leadTime": 1.8,
+  "lyrics": "./data/cat-walk-life-lyrics.json",
+  "guideVideo": {
+    "provider": "youtube",
+    "videoId": "1y5b0upSCjM",
+    "syncStatus": "unverified",
+    "audioToVideoOffset": null,
+    "note": "動画と音源の同一音による対応時刻は未確認。動画と音源の総尺差や約9秒という仮置きは同期値に使用しない。"
+  },
   "audio": {
     "src": "./assets/audio/cat-walk-life.mp3",
     "offset": 0

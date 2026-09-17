@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "timingStatus": "unverified",
+  "leadTime": 2,
+  "source": {
+    "name": "公式 CAT WALK LIFE Cheering Guide",
+    "url": "https://youtu.be/1y5b0upSCjM",
+    "revision": "2026-09-17-unverified"
+  },
+  "cues": [],
+  "observations": [
+    { "videoTime": 20, "text": "Let's go!", "status": "screen-text-only" },
+    { "videoTime": 60, "text": "Hi!", "status": "screen-text-only" },
+    { "videoTime": 75, "text": "ki-ki-ki-ki kitty hey!", "status": "screen-text-only" },
+    { "videoTime": 110, "text": "chipi!", "status": "screen-text-only" },
+    { "videoTime": 230, "text": "ki-ki-ki-ki kitty hey!", "status": "screen-text-only" }
+  ],
+  "notes": "observationsは画面上の文字を見た動画時刻で、歌唱開始・終了ではありません。音源時刻との対応と全出現箇所が未確認のため、公開表示に使うcuesは空です。"
+}
