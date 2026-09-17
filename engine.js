@@ -8,6 +8,8 @@ export function validateChart(chart) {
     previous = note.time;
   }
   if (chart.audio !== null && (!chart.audio || typeof chart.audio.src !== 'string' || !chart.audio.src || !Number.isFinite(chart.audio.offset) || chart.audio.offset < 0)) throw new Error('音源設定が正しくありません');
+  if (chart.lyrics !== undefined && (typeof chart.lyrics !== 'string' || !chart.lyrics)) throw new Error('歌詞データ参照が正しくありません');
+  if (chart.guideVideo !== undefined && (!chart.guideVideo || chart.guideVideo.provider !== 'youtube' || typeof chart.guideVideo.videoId !== 'string' || !chart.guideVideo.videoId || !['verified', 'unverified'].includes(chart.guideVideo.syncStatus) || (chart.guideVideo.syncStatus === 'verified' && (!Number.isFinite(chart.guideVideo.audioToVideoOffset) || chart.guideVideo.audioToVideoOffset < 0)))) throw new Error('ガイド動画設定が正しくありません');
   return chart;
 }
 export class Session {
