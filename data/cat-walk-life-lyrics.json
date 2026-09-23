@@ -1,19 +1,162 @@
 {
   "version": 1,
-  "timingStatus": "unverified",
+  "timingStatus": "verified",
   "leadTime": 2,
   "source": {
     "name": "公式 CAT WALK LIFE Cheering Guide",
-    "url": "https://youtu.be/1y5b0upSCjM",
-    "revision": "2026-09-17-unverified"
+    "url": "https://www.youtube.com/watch?v=1y5b0upSCjM",
+    "revision": "2026-09-23-red-active-10fps-waveform-sync"
   },
-  "cues": [],
-  "observations": [
-    { "videoTime": 20, "text": "Let's go!", "status": "screen-text-only" },
-    { "videoTime": 60, "text": "Hi!", "status": "screen-text-only" },
-    { "videoTime": 75, "text": "ki-ki-ki-ki kitty hey!", "status": "screen-text-only" },
-    { "videoTime": 110, "text": "chipi!", "status": "screen-text-only" },
-    { "videoTime": 230, "text": "ki-ki-ki-ki kitty hey!", "status": "screen-text-only" }
+  "cues": [
+    {
+      "start": 1.2492,
+      "end": 2.4492,
+      "text": "MEOW MEOW MEOW",
+      "source": "official guide video 9.5–10.7s red-active"
+    },
+    {
+      "start": 3.1492,
+      "end": 4.3492,
+      "text": "PURR PURR PURR",
+      "source": "official guide video 11.4–12.6s red-active"
+    },
+    {
+      "start": 10.7492,
+      "end": 12.6492,
+      "text": "Let's go!",
+      "source": "official guide video 19.0–20.9s red-active"
+    },
+    {
+      "start": 27.4492,
+      "end": 29.0492,
+      "text": "AJ!",
+      "source": "official guide video 35.7–37.3s red-active"
+    },
+    {
+      "start": 61.7492,
+      "end": 62.9492,
+      "text": "MEOW MEOW MEOW",
+      "source": "official guide video 70.0–71.2s red-active"
+    },
+    {
+      "start": 63.6492,
+      "end": 64.8492,
+      "text": "PURR PURR PURR",
+      "source": "official guide video 71.9–73.1s red-active"
+    },
+    {
+      "start": 66.6492,
+      "end": 68.8492,
+      "text": "ki-ki-ki-ki kitty hey!",
+      "source": "official guide video 74.9–77.1s red-active"
+    },
+    {
+      "start": 99.5492,
+      "end": 102.3492,
+      "text": "chipi!",
+      "source": "official guide video 107.8–110.6s red-active"
+    },
+    {
+      "start": 103.6492,
+      "end": 105.7492,
+      "text": "1 2 3",
+      "source": "official guide video 111.9–114.0s red-active"
+    },
+    {
+      "start": 125.7492,
+      "end": 127.7492,
+      "text": "Hooooo!!! Yeeeaah!!!",
+      "source": "official guide video 134.0–136.0s red-active"
+    },
+    {
+      "start": 177.9492,
+      "end": 179.9492,
+      "text": "Na Na Na Na Na",
+      "source": "official guide video 186.2–188.2s red-active"
+    },
+    {
+      "start": 181.7492,
+      "end": 183.8492,
+      "text": "yeah (yeah) yeah (yeah)",
+      "source": "official guide video 190.0–192.1s red-active"
+    },
+    {
+      "start": 185.6492,
+      "end": 187.6492,
+      "text": "Na Na Na Na Na",
+      "source": "official guide video 193.9–195.9s red-active"
+    },
+    {
+      "start": 189.5492,
+      "end": 191.6492,
+      "text": "yeah (yeah) yeah (yeah)",
+      "source": "official guide video 197.8–199.9s red-active"
+    },
+    {
+      "start": 193.4492,
+      "end": 197.1492,
+      "text": "Na Na Na Na Na",
+      "source": "official guide video 201.7–205.4s red-active"
+    },
+    {
+      "start": 201.3492,
+      "end": 205.0492,
+      "text": "Na Na Na Na Na",
+      "source": "official guide video 209.6–213.3s red-active"
+    },
+    {
+      "start": 208.0492,
+      "end": 209.2492,
+      "text": "MEOW MEOW MEOW",
+      "source": "official guide video 216.3–217.5s red-active"
+    },
+    {
+      "start": 209.9492,
+      "end": 211.1492,
+      "text": "PURR PURR PURR",
+      "source": "official guide video 218.2–219.4s red-active"
+    },
+    {
+      "start": 213.0492,
+      "end": 215.0492,
+      "text": "ki-ki-ki-ki kitty hey!",
+      "source": "official guide video 221.3–223.3s red-active"
+    },
+    {
+      "start": 215.8492,
+      "end": 217.0492,
+      "text": "MEOW MEOW MEOW",
+      "source": "official guide video 224.1–225.3s red-active"
+    },
+    {
+      "start": 217.7492,
+      "end": 218.9492,
+      "text": "PURR PURR PURR",
+      "source": "official guide video 226.0–227.2s red-active"
+    },
+    {
+      "start": 220.8492,
+      "end": 223.2492,
+      "text": "ki-ki-ki-ki kitty hey!",
+      "source": "official guide video 229.1–231.5s red-active"
+    }
   ],
-  "notes": "observationsは画面上の文字を見た動画時刻で、歌唱開始・終了ではありません。音源時刻との対応と全出現箇所が未確認のため、公開表示に使うcuesは空です。"
+  "observations": [
+    {
+      "videoTime": 8.0,
+      "text": "intro shout",
+      "status": "screen-observation-boundary-unverified"
+    },
+    {
+      "videoTime": 51.9,
+      "text": "woo",
+      "status": "screen-observation-boundary-unverified"
+    },
+    {
+      "videoTime": 59.9,
+      "text": "Hi",
+      "status": "screen-observation-boundary-unverified"
+    }
+  ],
+  "notes": "赤色アクティブ区間を10 fpsで走査し、動画時刻から確認済みオフセット8.2508秒を引いてMP3時刻へ変換。134.0–136.0秒の歓声は目視確認済みで境界は丸め値。intro shout / woo / Hiは短い画面表示を確認したが赤色境界未確定のため観測記録のみ。表示は採点と独立。"
 }
