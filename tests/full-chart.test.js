@@ -8,8 +8,8 @@ test('full song chart has playable spacing and stays within supplied audio',()=>
   assert.ok(chart.duration>224 && chart.duration<=224.3918);
   assert.equal(chart.audio.offset,0);
   assert.equal(chart.source.timingStatus,'provisional');
-  assert.equal(chart.guideVideo.syncStatus,'unverified');
-  assert.equal(chart.guideVideo.audioToVideoOffset,null);
+  assert.equal(chart.guideVideo.syncStatus,'verified');
+  assert.equal(chart.guideVideo.audioToVideoOffset,8.2508);
   assert.ok(chart.notes.at(-1).time>220);
   assert.ok(!chart.notes.some(n=>n.action==='JUMP'));
 });

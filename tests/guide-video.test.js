@@ -56,10 +56,10 @@ test('every start rewinds the same song and resume keeps mute without unverified
 });
 
 test('verified mapping seeks only on start/resume lifecycle transitions', () => {
-  const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.75}, {}, 10000, timers());
+  const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508}, {}, 10000, timers());
   guide.onReady(media); media.calls.length = 0;
   guide.start(0); guide.pause(); guide.resume(12);
-  assert.deepEqual(media.calls, [['mute'],['seekTo',8.75,true],['playVideo'],['pauseVideo'],['mute'],['seekTo',20.75,true],['playVideo']]);
+  assert.deepEqual(media.calls, [['mute'],['seekTo',8.2508,true],['playVideo'],['pauseVideo'],['mute'],['seekTo',12 + 8.2508,true],['playVideo']]);
 });
 
 test('official API error, autoplay block, and ready timeout report real state without throwing', async () => {
