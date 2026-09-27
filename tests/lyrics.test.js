@@ -85,3 +85,13 @@ test('simultaneous audience words do not add to or replace CLAP scoring', () => 
   assert.equal(session.results.filter(grade => grade === 'PERFECT').length, 1);
   assert.equal(chart.notes.filter(note => note.time === clap.time).length, 1);
 });
+
+test('2A 1 2 3 sing-along cue is active at its independent CALL note', () => {
+  const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
+  const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));
+  const call = chart.notes.find(note => note.time === 104.9792);
+  const display = lyricAt(data.cues, call.time, data.leadTime);
+  assert.equal(call.action, 'CALL');
+  assert.equal(display.cue.text, '1 2 3');
+  assert.equal(display.phase, 'active');
+});
