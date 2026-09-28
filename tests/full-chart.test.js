@@ -13,24 +13,25 @@ test('full song chart has playable spacing and stays within supplied audio',()=>
   assert.ok(chart.notes.at(-1).time>220);
   assert.ok(!chart.notes.some(n=>n.action==='JUMP'));
 });
-test('2A 1 2 3 call is one frame-verified timed action in chart order',()=>{
+test('AJ and 2A calls are frame-verified timed actions in chart order',()=>{
+  assert.deepEqual(chart.notes.filter(note=>note.time===27.7792),[{time:27.7792,action:'CALL',hint:'AJ！タップ＋声を出そう'}]);
   const calls=chart.notes.filter(note=>note.time===104.9792);
   assert.deepEqual(calls,[{
     time:104.9792,
     action:'CALL',
     hint:'1・2・3！「1」でタップ＋声を出そう'
   }]);
-  assert.equal(chart.id,'cat-walk-life-guide-beta-v2-2a-call');
-  assert.equal(chart.source.revision,'2026-09-28-beta2-2a-call');
+  assert.equal(chart.id,'cat-walk-life-guide-beta-v3-aj-call');
+  assert.equal(chart.source.revision,'2026-09-28-beta3-aj-call');
   assert.equal(chart.source.timingStatus,'provisional');
-  assert.equal(chart.notes.length,93);
+  assert.equal(chart.notes.length,94);
   assert.ok(chart.notes.every((note,index)=>index===0 || note.time>chart.notes[index-1].time));
   validateChart(chart);
 
   const session=new Session(chart);
   assert.equal(session.input(104.9792,'tap').grade,'PERFECT');
   assert.equal(session.summary().PERFECT,1);
-  assert.equal(session.summary().MISS,92);
+  assert.equal(session.summary().MISS,93);
 });
 test('full song can score perfectly and ends with every note accounted for',()=>{
   const session=new Session(chart);

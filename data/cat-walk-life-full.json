@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "id": "cat-walk-life-guide-beta-v2-2a-call",
+  "id": "cat-walk-life-guide-beta-v3-aj-call",
   "title": "CAT WALK LIFE",
   "kind": "guide-beta",
   "source": {
     "name": "公式Cheering Guide参考・暫定練習譜面",
     "url": "https://youtu.be/1y5b0upSCjM",
-    "revision": "2026-09-28-beta2-2a-call",
+    "revision": "2026-09-28-beta3-aj-call",
     "timingStatus": "provisional",
-    "notes": "動作の一部を動画で確認。2Aの104.9792秒CALLのみフレーム確認済みで、その他の区間境界・各判定時刻は暫定。公式の完全再現ではありません。左右はゲーム用の交互入力。"
+    "notes": "動作の一部を動画で確認。AJの27.7792秒CALLと2Aの104.9792秒CALLのみフレーム確認済みで、その他の区間境界・各判定時刻は暫定。公式の完全再現ではありません。左右はゲーム用の交互入力。"
   },
   "duration": 224.39,
   "leadTime": 1.8,
@@ -60,6 +60,11 @@
     {
       "time": 10.186,
       "action": "CLAP"
+    },
+    {
+      "time": 27.7792,
+      "action": "CALL",
+      "hint": "AJ！タップ＋声を出そう"
     },
     {
       "time": 51,

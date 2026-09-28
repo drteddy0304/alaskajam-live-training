@@ -95,3 +95,14 @@ test('2A 1 2 3 sing-along cue is active at its independent CALL note', () => {
   assert.equal(display.cue.text, '1 2 3');
   assert.equal(display.phase, 'active');
 });
+
+test('AJ sing-along cue is active at its independent scored CALL note', () => {
+  const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
+  const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));
+  const call = chart.notes.find(note => note.time === 27.7792);
+  const display = lyricAt(data.cues, call.time, data.leadTime);
+  assert.equal(call.action, 'CALL');
+  assert.equal(call.hint, 'AJ！タップ＋声を出そう');
+  assert.equal(display.cue.text, 'AJ!');
+  assert.equal(display.phase, 'active');
+});

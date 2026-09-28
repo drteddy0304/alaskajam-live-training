@@ -14,7 +14,7 @@ export class Music {
     this.media.addEventListener('pause', () => { if (!this.closed && !this.media.ended) this.oninterrupt?.(); });
     this.media.addEventListener('error', () => { if (!this.closed) this.oninterrupt?.(); });
   }
-  async load(src) {
+  async prime(src, offset = 0, duration = Infinity) {
     this.media.src = src;
     // Do not insert an await before play(): the start button's gesture is needed.
     const playing = this.media.play();
@@ -24,13 +24,19 @@ export class Music {
         timer = setTimeout(() => reject(new Error('音源の読み込みがタイムアウトしました')), 30000);
       })]);
       if (this.closed) throw new Error('再生を中止しました');
+      if (Number.isFinite(duration)) { this.start(0, offset, duration); this.reset(); }
     } finally { clearTimeout(timer); }
   }
+  async load(src) { return this.prime(src); }
   start(_countdown, offset, duration) {
     if (Number.isFinite(this.media.duration) && offset + duration > this.media.duration + .05) throw new Error('音源が練習時間より短いため再生できません');
     this.offset = offset;
     this.duration = duration;
     if (offset) this.media.currentTime = offset;
+  }
+  reset() {
+    this.media.pause();
+    this.media.currentTime = this.offset;
   }
   time() { return this.media.ended ? this.duration : Math.max(0, this.media.currentTime - this.offset); }
   async pause() { this.media.pause(); }
