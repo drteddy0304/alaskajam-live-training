@@ -77,3 +77,12 @@ test('official API error, autoplay block, and ready timeout report real state wi
   timeout.state.callback();
   assert.deepEqual(timeoutReports, ['timeout']);
 });
+
+test('prime requests muted playback then pauses and resets at verified offset', () => {
+  const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508}, {}, 10000, timers());
+  guide.onReady(media); media.calls.length = 0;
+  guide.prime(0);
+  assert.deepEqual(media.calls, [['mute'],['seekTo',8.2508,true],['playVideo'],['pauseVideo']]);
+  guide.reset(0);
+  assert.deepEqual(media.calls.slice(-2), [['seekTo',8.2508,true],['pauseVideo']]);
+});

@@ -45,19 +45,28 @@ export class GuidePlayback {
   apply() {
     if (!this.ready || this.failed) return false;
     this.call('mute');
-    if (!this.enabled || this.intent !== 'playing') return this.call('pauseVideo');
-    if (this.restart) {
-      const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
-      this.call('seekTo', target, true);
-      this.restart = false;
-    } else if (validGuideOffset(this.mapping)) {
-      this.call('seekTo', this.audioTime + this.mapping.audioToVideoOffset, true);
-    }
-    return this.call('playVideo');
+    if (!this.enabled || !['playing', 'priming'].includes(this.intent)) return this.call('pauseVideo');
+    const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
+    if (this.restart || validGuideOffset(this.mapping)) this.call('seekTo', target, true);
+    this.restart = false;
+    const played = this.call('playVideo');
+    if (this.intent === 'priming') this.call('pauseVideo');
+    return played;
   }
   setEnabled(enabled) {
     this.enabled = Boolean(enabled);
     return this.apply();
+  }
+  prime(audioTime = 0) {
+    this.intent = 'priming'; this.audioTime = audioTime; this.restart = true;
+    return this.apply();
+  }
+  reset(audioTime = 0) {
+    this.audioTime = audioTime; this.restart = false;
+    const target = validGuideOffset(this.mapping) ? audioTime + this.mapping.audioToVideoOffset : 0;
+    if (this.ready && this.enabled) this.call('seekTo', target, true);
+    this.intent = 'paused';
+    return this.call('pauseVideo');
   }
   start(audioTime = 0) {
     this.intent = 'playing'; this.audioTime = audioTime; this.restart = true;
