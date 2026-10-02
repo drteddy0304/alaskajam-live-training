@@ -13,7 +13,7 @@ test('full song chart has playable spacing and stays within supplied audio',()=>
   assert.ok(chart.notes.at(-1).time>220);
   assert.ok(!chart.notes.some(n=>n.action==='JUMP'));
 });
-test('AJ and 2A calls are frame-verified timed actions in chart order',()=>{
+test('audio-onset pass preserves frame-verified calls and shifts repeating actions',()=>{
   assert.deepEqual(chart.notes.filter(note=>note.time===27.7792),[{time:27.7792,action:'CALL',hint:'AJ！タップ＋声を出そう'}]);
   const calls=chart.notes.filter(note=>note.time===104.9792);
   assert.deepEqual(calls,[{
@@ -21,10 +21,12 @@ test('AJ and 2A calls are frame-verified timed actions in chart order',()=>{
     action:'CALL',
     hint:'1・2・3！「1」でタップ＋声を出そう'
   }]);
-  assert.equal(chart.id,'cat-walk-life-guide-beta-v3-aj-call');
-  assert.equal(chart.source.revision,'2026-09-28-beta3-aj-call');
+  assert.equal(chart.id,'cat-walk-life-guide-beta-v4-audio-onset');
+  assert.equal(chart.source.revision,'2026-10-02-beta4-audio-onset');
   assert.equal(chart.source.timingStatus,'provisional');
   assert.equal(chart.notes.length,94);
+  assert.equal(chart.notes.filter(note=>note.action!=='CALL').length,89);
+  assert.deepEqual(chart.notes.slice(0,3).map(note=>note.time),[2.421,3.397,4.372]);
   assert.ok(chart.notes.every((note,index)=>index===0 || note.time>chart.notes[index-1].time));
   validateChart(chart);
 
