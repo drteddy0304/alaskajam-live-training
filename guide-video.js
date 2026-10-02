@@ -1,4 +1,7 @@
 let apiPromise;
+export const GUIDE_SYNC_TOLERANCE = 0.4;
+export const GUIDE_EARLY_SYNC_INTERVAL = 1;
+export const GUIDE_LATE_SYNC_INTERVAL = 4;
 
 export function validGuideOffset(mapping) {
   return mapping?.syncStatus === 'verified' && Number.isFinite(mapping.audioToVideoOffset) && mapping.audioToVideoOffset >= 0;
@@ -15,6 +18,7 @@ export class GuidePlayback {
     this.intent = 'stopped';
     this.audioTime = 0;
     this.restart = false;
+    this.nextSyncAt = Infinity;
     this.timeout = timers.setTimeout(() => this.fail('timeout'), timeoutMs);
     this.clearTimeout = timers.clearTimeout.bind(timers);
   }
@@ -70,14 +74,36 @@ export class GuidePlayback {
   }
   start(audioTime = 0) {
     this.intent = 'playing'; this.audioTime = audioTime; this.restart = true;
+    this.resetSyncSchedule(audioTime);
     return this.apply();
   }
   pause() { this.intent = 'paused'; return this.call('pauseVideo'); }
   resume(audioTime = 0) {
     this.intent = 'playing'; this.audioTime = audioTime; this.restart = false;
+    this.resetSyncSchedule(audioTime);
     return this.apply();
   }
   stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
+  resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_EARLY_SYNC_INTERVAL; }
+  // MP3 time is authoritative. Correct only measured drift while YouTube is
+  // actively PLAYING; 0.4 s avoids seeking for ordinary decoder jitter.
+  sync(audioTime, tolerance = GUIDE_SYNC_TOLERANCE) {
+    if (!this.enabled || !this.ready || this.failed || this.intent !== 'playing' || !validGuideOffset(this.mapping)) return false;
+    try {
+      if (typeof this.player?.getPlayerState !== 'function' || this.player.getPlayerState() !== 1) return false;
+      if (typeof this.player.getCurrentTime !== 'function') return false;
+      const current = this.player.getCurrentTime();
+      const expected = audioTime + this.mapping.audioToVideoOffset;
+      if (!Number.isFinite(current) || !Number.isFinite(expected) || Math.abs(current - expected) <= tolerance) return false;
+      return this.call('seekTo', expected, true);
+    } catch { return false; }
+  }
+  syncIfDue(audioTime) {
+    if (!Number.isFinite(audioTime) || audioTime < this.nextSyncAt) return false;
+    const corrected = this.sync(audioTime);
+    this.nextSyncAt = audioTime + (audioTime < 10 ? GUIDE_EARLY_SYNC_INTERVAL : GUIDE_LATE_SYNC_INTERVAL);
+    return corrected;
+  }
 }
 
 export function loadYouTubeAPI(win = window, doc = document) {
