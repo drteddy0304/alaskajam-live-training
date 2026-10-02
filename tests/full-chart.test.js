@@ -13,7 +13,7 @@ test('full song chart has playable spacing and stays within supplied audio',()=>
   assert.ok(chart.notes.at(-1).time>220);
   assert.ok(!chart.notes.some(n=>n.action==='JUMP'));
 });
-test('audio-onset pass preserves frame-verified calls and shifts repeating actions',()=>{
+test('rebuilt chart preserves verified calls and uses quarter-note wipers',()=>{
   assert.deepEqual(chart.notes.filter(note=>note.time===27.7792),[{time:27.7792,action:'CALL',hint:'AJ！タップ＋声を出そう'}]);
   const calls=chart.notes.filter(note=>note.time===104.9792);
   assert.deepEqual(calls,[{
@@ -21,19 +21,21 @@ test('audio-onset pass preserves frame-verified calls and shifts repeating actio
     action:'CALL',
     hint:'1・2・3！「1」でタップ＋声を出そう'
   }]);
-  assert.equal(chart.id,'cat-walk-life-guide-beta-v4-audio-onset');
-  assert.equal(chart.source.revision,'2026-10-02-beta4-audio-onset');
+  assert.equal(chart.id,'cat-walk-life-guide-beta-v5-clap-quarter-wiper');
+  assert.equal(chart.source.revision,'2026-10-02-beta5-clap-quarter-wiper');
   assert.equal(chart.source.timingStatus,'provisional');
-  assert.equal(chart.notes.length,94);
-  assert.equal(chart.notes.filter(note=>note.action!=='CALL').length,89);
-  assert.deepEqual(chart.notes.slice(0,3).map(note=>note.time),[2.421,3.397,4.372]);
+  assert.equal(chart.notes.length,144);
+  assert.deepEqual(chart.notes.filter(note=>note.action==='CLAP').slice(0,3).map(note=>note.time),[1.195,2.18,3.135]);
+  const firstWipers=chart.notes.filter(note=>note.action==='WIPER').slice(0,3);
+  assert.deepEqual(firstWipers.map(note=>note.direction),['left','right','left']);
+  assert.ok(Math.abs(firstWipers[1].time-firstWipers[0].time-60/123)<.0001);
   assert.ok(chart.notes.every((note,index)=>index===0 || note.time>chart.notes[index-1].time));
   validateChart(chart);
 
   const session=new Session(chart);
   assert.equal(session.input(104.9792,'tap').grade,'PERFECT');
   assert.equal(session.summary().PERFECT,1);
-  assert.equal(session.summary().MISS,93);
+  assert.equal(session.summary().MISS,chart.notes.length-1);
 });
 test('full song can score perfectly and ends with every note accounted for',()=>{
   const session=new Session(chart);
