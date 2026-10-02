@@ -8,7 +8,7 @@ const timers = () => {
 };
 const player = () => {
   const calls = [];
-  return { calls, mute: () => calls.push(['mute']), seekTo: (...args) => calls.push(['seekTo',...args]), playVideo: () => calls.push(['playVideo']), pauseVideo: () => calls.push(['pauseVideo']) };
+  return { calls, currentTime: 0, state: 1, mute: () => calls.push(['mute']), seekTo: (...args) => calls.push(['seekTo',...args]), playVideo: () => calls.push(['playVideo']), pauseVideo: () => calls.push(['pauseVideo']), getCurrentTime() { return this.currentTime; }, getPlayerState() { return this.state; } };
 };
 
 test('start waits for official API ready, then rewinds, mutes, and plays', () => {
@@ -85,4 +85,35 @@ test('prime requests muted playback then pauses and resets at verified offset', 
   assert.deepEqual(media.calls, [['mute'],['seekTo',8.2508,true],['playVideo'],['pauseVideo']]);
   guide.reset(0);
   assert.deepEqual(media.calls.slice(-2), [['seekTo',8.2508,true],['pauseVideo']]);
+});
+
+test('measured guide sync uses offset math and ignores drift within 0.4 seconds', () => {
+  const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
+  guide.onReady(media);guide.start(2);media.calls.length=0;
+  media.currentTime=10.5;
+  assert.equal(guide.sync(2),false);
+  assert.deepEqual(media.calls,[]);
+  media.currentTime=9;
+  assert.equal(guide.sync(2),true);
+  assert.deepEqual(media.calls,[['seekTo',10.2508,true]]);
+});
+
+test('sync schedule is bounded to early one-second and later four-second checks', () => {
+  const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
+  guide.onReady(media);guide.start(0);media.calls.length=0;media.currentTime=0;
+  assert.equal(guide.syncIfDue(.99),false);assert.equal(guide.nextSyncAt,1);
+  guide.syncIfDue(1);assert.equal(guide.nextSyncAt,2);
+  guide.syncIfDue(10);assert.equal(guide.nextSyncAt,14);
+  guide.resume(20);assert.equal(guide.nextSyncAt,21);
+});
+
+test('sync is a no-op when OFF, unavailable, failed, or not actively playing', () => {
+  const mapping={syncStatus:'verified',audioToVideoOffset:8.2508};
+  const media=player(), guide=new GuidePlayback(mapping,{},10000,timers());
+  assert.equal(guide.sync(2),false);
+  guide.onReady(media);guide.start(0);media.calls.length=0;
+  media.state=3;assert.equal(guide.sync(2),false);
+  media.state=1;guide.setEnabled(false);media.calls.length=0;assert.equal(guide.sync(2),false);
+  guide.enabled=true;guide.failed=true;assert.equal(guide.sync(2),false);
+  assert.deepEqual(media.calls,[]);
 });

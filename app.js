@@ -1,9 +1,9 @@
 import { Session, validateChart, WINDOWS } from './engine.js';
-import { Music } from './audio.js?v=countdown1';
-import { lyricAt, validateLyrics } from './lyrics.js?v=lyrics1';
-import { noteStyle, visibleLaneNotes } from './lane.js?v=lane1';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=guide3';
-import { StartCountdown, primeMedia, startMediaTogether } from './startup.js?v=countdown1';
+import { Music } from './audio.js?v=sync2';
+import { lyricAt, validateLyrics } from './lyrics.js?v=sync2';
+import { noteStyle, visibleLaneNotes } from './lane.js?v=sync2';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=sync2';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=sync2';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -12,6 +12,14 @@ const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印の向きにスワイプ！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
 let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null;
+function showCountdown(value, preparing = false) {
+  const state = countdownOverlayState(value, preparing);
+  $('countdown-overlay').hidden = state.hidden;
+  $('countdown-overlay').classList.toggle('is-preparing', state.preparing);
+  $('countdown-label').textContent = state.label;
+  $('countdown-value').textContent = state.value;
+}
+function hideCountdown() { const state = countdownOverlayState(); $('countdown-overlay').hidden = state.hidden; $('countdown-overlay').classList.remove('is-preparing'); }
 function drawLyrics(time) {
   const data = lyrics.get(chart.lyrics);
   const state = data ? lyricAt(data.cues, time, data.leadTime) : null;
@@ -76,6 +84,7 @@ function drawLane(time) {
 function draw() {
   if (phase !== 'playing') return;
   const t = clock();
+  guide?.syncIfDue(t);
   for (const missed of session.advance(t)) flash(missed);
   const progress = Math.max(0, Math.min(t, chart.duration));
   $('elapsed').textContent = formatTime(progress);
@@ -136,35 +145,36 @@ async function start(song = null) {
   $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
   show('play');
 
-  // Deliberately do not await before these native/YouTube playback requests.
+  // Display immediately, then make both authorization-sensitive playback
+  // requests in this same user-gesture task, before observing any promise.
+  showCountdown(5);
   const prepared = primeMedia(audio, guide, {src: chart.audio?.src, offset: chart.audio?.offset || 0, duration: chart.duration});
-  try {
-    await prepared;
-    if (phase !== 'countdown' || document.hidden) throw new Error('cancelled');
-  } catch {
-    if (phase !== 'countdown') return;
-    audio?.close(); audio = null; guide?.stop(); starting = false; phase = 'home';
-    $('try-demo').disabled = false; $('retry').disabled = false;
-    $('load-status').textContent = '音源を再生できませんでした。SafariまたはChromeで開き、もう一度開始してください。'; show('home'); return;
-  }
-  $('load-status').textContent = '';
   if (audio) audio.oninterrupt = () => { if (phase === 'playing') pause(); };
-  countdown = new StartCountdown({
+  countdown = new StartBarrier({
     onTick: number => {
+      showCountdown(number);
       $('cue-label').textContent = 'COUNTDOWN'; $('cue-action').textContent = number;
       $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
     },
-    onComplete: () => {
-      if (phase !== 'countdown') return;
+    onPreparing: () => showCountdown('音源を準備中…', true),
+    onReady: () => {
+      if (phase !== 'countdown' || document.hidden) { home(); return; }
+      hideCountdown(); $('load-status').textContent = '';
       startAt = performance.now(); phase = 'playing'; starting = false;
       $('try-demo').disabled = false; $('retry').disabled = false;
       $('pad').disabled = false; $('pause').disabled = false;
       const started = startMediaTogether(audio, guide, 0);
       $('pause').focus({preventScroll:true}); draw();
       started.catch(() => { if (phase === 'playing') pause(); document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; });
+    },
+    onError: () => {
+      if (phase !== 'countdown') return;
+      hideCountdown(); audio?.close(); audio = null; guide?.stop(); starting = false; phase = 'home';
+      $('try-demo').disabled = false; $('retry').disabled = false;
+      $('load-status').textContent = '音源を再生できませんでした。SafariまたはChromeで開き、もう一度開始してください。'; show('home');
     }
   });
-  countdown.start();
+  countdown.start(prepared);
 }
 
 function pause() {
@@ -196,7 +206,7 @@ function finish() {
   $('best').textContent = saved ? `この端末のベスト準備度 ${best}%` : 'このブラウザでは記録を保存できません';
   show('result'); $('result-title').tabIndex = -1; $('result-title').focus({preventScroll:true});
 }
-function home() { countdown?.cancel(); countdown = null; starting = false; cancelAnimationFrame(frame); audio?.close(); guide?.stop(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
+function home() { countdown?.cancel(); countdown = null; hideCountdown(); starting = false; cancelAnimationFrame(frame); audio?.close(); guide?.stop(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
 function videoFailed() { $('video-status').textContent = '公式動画を再生できません。動画なしで練習を続けられます。'; $('video-status').dataset.error = 'true'; }
 $('video-toggle').addEventListener('click', () => {
   videoEnabled = !videoEnabled;
@@ -228,7 +238,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'countdown1');
+  url.searchParams.set('v', 'sync2');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
