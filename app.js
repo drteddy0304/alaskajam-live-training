@@ -1,9 +1,9 @@
 import { Session, validateChart, WINDOWS } from './engine.js';
-import { Music } from './audio.js?v=sync2';
-import { lyricAt, validateLyrics } from './lyrics.js?v=sync2';
-import { noteStyle, visibleLaneNotes } from './lane.js?v=sync2';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=sync2';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=sync2';
+import { Music } from './audio.js?v=sync3';
+import { lyricAt, validateLyrics } from './lyrics.js?v=sync3';
+import { noteStyle, visibleLaneNotes } from './lane.js?v=sync3';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=sync3';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=sync3';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -38,7 +38,8 @@ function configureGuide(mapping) {
   guide = new GuidePlayback(mapping, {
     onReady: () => { $('video-status').textContent = mapping.syncStatus === 'verified' ? '動画はミュートです。確認済みの対応位置で連携します。' : '動画はミュートです。同期位置は未確認のため、お手本としてご覧ください。'; },
     onFailure: videoFailed,
-    onAutoplayBlocked: () => { $('video-status').textContent = '動画の自動再生がブロックされました。動画内の再生ボタンを押すか、動画OFFで練習を続けてください。'; $('video-status').dataset.error = 'true'; }
+    onAutoplayBlocked: () => { $('video-status').textContent = '動画の自動再生がブロックされました。動画内の再生ボタンを押すか、動画OFFで練習を続けてください。'; $('video-status').dataset.error = 'true'; },
+    onPauseRequest: () => { if (phase === 'playing') pause(); }
   });
   guide.setEnabled(videoEnabled);
   mountYouTubePlayer(guide, 'guide-player', mapping.videoId);
@@ -238,7 +239,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'sync2');
+  url.searchParams.set('v', 'sync3');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();

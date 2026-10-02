@@ -1,7 +1,7 @@
 let apiPromise;
-export const GUIDE_SYNC_TOLERANCE = 0.4;
-export const GUIDE_EARLY_SYNC_INTERVAL = 1;
-export const GUIDE_LATE_SYNC_INTERVAL = 4;
+export const GUIDE_SYNC_TOLERANCE = 0.15;
+export const GUIDE_EARLY_SYNC_INTERVAL = 0.5;
+export const GUIDE_LATE_SYNC_INTERVAL = 1;
 
 export function validGuideOffset(mapping) {
   return mapping?.syncStatus === 'verified' && Number.isFinite(mapping.audioToVideoOffset) && mapping.audioToVideoOffset >= 0;
@@ -33,6 +33,11 @@ export class GuidePlayback {
   onError(code) { this.fail(`error:${code}`); }
   onAutoplayBlocked() {
     this.callbacks.onAutoplayBlocked?.();
+  }
+  onStateChange(state) {
+    // Programmatic pauses change intent first. PAUSED while the guide still
+    // intends to play therefore came from the YouTube player controls.
+    if (state === 2 && this.intent === 'playing' && this.enabled) this.callbacks.onPauseRequest?.();
   }
   fail(reason) {
     if (this.failed) return;
@@ -86,7 +91,7 @@ export class GuidePlayback {
   stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
   resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_EARLY_SYNC_INTERVAL; }
   // MP3 time is authoritative. Correct only measured drift while YouTube is
-  // actively PLAYING; 0.4 s avoids seeking for ordinary decoder jitter.
+  // actively PLAYING; the tight threshold keeps the guide visually aligned.
   sync(audioTime, tolerance = GUIDE_SYNC_TOLERANCE) {
     if (!this.enabled || !this.ready || this.failed || this.intent !== 'playing' || !validGuideOffset(this.mapping)) return false;
     try {
@@ -130,7 +135,8 @@ export async function mountYouTubePlayer(controller, elementId, videoId, win = w
       events: {
         onReady: event => controller.onReady(event.target),
         onError: event => controller.onError(event.data),
-        onAutoplayBlocked: () => controller.onAutoplayBlocked()
+        onAutoplayBlocked: () => controller.onAutoplayBlocked(),
+        onStateChange: event => controller.onStateChange(event.data)
       }
     });
   } catch { controller.fail('api-load'); return null; }
