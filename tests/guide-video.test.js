@@ -87,10 +87,10 @@ test('prime requests muted playback then pauses and resets at verified offset', 
   assert.deepEqual(media.calls.slice(-2), [['seekTo',8.2508,true],['pauseVideo']]);
 });
 
-test('measured guide sync uses offset math and ignores drift within 0.4 seconds', () => {
+test('measured guide sync uses offset math and corrects drift above 0.15 seconds', () => {
   const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
   guide.onReady(media);guide.start(2);media.calls.length=0;
-  media.currentTime=10.5;
+  media.currentTime=10.35;
   assert.equal(guide.sync(2),false);
   assert.deepEqual(media.calls,[]);
   media.currentTime=9;
@@ -98,13 +98,23 @@ test('measured guide sync uses offset math and ignores drift within 0.4 seconds'
   assert.deepEqual(media.calls,[['seekTo',10.2508,true]]);
 });
 
-test('sync schedule is bounded to early one-second and later four-second checks', () => {
+test('sync schedule checks twice a second early and once a second later', () => {
   const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
   guide.onReady(media);guide.start(0);media.calls.length=0;media.currentTime=0;
-  assert.equal(guide.syncIfDue(.99),false);assert.equal(guide.nextSyncAt,1);
-  guide.syncIfDue(1);assert.equal(guide.nextSyncAt,2);
-  guide.syncIfDue(10);assert.equal(guide.nextSyncAt,14);
-  guide.resume(20);assert.equal(guide.nextSyncAt,21);
+  assert.equal(guide.syncIfDue(.49),false);assert.equal(guide.nextSyncAt,.5);
+  guide.syncIfDue(.5);assert.equal(guide.nextSyncAt,1);
+  guide.syncIfDue(10);assert.equal(guide.nextSyncAt,11);
+  guide.resume(20);assert.equal(guide.nextSyncAt,20.5);
+});
+
+test('a manual YouTube pause requests one shared game pause', () => {
+  const requests=[];
+  const guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{onPauseRequest:()=>requests.push('pause')},10000,timers());
+  const media=player();guide.onReady(media);guide.start(0);
+  guide.onStateChange(2);
+  assert.deepEqual(requests,['pause']);
+  guide.pause();guide.onStateChange(2);
+  assert.deepEqual(requests,['pause']);
 });
 
 test('sync is a no-op when OFF, unavailable, failed, or not actively playing', () => {
