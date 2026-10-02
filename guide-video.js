@@ -58,9 +58,7 @@ export class GuidePlayback {
     const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
     if (this.restart || validGuideOffset(this.mapping)) this.call('seekTo', target, true);
     this.restart = false;
-    const played = this.call('playVideo');
-    if (this.intent === 'priming') this.call('pauseVideo');
-    return played;
+    return this.call('playVideo');
   }
   setEnabled(enabled) {
     this.enabled = Boolean(enabled);
@@ -74,6 +72,10 @@ export class GuidePlayback {
     this.audioTime = audioTime; this.restart = false;
     const target = validGuideOffset(this.mapping) ? audioTime + this.mapping.audioToVideoOffset : 0;
     if (this.ready && this.enabled) this.call('seekTo', target, true);
+    // Keep the muted iframe playing behind the countdown after the user's
+    // start tap. Mobile browsers can block a second play request five seconds
+    // later, while seeking an already-authorized player remains allowed.
+    if (this.intent === 'priming' && this.enabled) return true;
     this.intent = 'paused';
     return this.call('pauseVideo');
   }

@@ -77,7 +77,7 @@ test('simultaneous audience words do not add to or replace CLAP scoring', () => 
   const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
   const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));
   const session = new Session(chart);
-  const clap = chart.notes.find(note => note.action === 'CLAP' && note.time > 208);
+  const clap = chart.notes.find(note => note.action === 'CLAP' && note.time > 208.5);
   const display = lyricAt(data.cues, clap.time, data.leadTime);
   assert.equal(display.cue.text, 'MEOW MEOW MEOW');
   assert.equal(display.phase, 'active');

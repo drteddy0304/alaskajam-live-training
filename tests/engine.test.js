@@ -7,8 +7,8 @@ test('perfect/good windows are inclusive and early taps do not consume a note', 
   const session = new Session(chart);
   assert.equal(session.input(1.7,'tap'),null);
   assert.equal(session.input(1.88,'tap').grade,'PERFECT');
-  assert.equal(session.input(4.28,'tap').grade,'GOOD');
-  assert.equal(session.input(4.29,'tap'),null);
+  assert.equal(session.input(4.22,'tap').grade,'GOOD');
+  assert.equal(session.input(4.23,'tap'),null);
   assert.equal(session.results.filter(Boolean).length,2);
 });
 test('late and wrong direction inputs miss; vertical/other gestures cannot score', () => {

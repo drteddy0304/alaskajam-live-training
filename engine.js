@@ -1,4 +1,4 @@
-export const WINDOWS = Object.freeze({ perfect: 0.12, good: 0.28 });
+export const WINDOWS = Object.freeze({ perfect: 0.12, good: 0.22 });
 const actions = ['CLAP', 'WIPER', 'CALL', 'JUMP'];
 export function validateChart(chart) {
   if (chart.version !== 1 || !chart.id || !chart.title || !Number.isFinite(chart.duration) || chart.duration <= 0 || !Number.isFinite(chart.leadTime) || chart.leadTime < WINDOWS.good || !Array.isArray(chart.notes) || !chart.notes.length) throw new Error('譜面の形式が正しくありません');
