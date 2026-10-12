@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ecff62">
+  <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
+  <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
+  <link rel="stylesheet" href="./style.css?v=record1">
+  <script type="module" src="./recorder-app.js?v=record1"></script>
+</head>
+<body data-page="recorder">
+  <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <span id="record-countdown-label">START IN</span><strong id="record-countdown-value">5</strong>
+  </div>
+  <div class="shell recorder-shell">
+    <header class="masthead"><a href="./" aria-label="Alaska Jam ホーム">AJ<span>ALASKA JAM<br>LIVE TRAINING</span></a><span class="edition">TIMING<br>RECORDER</span></header>
+    <main>
+      <section id="recorder-intro" aria-labelledby="recorder-title">
+        <div class="eyebrow"><span class="dot"></span> CAT WALK LIFE</div>
+        <h1 id="recorder-title">あなたの操作で、<br><span class="highlight">タイミングを記録。</span></h1>
+        <div class="record-steps">
+          <p><b>1</b><span>曲を聴きながら、クラップの瞬間に大きなパッドをタップ。</span></p>
+          <p><b>2</b><span>ワイパーの瞬間は、パッドを左右にスワイプ。</span></p>
+          <p><b>3</b><span>CALL / JUMPだけ、タップ前に種類を切り替える。</span></p>
+        </div>
+        <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。YouTube動画は流さず、曲だけを基準にする記録専用画面です。</p>
+        <button id="record-start" class="primary">5秒カウントして記録開始 →</button>
+        <p id="record-saved-status" class="micro" role="status"></p>
+        <a class="text-button" href="./">通常のゲームへ戻る</a>
+      </section>
+
+      <section id="recorder-run" hidden aria-labelledby="record-run-title">
+        <div class="play-top"><span class="eyebrow">RECORDING</span><button id="record-pause" class="small-button" type="button">⏸ 一時停止</button></div>
+        <h2 id="record-run-title">CAT WALK LIFE</h2>
+        <div class="progress-meta"><span id="record-elapsed">0:00.000</span><span id="record-note-count">0件</span><span>3:44</span></div>
+        <progress id="record-progress" value="0" max="224.39" aria-label="曲の進み具合"></progress>
+
+        <fieldset class="record-actions">
+          <legend>タップで記録する種類</legend>
+          <button type="button" data-record-action="CLAP" aria-pressed="true">✳ CLAP</button>
+          <button type="button" data-record-action="CALL" aria-pressed="false">〰 CALL</button>
+          <button type="button" data-record-action="JUMP" aria-pressed="false">↑ JUMP</button>
+        </fieldset>
+        <p class="micro record-tip">左右スワイプは、選択に関係なくWIPERになります。</p>
+
+        <button id="record-pad" class="pad record-pad" aria-label="記録パッド。タップ、または左右にスワイプ">
+          <span id="record-pad-icon" class="pad-icon" aria-hidden="true">✳</span>
+          <b id="record-pad-label">CLAPを記録</b>
+          <small>タップ / 左右にスワイプ</small>
+        </button>
+        <div class="record-feedback"><strong id="record-last" role="status" aria-live="polite">曲に合わせて操作してください</strong></div>
+        <div class="record-controls">
+          <button id="record-undo" class="small-button" type="button" disabled>↶ 1つ戻す</button>
+          <button id="record-finish" class="primary" type="button">記録を終了</button>
+        </div>
+      </section>
+
+      <section id="recorder-result" hidden aria-labelledby="record-result-title">
+        <div class="eyebrow">RECORDING COMPLETE</div>
+        <h1 id="record-result-title">タイミングを<br>記録しました。</h1>
+        <p id="record-result-summary" class="section-note"></p>
+        <label class="record-output-label" for="record-output">記録データ</label>
+        <textarea id="record-output" class="record-output" readonly spellcheck="false"></textarea>
+        <button id="record-copy" class="primary" type="button">記録データをコピー</button>
+        <p id="record-copy-status" class="micro" role="status">コピー後、このチャットへそのまま貼ってください。</p>
+        <button id="record-again" class="text-button" type="button">最初から記録し直す</button>
+        <a class="text-button" href="./">通常のゲームへ戻る</a>
+      </section>
+    </main>
+    <footer><b>ALASKA JAM LIVE TRAINING</b><span>端末内保存・送信なし</span></footer>
+  </div>
+  <noscript>この記録機能にはJavaScriptを有効にしてください。</noscript>
+</body>
+</html>
