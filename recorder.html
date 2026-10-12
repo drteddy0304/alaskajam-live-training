@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#ecff62">
   <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
-  <link rel="stylesheet" href="./style.css?v=record1">
-  <script type="module" src="./recorder-app.js?v=record1"></script>
+  <link rel="stylesheet" href="./style.css?v=record2">
+  <script type="module" src="./recorder-app.js?v=record2"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -22,7 +22,7 @@
         <div class="record-steps">
           <p><b>1</b><span>曲を聴きながら、クラップの瞬間に大きなパッドをタップ。</span></p>
           <p><b>2</b><span>ワイパーの瞬間は、パッドを左右にスワイプ。</span></p>
-          <p><b>3</b><span>CALL / JUMPだけ、タップ前に種類を切り替える。</span></p>
+          <p><b>3</b><span>CALL、CLAP＋CALL、JUMPは、タップ前に種類を切り替える。</span></p>
         </div>
         <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。YouTube動画は流さず、曲だけを基準にする記録専用画面です。</p>
         <button id="record-start" class="primary">5秒カウントして記録開始 →</button>
@@ -40,6 +40,7 @@
           <legend>タップで記録する種類</legend>
           <button type="button" data-record-action="CLAP" aria-pressed="true">✳ CLAP</button>
           <button type="button" data-record-action="CALL" aria-pressed="false">〰 CALL</button>
+          <button type="button" data-record-action="CLAP_CALL" aria-pressed="false">✳＋〰 CLAP＋CALL</button>
           <button type="button" data-record-action="JUMP" aria-pressed="false">↑ JUMP</button>
         </fieldset>
         <p class="micro record-tip">左右スワイプは、選択に関係なくWIPERになります。</p>

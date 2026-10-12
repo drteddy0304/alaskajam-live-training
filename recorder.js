@@ -1,4 +1,4 @@
-export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'JUMP']);
+export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP']);
 
 function cleanTime(time) {
   if (!Number.isFinite(time) || time < 0) throw new TypeError('記録時刻は0以上の数値が必要です');
@@ -12,6 +12,7 @@ export function noteFromGesture(time, gesture, tapAction = 'CLAP') {
   }
   if (gesture !== 'tap') throw new TypeError('未対応の操作です');
   if (!TAP_ACTIONS.includes(tapAction)) throw new TypeError('未対応のタップ種別です');
+  if (tapAction === 'CLAP_CALL') return {time: noteTime, action: 'CALL', simultaneous: ['CLAP']};
   return {time: noteTime, action: tapAction};
 }
 

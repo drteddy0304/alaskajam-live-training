@@ -5,6 +5,7 @@ import {buildRecording, noteFromGesture, recordingText} from '../recorder.js';
 test('tap and swipe use the supplied audio timestamp without release-time delay', () => {
   assert.deepEqual(noteFromGesture(12.34549, 'tap'), {time: 12.345, action: 'CLAP'});
   assert.deepEqual(noteFromGesture(22.125, 'tap', 'CALL'), {time: 22.125, action: 'CALL'});
+  assert.deepEqual(noteFromGesture(22.5, 'tap', 'CLAP_CALL'), {time: 22.5, action: 'CALL', simultaneous: ['CLAP']});
   assert.deepEqual(noteFromGesture(33.75, 'tap', 'JUMP'), {time: 33.75, action: 'JUMP'});
   assert.deepEqual(noteFromGesture(44.9876, 'left', 'CALL'), {time: 44.988, action: 'WIPER', direction: 'left'});
   assert.deepEqual(noteFromGesture(45, 'right'), {time: 45, action: 'WIPER', direction: 'right'});
