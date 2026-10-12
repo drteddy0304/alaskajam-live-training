@@ -1,6 +1,6 @@
-import {Music} from './audio.js?v=record1';
-import {StartBarrier, countdownOverlayState, primeMedia, startMediaTogether} from './startup.js?v=record1';
-import {buildRecording, noteFromGesture, recordingText, TAP_ACTIONS} from './recorder.js?v=record1';
+import {Music} from './audio.js?v=record2';
+import {StartBarrier, countdownOverlayState, primeMedia, startMediaTogether} from './startup.js?v=record2';
+import {buildRecording, noteFromGesture, recordingText, TAP_ACTIONS} from './recorder.js?v=record2';
 
 const SONG = Object.freeze({
   id: 'cat-walk-life-timing-take',
@@ -65,7 +65,7 @@ function setAction(action) {
   document.querySelectorAll('[data-record-action]').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.recordAction === action));
   });
-  const labels = {CLAP: ['✳', 'CLAPを記録'], CALL: ['〰', 'CALLを記録'], JUMP: ['↑', 'JUMPを記録']};
+  const labels = {CLAP: ['✳', 'CLAPを記録'], CALL: ['〰', 'CALLを記録'], CLAP_CALL: ['✳＋〰', 'CLAP＋CALLを同時記録'], JUMP: ['↑', 'JUMPを記録']};
   $('#record-pad-icon').textContent = labels[action][0];
   $('#record-pad-label').textContent = labels[action][1];
 }
@@ -107,7 +107,8 @@ function recordGesture(gesture, time) {
   saveDraft();
   updateCount();
   const direction = note.direction ? ` ${note.direction === 'left' ? '←' : '→'}` : '';
-  last.textContent = `${formatTime(note.time, true)}　${note.action}${direction}`;
+  const action = note.simultaneous?.includes('CLAP') ? 'CLAP＋CALL' : note.action;
+  last.textContent = `${formatTime(note.time, true)}　${action}${direction}`;
   try { navigator.vibrate?.(12); } catch {}
 }
 
