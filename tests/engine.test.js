@@ -31,6 +31,12 @@ test('all missed scores zero; good scores 70; new session resets', () => {
   assert.equal(good.summary().readiness,70);
   assert.equal(new Session(chart).results.filter(Boolean).length,0);
 });
+test('seeking starts a partial practice without counting earlier notes as misses', () => {
+  const session = new Session(chart).skipBefore(12);
+  assert.equal(session.results.filter(result => result === 'SKIP').length, 5);
+  assert.equal(session.input(12,'right').grade,'PERFECT');
+  assert.deepEqual(session.summary(),{PERFECT:1,GOOD:0,MISS:13,readiness:7,maxCombo:1});
+});
 test('dense rhythms choose the nearest compatible note inside overlapping windows', () => {
   const dense = {...chart, notes:[
     {time:2,action:'CLAP'},

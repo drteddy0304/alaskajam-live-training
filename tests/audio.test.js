@@ -12,6 +12,8 @@ test('native audio requests playback before load returns, and clock follows buff
  const m=new Music();const loaded=m.load('song.mp3');assert.deepEqual(m.media.calls,['play']);await loaded;m.start(3,0,224.39);
  m.media.currentTime=61.2;assert.equal(m.time(),61.2);assert.equal(m.time(),61.2);
  await m.pause();assert.equal(m.time(),61.2);await m.resume();assert.equal(m.media.paused,false);
+ assert.equal(m.seek(170),170);assert.equal(m.media.currentTime,170);
+ assert.equal(m.seek(999),224.39);assert.equal(m.media.currentTime,224.39);
  m.media.ended=true;assert.equal(m.time(),224.39);m.close();assert.equal(m.media.paused,true);
 });
 test('blocked playback rejects; closing does not trigger interruption',async()=>{

@@ -39,6 +39,11 @@ export class Music {
     this.media.currentTime = this.offset;
   }
   time() { return this.media.ended ? this.duration : Math.max(0, this.media.currentTime - this.offset); }
+  seek(time) {
+    const target = Math.max(0, Math.min(Number(time) || 0, this.duration));
+    this.media.currentTime = this.offset + target;
+    return target;
+  }
   async pause() { this.media.pause(); }
   async resume() {
     let timer;

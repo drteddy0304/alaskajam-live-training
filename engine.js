@@ -20,6 +20,13 @@ export class Session {
     this.maxCombo = Math.max(this.maxCombo, this.combo);
     return { index, grade };
   }
+  skipBefore(time) {
+    this.chart.notes.forEach((note, index) => {
+      if (note.time < time) this.results[index] = 'SKIP';
+    });
+    this.combo = 0;
+    return this;
+  }
   advance(time) {
     const missed = [];
     this.chart.notes.forEach((note, i) => { if (!this.results[i] && time - note.time > WINDOWS.good + 1e-9) missed.push(this.record(i, 'MISS')); });
@@ -44,7 +51,8 @@ export class Session {
   }
   summary() {
     const counts = { PERFECT: 0, GOOD: 0, MISS: 0 };
-    this.results.forEach(grade => counts[grade || 'MISS']++);
-    return { ...counts, readiness: Math.round((counts.PERFECT + counts.GOOD * 0.7) / this.results.length * 100), maxCombo: this.maxCombo };
+    this.results.forEach(grade => { if (grade !== 'SKIP') counts[grade || 'MISS']++; });
+    const total = counts.PERFECT + counts.GOOD + counts.MISS;
+    return { ...counts, readiness: total ? Math.round((counts.PERFECT + counts.GOOD * 0.7) / total * 100) : 0, maxCombo: this.maxCombo };
   }
 }
