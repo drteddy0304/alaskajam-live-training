@@ -1,4 +1,4 @@
-export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP']);
+export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP', 'VOICE_CALL']);
 
 const RECORDING_SONGS = Object.freeze({
   'cat-walk-life': Object.freeze({
@@ -52,6 +52,7 @@ export function noteFromGesture(time, gesture, tapAction = 'CLAP') {
   if (gesture !== 'tap') throw new TypeError('未対応の操作です');
   if (!TAP_ACTIONS.includes(tapAction)) throw new TypeError('未対応のタップ種別です');
   if (tapAction === 'CLAP_CALL') return {time: noteTime, action: 'CALL', simultaneous: ['CLAP']};
+  if (tapAction === 'VOICE_CALL') return {time: noteTime, action: 'VOICE_CALL'};
   return {time: noteTime, action: tapAction};
 }
 

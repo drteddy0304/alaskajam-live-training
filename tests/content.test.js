@@ -6,6 +6,7 @@ const root=new URL('../',import.meta.url);
 const songs=JSON.parse(await readFile(new URL('data/songs.json',root),'utf8'));
 const html=await readFile(new URL('index.html',root),'utf8');
 const css=await readFile(new URL('style.css',root),'utf8');
+const recorderHtml=await readFile(new URL('recorder.html',root),'utf8');
 
 test('QUATTRO training setlist contains only CAT WALK LIFE and SNACK SNACK',()=>{
   assert.deepEqual(songs.map(song=>song.title),['CAT WALK LIFE','SNACK SNACK']);
@@ -35,4 +36,10 @@ test('smartphone play view keeps all controls inside the dynamic viewport',()=>{
   assert.match(css,/body\[data-page=play\]\{height:100dvh;overflow:hidden\}/);
   assert.match(css,/\.wiper-controls button\{min-height:clamp\(46px,8dvh,56px\)/);
   assert.match(html,/style\.css\?v=record3/);
+});
+
+test('recorder separates scored tap CALL from voice-only CALL',()=>{
+  assert.match(recorderHtml,/data-record-now="CALL"[^>]*>[\s\S]*?タップCALL/);
+  assert.match(recorderHtml,/data-record-now="VOICE_CALL"[^>]*>[\s\S]*?声だけCALL/);
+  assert.match(recorderHtml,/採点タップなし/);
 });
