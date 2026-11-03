@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { GuidePlayback, mountYouTubePlayer, validGuideOffset } from '../guide-video.js';
+import { GuidePlayback, mountYouTubePlayer, resetYouTubeMount, validGuideOffset } from '../guide-video.js';
 
 const timers = () => {
   const state = { callback: null, cleared: false };
@@ -84,6 +84,23 @@ test('official API error, autoplay block, and ready timeout report real state wi
   new GuidePlayback({}, {onFailure:r=>timeoutReports.push(r)}, 10000, timeout);
   timeout.state.callback();
   assert.deepEqual(timeoutReports, ['timeout']);
+});
+
+test('switching songs replaces the existing YouTube iframe mount', () => {
+  let mounted;
+  const current = {
+    tagName: 'IFRAME',
+    getAttribute: name => name === 'aria-label' ? 'old guide' : null,
+    replaceWith: replacement => { mounted = replacement; }
+  };
+  const doc = {
+    getElementById: id => id === 'guide-player' ? current : null,
+    createElement: tagName => ({tagName,setAttribute(name,value){this[name]=value;}})
+  };
+  const replacement = resetYouTubeMount('guide-player', doc);
+  assert.equal(replacement, mounted);
+  assert.equal(replacement.id, 'guide-player');
+  assert.equal(replacement['aria-label'], 'old guide');
 });
 
 test('prime keeps muted playback authorized through countdown and resets its offset', () => {
