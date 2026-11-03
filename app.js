@@ -21,11 +21,19 @@ function showCountdown(value, preparing = false) {
   $('countdown-start').hidden = true;
 }
 function hideCountdown() { const state = countdownOverlayState(); $('countdown-overlay').hidden = state.hidden; $('countdown-overlay').classList.remove('is-preparing'); $('countdown-start').hidden = true; pendingStart = null; }
-function askForStartTap(callback) {
+function askForStartTap(callback, message = '動画の再生にはタップが必要です') {
   pendingStart = callback;
-  showCountdown('動画の再生にはタップが必要です', true);
+  showCountdown(message, true);
   $('countdown-start').hidden = false;
   $('countdown-start').focus({preventScroll:true});
+}
+function requestStart(song) {
+  if (starting) return;
+  const selected = song?.chart ? charts.get(song.chart) : chart;
+  if (!selected) return;
+  chart = selected;
+  configureGuide(chart.guideVideo);
+  askForStartTap(() => start(), 'ボタンを押すとカウントダウンが始まります');
 }
 function drawLyrics(time) {
   const data = lyrics.get(chart.lyrics);
@@ -258,8 +266,8 @@ $('video-toggle').addEventListener('click', () => {
   $('video-toggle').setAttribute('aria-expanded', String(videoEnabled));
   guide?.setEnabled(videoEnabled);
 });
-$('try-demo').addEventListener('click', () => $('setlist').scrollIntoView({behavior:'smooth',block:'start'})); $('retry').addEventListener('click', () => start());
-$('countdown-start').addEventListener('click', () => pendingStart?.());
+$('try-demo').addEventListener('click', () => $('setlist').scrollIntoView({behavior:'smooth',block:'start'})); $('retry').addEventListener('click', () => requestStart());
+$('countdown-start').addEventListener('click', () => { const action = pendingStart; pendingStart = null; action?.(); });
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('seek').addEventListener('pointerdown', () => { seeking = true; });
 $('seek').addEventListener('input', event => { seeking = true; $('elapsed').textContent = formatTime(Number(event.target.value)); });
@@ -303,7 +311,7 @@ try {
     const number = document.createElement('span'); number.className = 'number'; number.textContent = String(index+1).padStart(2,'0');
     const name = document.createElement('span'); name.className = 'song-name'; name.textContent = song.title;
     const end = document.createElement(song.chart || song.recorder ? 'button' : 'span'); end.textContent = '準備中';
-    if (song.chart) { end.disabled = true; end.textContent = song.status === 'demo' ? 'DEMO →' : 'PLAY →'; end.setAttribute('aria-label', `${song.title} の練習を開始`); end.addEventListener('click', () => start(song)); }
+    if (song.chart) { end.disabled = true; end.textContent = song.status === 'demo' ? 'DEMO →' : 'PLAY →'; end.setAttribute('aria-label', `${song.title} の練習を開始`); end.addEventListener('click', () => requestStart(song)); }
     else if (song.recorder) { end.disabled = true; end.textContent = 'RECORD →'; end.setAttribute('aria-label', `${song.title} のタイミングを記録`); end.addEventListener('click', () => { location.href = song.recorder; }); }
     else end.className = 'coming';
     row.append(number,name,end); $('songs').append(row);
