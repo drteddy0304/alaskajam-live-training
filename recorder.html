@@ -7,7 +7,7 @@
   <meta name="description" content="Alaska Jamの曲を聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css?v=record9">
-  <script type="module" src="./recorder-app.js?v=segment1"></script>
+  <script type="module" src="./recorder-app.js?v=segment2"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -61,7 +61,7 @@
         <h1 id="record-result-title">タイミングを<br>記録しました。</h1>
         <p id="record-result-summary" class="section-note"></p>
         <button id="record-next-pass" class="primary">別の動きを重ねてもう1周 →</button>
-        <p class="micro">前の周の記録は残ります。次の周で声だけCALLなど別の動きを記録してください。</p>
+        <p id="record-next-pass-note" class="micro">前の周の記録は残ります。次の周で声だけCALLなど別の動きを記録してください。</p>
         <label class="record-output-label" for="record-output">記録データ</label>
         <textarea id="record-output" class="record-output" readonly spellcheck="false"></textarea>
         <button id="record-copy" class="primary" type="button">記録データをコピー</button>

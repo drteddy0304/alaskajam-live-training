@@ -46,6 +46,7 @@ if (IS_SEGMENT) {
   $('#record-actions-legend').textContent = '押した瞬間に直接記録（Space＝CLAP）';
   $('.record-tip').textContent = 'CLAPは画面ボタンまたはSpaceキー、タップCALLは画面ボタンを直接押してください。';
   $('#record-next-pass').hidden = true;
+  $('#record-next-pass-note').hidden = true;
 }
 document.querySelectorAll('[data-record-now], [data-record-wiper]').forEach(button => {
   const action = button.dataset.recordWiper ? 'WIPER' : button.dataset.recordNow;
