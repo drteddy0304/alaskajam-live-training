@@ -1,5 +1,13 @@
 export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP']);
 
+export function recorderShortcut(code, repeat = false) {
+  if (repeat) return null;
+  if (code === 'Space') return {gesture: 'tap', tapAction: 'CLAP'};
+  if (code === 'ArrowLeft') return {gesture: 'left'};
+  if (code === 'ArrowRight') return {gesture: 'right'};
+  return null;
+}
+
 export function songTime(playbackTime, preRoll = 5) {
   if (!Number.isFinite(playbackTime) || !Number.isFinite(preRoll) || preRoll < 0) throw new TypeError('再生時刻が不正です');
   return Math.max(0, playbackTime - preRoll);
