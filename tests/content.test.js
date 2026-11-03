@@ -13,9 +13,11 @@ test('QUATTRO training setlist contains only CAT WALK LIFE and SNACK SNACK',()=>
   assert.equal(songs[1].status,'coming');
 });
 
-test('home copy leads with QUATTRO participation training',()=>{
-  assert.match(html,/渋谷QUATTRO/);
-  assert.match(html,/参戦予習。/);
+test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
+  assert.match(html,/AJ LIVE<br><span class="highlight">TRAINING<\/span>/);
+  assert.match(html,/ライブ参戦前に、遊びながら練習しよう！/);
+  assert.match(html,/QUATTRO<br><i>READY\?<\/i>/);
+  assert.doesNotMatch(html,/渋谷QUATTRO<br><span class="highlight">参戦予習。<\/span>/);
   assert.match(html,/02 TRACKS/);
   assert.doesNotMatch(html,/その手で/);
   assert.doesNotMatch(html,/フロアを(?:<[^>]+>)*沸かせ/);
