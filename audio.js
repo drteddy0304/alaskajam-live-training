@@ -47,22 +47,50 @@ export class Music {
     this.media.currentTime = this.offset + target;
     return target;
   }
+  async seekSettled(time, timeout = 3000) {
+    const relative = Math.max(0, Math.min(Number(time) || 0, this.duration));
+    const target = this.offset + relative;
+    if (Math.abs(this.media.currentTime - target) <= .03 && !this.media.seeking) {
+      this.media.currentTime = target;
+      return relative;
+    }
+    await new Promise((resolve, reject) => {
+      let timer;
+      const cleanup = () => {
+        clearTimeout(timer);
+        this.media.removeEventListener('seeked', settled);
+      };
+      const settled = () => { cleanup(); resolve(); };
+      this.media.addEventListener('seeked', settled, {once: true});
+      this.media.currentTime = target;
+      timer = setTimeout(() => {
+        cleanup();
+        reject(new Error('曲の開始位置を0秒に合わせられませんでした'));
+      }, timeout);
+    });
+    return relative;
+  }
   async pause() { this.media.pause(); }
   async release(time = 0) {
-    this.seek(time);
+    // Do not unmute until the browser confirms the countdown-time seek. On
+    // mobile, assigning currentTime while playing is asynchronous.
+    this.media.muted = true;
+    await this.seekSettled(time);
+    if (this.media.paused) await this.playMedia();
     this.media.muted = false;
-    if (!this.media.paused) return;
-    return this.resume();
   }
-  async resume() {
-    this.media.muted = false;
-    if (!this.media.paused) return;
+  async playMedia() {
     let timer;
     try {
       await Promise.race([this.media.play(), new Promise((_,reject) => {
         timer = setTimeout(() => reject(new Error('再生できませんでした')),15000);
       })]);
     } finally { clearTimeout(timer); }
+  }
+  async resume() {
+    this.media.muted = false;
+    if (!this.media.paused) return;
+    return this.playMedia();
   }
   close() {
     if (this.closed) return;
