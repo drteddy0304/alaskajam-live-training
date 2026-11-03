@@ -1,16 +1,11 @@
 import {Music} from './audio.js?v=record2';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
-import {buildRecording, noteFromGesture, recorderShortcut, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record9';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record10';
 
-const PRE_ROLL_SECONDS = 5;
-const SONG = Object.freeze({
-  id: 'cat-walk-life-timing-take',
-  title: 'CAT WALK LIFE',
-  duration: 224.39,
-  audio: './assets/audio/cat-walk-life-recorder.mp3'
-});
+const SONG = recordingSong(new URLSearchParams(location.search).get('song') || 'cat-walk-life');
+const PRE_ROLL_SECONDS = SONG.preRoll;
 const PLAYBACK_DURATION = SONG.duration + PRE_ROLL_SECONDS;
-const DRAFT_KEY = 'aj-timing-recorder-draft-v1';
+const DRAFT_KEY = SONG.id === 'cat-walk-life-timing-take' ? 'aj-timing-recorder-draft-v1' : `aj-timing-recorder-draft-v1-${SONG.id}`;
 const $ = selector => document.querySelector(selector);
 const intro = $('#recorder-intro');
 const run = $('#recorder-run');
@@ -30,6 +25,13 @@ const savedStatus = $('#record-saved-status');
 const countdown = $('#record-countdown');
 const countdownLabel = $('#record-countdown-label');
 const countdownValue = $('#record-countdown-value');
+
+document.title = `${SONG.title} タイミング記録 | Alaska Jam LIVE TRAINING`;
+$('#record-song-label').textContent = SONG.title;
+$('#record-run-title').textContent = SONG.title;
+$('#record-duration').textContent = formatTime(SONG.duration);
+progress.max = SONG.duration;
+$('#record-guide-link').href = SONG.guideUrl;
 
 let music = null;
 let barrier = null;

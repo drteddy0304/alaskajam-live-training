@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildRecording, noteFromGesture, recorderShortcut, recordingText, rewindTake, songTime} from '../recorder.js';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime} from '../recorder.js';
+
+test('SNACK SNACK recorder uses the supplied audio and official guide', () => {
+  const song = recordingSong('snack-snack');
+  assert.equal(song.title, 'SNACK SNACK');
+  assert.equal(song.duration, 168.54);
+  assert.equal(song.audio, './assets/audio/snack-snack.mp3');
+  assert.equal(song.preRoll, 0);
+  assert.equal(song.guideVideoId, 'Y04dtYKy-rk');
+  assert.equal(song.guideUrl, 'https://www.youtube.com/watch?v=Y04dtYKy-rk');
+});
 
 test('five-second audio pre-roll maps exactly to song time zero', () => {
   assert.equal(songTime(0), 0);

@@ -1,5 +1,22 @@
 export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP']);
 
+const RECORDING_SONGS = Object.freeze({
+  'cat-walk-life': Object.freeze({
+    id: 'cat-walk-life-timing-take', title: 'CAT WALK LIFE', duration: 224.39,
+    audio: './assets/audio/cat-walk-life-recorder.mp3', preRoll: 5,
+    guideUrl: 'https://www.youtube.com/watch?v=1y5b0upSCjM', guideVideoId: '1y5b0upSCjM'
+  }),
+  'snack-snack': Object.freeze({
+    id: 'snack-snack-timing-take', title: 'SNACK SNACK', duration: 168.54,
+    audio: './assets/audio/snack-snack.mp3', preRoll: 0,
+    guideUrl: 'https://www.youtube.com/watch?v=Y04dtYKy-rk', guideVideoId: 'Y04dtYKy-rk'
+  })
+});
+
+export function recordingSong(id = 'cat-walk-life') {
+  return RECORDING_SONGS[id] || RECORDING_SONGS['cat-walk-life'];
+}
+
 export function recorderShortcut(code, repeat = false) {
   if (repeat) return null;
   if (code === 'Space') return {gesture: 'tap', tapAction: 'CLAP'};
