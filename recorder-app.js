@@ -1,6 +1,6 @@
 import {Music} from './audio.js?v=record2';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
-import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record10';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record11';
 
 const SONG = recordingSong(new URLSearchParams(location.search).get('song') || 'cat-walk-life');
 const PRE_ROLL_SECONDS = SONG.preRoll;
@@ -104,9 +104,14 @@ function recordGesture(gesture, time, tapAction = 'CLAP') {
   saveDraft();
   updateCount();
   const direction = note.direction ? ` ${note.direction === 'left' ? '←' : '→'}` : '';
-  const action = note.simultaneous?.includes('CLAP') ? 'CLAP＋CALL' : note.action;
+  const action = actionLabel(note);
   last.textContent = `${formatTime(note.time, true)}　${action}${direction}`;
   try { navigator.vibrate?.(12); } catch {}
+}
+
+function actionLabel(note) {
+  if (note.simultaneous?.includes('CLAP')) return 'CLAP＋CALL';
+  return note.action === 'VOICE_CALL' ? '声だけCALL' : note.action;
 }
 
 async function start(preservePreviousPasses = false) {
@@ -265,7 +270,7 @@ undo.addEventListener('click', () => {
   if (!removed) return;
   saveDraft();
   updateCount();
-  const action = removed.simultaneous?.includes('CLAP') ? 'CLAP＋CALL' : removed.action;
+  const action = actionLabel(removed);
   last.textContent = `${formatTime(removed.time, true)} の ${action} を取り消しました`;
 });
 rewindButton.addEventListener('click', rewind);

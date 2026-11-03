@@ -7,7 +7,7 @@
   <meta name="description" content="Alaska Jamの曲を聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css?v=record9">
-  <script type="module" src="./recorder-app.js?v=record10"></script>
+  <script type="module" src="./recorder-app.js?v=record11"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -22,10 +22,10 @@
         <div class="record-steps">
           <p><b>1</b><span>曲を聴きながら、クラップの瞬間に画面のCLAPかキーボードのSpaceを押す。</span></p>
           <p><b>2</b><span>ワイパーの瞬間は「WIPER ←／→」かキーボードの←／→キーを押す。</span></p>
-          <p><b>3</b><span>CLAP、CALL、CLAP＋CALL、JUMPは、それぞれのボタンを直接押す。</span></p>
+          <p><b>3</b><span>押すCALLは「タップCALL」、発声だけの場所は「声だけCALL」で分けて記録する。</span></p>
         </div>
         <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。開始前に<strong>5・4・3・2・1</strong>を表示し、1の後から曲と記録が同時に始まります。</p>
-        <p class="notice"><strong>重ね録りできます。</strong>1周目はCLAP／WIPER、2周目はCALLのように分けて記録し、最後に1つのデータとしてコピーできます。</p>
+        <p class="notice"><strong>重ね録りできます。</strong>1周目はCLAP／WIPER／タップCALL、2周目は声だけCALLのように分けて記録し、最後に1つのデータとしてコピーできます。</p>
         <a id="record-guide-link" class="text-button" href="https://www.youtube.com/watch?v=1y5b0upSCjM" target="_blank" rel="noopener">公式Cheering Guideを別タブで見る ↗</a>
         <button id="record-start" class="primary">5秒カウントして記録開始 →</button>
         <p id="record-saved-status" class="micro" role="status"></p>
@@ -38,15 +38,16 @@
         <fieldset class="record-actions">
           <legend>押した瞬間に直接記録（Space＝CLAP、←／→＝WIPER）</legend>
           <button type="button" data-record-now="CLAP">✳ <strong>CLAP</strong><small>Spaceキー対応</small></button>
-          <button type="button" data-record-now="CALL">〰 <strong>CALL</strong><small>コール</small></button>
+          <button type="button" data-record-now="CALL">〰 <strong>タップCALL</strong><small>押す＋声</small></button>
           <button type="button" data-record-now="CLAP_CALL">✳＋〰 <strong>CLAP＋CALL</strong><small>同時</small></button>
           <button type="button" data-record-now="JUMP">↑ <strong>JUMP</strong><small>ジャンプ</small></button>
           <button type="button" data-record-wiper="left">← <strong>WIPER</strong><small>←キー対応</small></button>
           <button type="button" data-record-wiper="right">→ <strong>WIPER</strong><small>→キー対応</small></button>
+          <button type="button" data-record-now="VOICE_CALL">声 <strong>声だけCALL</strong><small>採点タップなし</small></button>
         </fieldset>
         <div class="progress-meta"><span id="record-elapsed">0:00.000</span><span id="record-note-count">0件</span><span id="record-duration">3:44</span></div>
         <progress id="record-progress" value="0" max="224.39" aria-label="曲の進み具合"></progress>
-        <p class="micro record-tip">6つとも切替不要です。必要なボタンをそのまま押してください。</p>
+        <p class="micro record-tip">7つとも切替不要です。必要なボタンをそのまま押してください。</p>
         <div class="record-feedback"><strong id="record-last" role="status" aria-live="polite">曲に合わせて操作してください</strong></div>
         <div class="record-controls">
           <button id="record-undo" class="small-button" type="button" disabled>↶ 1つ戻す</button>
@@ -60,7 +61,7 @@
         <h1 id="record-result-title">タイミングを<br>記録しました。</h1>
         <p id="record-result-summary" class="section-note"></p>
         <button id="record-next-pass" class="primary">別の動きを重ねてもう1周 →</button>
-        <p class="micro">前の周の記録は残ります。次の周でCALLなど別の動きを記録してください。</p>
+        <p class="micro">前の周の記録は残ります。次の周で声だけCALLなど別の動きを記録してください。</p>
         <label class="record-output-label" for="record-output">記録データ</label>
         <textarea id="record-output" class="record-output" readonly spellcheck="false"></textarea>
         <button id="record-copy" class="primary" type="button">記録データをコピー</button>
