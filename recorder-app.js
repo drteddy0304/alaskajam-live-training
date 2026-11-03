@@ -1,5 +1,5 @@
-import {Music} from './audio.js?v=record2';
-import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
+import {Music} from './audio.js?v=countdown1';
+import {StartBarrier, countdownOverlayState} from './startup.js?v=countdown1';
 import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record11';
 
 const SONG = recordingSong(new URLSearchParams(location.search).get('song') || 'cat-walk-life');
@@ -141,8 +141,7 @@ async function start(preservePreviousPasses = false) {
     onPreparing: () => showCountdown('音源を準備中…', true),
     onReady: async () => {
       try {
-        music.media.currentTime = PRE_ROLL_SECONDS;
-        await music.resume();
+        await music.release(PRE_ROLL_SECONDS);
         if (phase !== 'countdown' || document.hidden) { await music.pause(); return; }
         showCountdown();
         phase = 'playing';
