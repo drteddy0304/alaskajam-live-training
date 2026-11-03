@@ -1,6 +1,6 @@
 import {Music} from './audio.js?v=record2';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
-import {buildRecording, noteFromGesture, recordingText, songTime, TAP_ACTIONS} from './recorder.js?v=record5';
+import {buildRecording, noteFromGesture, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record7';
 
 const PRE_ROLL_SECONDS = 5;
 const SONG = Object.freeze({
@@ -22,6 +22,7 @@ const progress = $('#record-progress');
 const count = $('#record-note-count');
 const last = $('#record-last');
 const undo = $('#record-undo');
+const rewindButton = $('#record-rewind');
 const finishButton = $('#record-finish');
 const output = $('#record-output');
 const copyStatus = $('#record-copy-status');
@@ -154,6 +155,19 @@ function pause() {
   last.textContent = '一時停止中です';
 }
 
+function rewind() {
+  if (!['playing', 'paused'].includes(phase) || !music) return;
+  if (phase === 'playing') pause();
+  const rewound = rewindTake(currentSongTime(), 5, notes);
+  notes = rewound.notes;
+  music.media.currentTime = PRE_ROLL_SECONDS + rewound.time;
+  elapsed.textContent = formatTime(rewound.time, true);
+  progress.value = rewound.time;
+  saveDraft();
+  updateCount();
+  last.textContent = `${formatTime(rewound.time, true)}へ戻しました。この地点以降の記録を消しました。準備できたら再開してください。`;
+}
+
 async function resume() {
   if (phase !== 'paused') return;
   try {
@@ -227,6 +241,7 @@ undo.addEventListener('click', () => {
   const action = removed.simultaneous?.includes('CLAP') ? 'CLAP＋CALL' : removed.action;
   last.textContent = `${formatTime(removed.time, true)} の ${action} を取り消しました`;
 });
+rewindButton.addEventListener('click', rewind);
 finishButton.addEventListener('click', finish);
 $('#record-copy').addEventListener('click', copyRecording);
 $('#record-again').addEventListener('click', reset);

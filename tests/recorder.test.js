@@ -1,12 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildRecording, noteFromGesture, recordingText, songTime} from '../recorder.js';
+import {buildRecording, noteFromGesture, recordingText, rewindTake, songTime} from '../recorder.js';
 
 test('five-second audio pre-roll maps exactly to song time zero', () => {
   assert.equal(songTime(0), 0);
   assert.equal(songTime(4.999), 0);
   assert.equal(songTime(5), 0);
   assert.ok(Math.abs(songTime(5.2) - .2) < 1e-9);
+});
+
+test('rewind removes the section that will be recorded again', () => {
+  const notes = [
+    {time: 2, action: 'CLAP'},
+    {time: 6, action: 'CALL'},
+    {time: 9, action: 'WIPER', direction: 'left'}
+  ];
+  assert.deepEqual(rewindTake(10, 5, notes), {time: 5, notes: [{time: 2, action: 'CLAP'}]});
+  assert.deepEqual(rewindTake(3, 5, notes), {time: 0, notes: []});
 });
 
 test('tap and swipe use the supplied audio timestamp without release-time delay', () => {

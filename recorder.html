@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#ecff62">
   <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
-  <link rel="stylesheet" href="./style.css?v=record6">
-  <script type="module" src="./recorder-app.js?v=record6"></script>
+  <link rel="stylesheet" href="./style.css?v=record7">
+  <script type="module" src="./recorder-app.js?v=record7"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -48,8 +48,9 @@
         <div class="record-feedback"><strong id="record-last" role="status" aria-live="polite">曲に合わせて操作してください</strong></div>
         <div class="record-controls">
           <button id="record-undo" class="small-button" type="button" disabled>↶ 1つ戻す</button>
-          <button id="record-finish" class="primary" type="button">記録を終了</button>
+          <button id="record-rewind" class="small-button" type="button">⏪ 5秒戻して停止</button>
         </div>
+        <button id="record-finish" class="primary record-finish-button" type="button">記録を終了</button>
       </section>
 
       <section id="recorder-result" hidden aria-labelledby="record-result-title">
