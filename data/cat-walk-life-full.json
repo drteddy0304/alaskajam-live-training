@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "id": "cat-walk-life-user-timing-v3-final-chorus-trim",
+  "id": "cat-walk-life-user-timing-v4-keyboard",
   "title": "CAT WALK LIFE",
   "kind": "guide-beta",
   "source": {
     "name": "公式Cheering Guide参考・ユーザー実演タイミング",
     "url": "https://youtu.be/1y5b0upSCjM",
-    "revision": "2026-11-03-user-recorded-final-chorus-trim-v3",
+    "revision": "2026-11-03-user-recorded-keyboard-v4",
     "timingStatus": "user-recorded",
-    "notes": "1周目のCLAP・WIPER・タップCALLを基礎に採用。ラストサビは1周目末尾の余分なWIPER 4件と、2・3周目（178.069秒以降）のWIPER 59件を削除し、2周目に記録したCALL 24件をタップ＋発声ノーツへ変更。その他の2周目CALLは歌詞表示のみ。"
+    "notes": "キーボードで再記録したCLAP 102件・WIPER 96件を採用。既存のタップCALL 30件とCALLヒントは変更せず保持。ラストサビ178.069秒以降は従来どおりWIPERなしでCALLのみ。"
   },
   "duration": 224.39,
   "leadTime": 1.8,
@@ -26,107 +26,107 @@
   },
   "notes": [
     {
-      "time": 0.642,
+      "time": 0.802,
       "action": "CLAP"
     },
     {
-      "time": 0.885,
+      "time": 0.964,
       "action": "CLAP"
     },
     {
-      "time": 1.336,
+      "time": 1.456,
       "action": "CLAP"
     },
     {
-      "time": 1.742,
+      "time": 1.821,
       "action": "CLAP"
     },
     {
-      "time": 2.07,
+      "time": 2.185,
       "action": "CLAP"
     },
     {
-      "time": 2.562,
+      "time": 2.673,
       "action": "CLAP"
     },
     {
-      "time": 2.807,
+      "time": 2.916,
       "action": "CLAP"
     },
     {
-      "time": 3.297,
+      "time": 3.403,
       "action": "CLAP"
     },
     {
-      "time": 3.663,
+      "time": 3.768,
       "action": "CLAP"
     },
     {
-      "time": 3.996,
+      "time": 4.146,
       "action": "CLAP"
     },
     {
-      "time": 4.28,
+      "time": 4.389,
       "action": "CLAP"
     },
     {
-      "time": 4.564,
+      "time": 4.634,
       "action": "CLAP"
     },
     {
-      "time": 4.808,
+      "time": 4.877,
       "action": "CLAP"
     },
     {
-      "time": 5.092,
+      "time": 5.12,
       "action": "CLAP"
     },
     {
-      "time": 5.335,
+      "time": 5.364,
       "action": "CLAP"
     },
     {
-      "time": 5.579,
+      "time": 5.607,
       "action": "CLAP"
     },
     {
-      "time": 5.822,
+      "time": 5.85,
       "action": "CLAP"
     },
     {
-      "time": 6.075,
+      "time": 6.094,
       "action": "CLAP"
     },
     {
-      "time": 6.318,
+      "time": 6.338,
       "action": "CLAP"
     },
     {
-      "time": 6.561,
+      "time": 6.581,
       "action": "CLAP"
     },
     {
-      "time": 6.806,
+      "time": 6.823,
       "action": "CLAP"
     },
     {
-      "time": 7.05,
+      "time": 7.066,
       "action": "CLAP"
     },
     {
-      "time": 7.293,
+      "time": 7.31,
       "action": "CLAP"
     },
     {
-      "time": 7.537,
+      "time": 7.553,
       "action": "CLAP"
     },
     {
-      "time": 7.744,
+      "time": 7.796,
       "action": "CLAP"
     },
     {
-      "time": 7.987,
+      "time": 8.039,
       "action": "CLAP"
     },
     {
@@ -140,186 +140,186 @@
       "hint": "CALL！タップ＋声を出そう"
     },
     {
-      "time": 61.259,
+      "time": 61.281,
       "action": "CLAP"
     },
     {
-      "time": 61.421,
+      "time": 61.443,
       "action": "CLAP"
     },
     {
-      "time": 61.909,
+      "time": 61.93,
       "action": "CLAP"
     },
     {
-      "time": 62.284,
+      "time": 62.336,
       "action": "CLAP"
     },
     {
-      "time": 62.664,
+      "time": 62.662,
       "action": "CLAP"
     },
     {
-      "time": 63.074,
+      "time": 63.149,
       "action": "CLAP"
     },
     {
-      "time": 63.363,
+      "time": 63.393,
       "action": "CLAP"
     },
     {
-      "time": 63.81,
+      "time": 63.88,
       "action": "CLAP"
     },
     {
-      "time": 64.216,
+      "time": 64.245,
       "action": "CLAP"
     },
     {
-      "time": 64.58,
+      "time": 64.611,
       "action": "CLAP"
     },
     {
-      "time": 65.027,
+      "time": 65.097,
       "action": "CLAP"
     },
     {
-      "time": 65.312,
+      "time": 65.341,
       "action": "CLAP"
     },
     {
-      "time": 65.76,
+      "time": 65.828,
       "action": "CLAP"
     },
     {
-      "time": 66.167,
+      "time": 66.193,
       "action": "CLAP"
     },
     {
-      "time": 66.494,
+      "time": 66.558,
       "action": "CLAP"
     },
     {
-      "time": 66.985,
+      "time": 67.045,
       "action": "CLAP"
     },
     {
-      "time": 67.23,
+      "time": 67.288,
       "action": "CLAP"
     },
     {
-      "time": 67.717,
+      "time": 67.774,
       "action": "CLAP"
     },
     {
-      "time": 68.128,
+      "time": 68.18,
       "action": "CLAP"
     },
     {
-      "time": 68.495,
+      "time": 68.504,
       "action": "CLAP"
     },
     {
-      "time": 68.739,
+      "time": 68.788,
       "action": "CLAP"
     },
     {
-      "time": 69.023,
+      "time": 69.032,
       "action": "CLAP"
     },
     {
-      "time": 69.267,
+      "time": 69.275,
       "action": "CLAP"
     },
     {
-      "time": 69.516,
+      "time": 69.519,
       "action": "CLAP"
     },
     {
-      "time": 69.763,
+      "time": 69.762,
       "action": "CLAP"
     },
     {
-      "time": 70.01,
+      "time": 70.006,
       "action": "CLAP"
     },
     {
-      "time": 70.213,
+      "time": 70.25,
       "action": "CLAP"
     },
     {
-      "time": 70.467,
+      "time": 70.494,
       "action": "CLAP"
     },
     {
-      "time": 70.711,
+      "time": 70.738,
       "action": "CLAP"
     },
     {
-      "time": 70.957,
+      "time": 70.981,
       "action": "CLAP"
     },
     {
-      "time": 71.2,
+      "time": 71.225,
       "action": "CLAP"
     },
     {
-      "time": 71.449,
+      "time": 71.468,
       "action": "CLAP"
     },
     {
-      "time": 71.694,
+      "time": 71.712,
       "action": "CLAP"
     },
     {
-      "time": 71.937,
+      "time": 71.955,
       "action": "CLAP"
     },
     {
-      "time": 72.141,
+      "time": 72.198,
       "action": "CLAP"
     },
     {
-      "time": 72.389,
+      "time": 72.441,
       "action": "CLAP"
     },
     {
-      "time": 76.578,
+      "time": 76.51,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 77.027,
+      "time": 76.995,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 77.473,
+      "time": 77.523,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 77.961,
+      "time": 78.011,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 78.449,
+      "time": 78.498,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 78.935,
+      "time": 78.984,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 79.422,
+      "time": 79.471,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 79.909,
+      "time": 79.916,
       "action": "WIPER",
       "direction": "right"
     },
@@ -329,117 +329,117 @@
       "direction": "left"
     },
     {
-      "time": 80.928,
+      "time": 80.929,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 81.414,
+      "time": 81.456,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 81.86,
+      "time": 81.902,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 82.425,
+      "time": 82.387,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 82.87,
+      "time": 82.874,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 83.357,
+      "time": 83.36,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 83.802,
+      "time": 83.847,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 84.33,
+      "time": 84.334,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 84.779,
+      "time": 84.822,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 85.267,
+      "time": 85.308,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 85.757,
+      "time": 85.834,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 86.252,
+      "time": 86.28,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 86.698,
+      "time": 86.766,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 87.186,
+      "time": 87.252,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 87.673,
+      "time": 87.739,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 88.207,
+      "time": 88.225,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 88.739,
+      "time": 88.712,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 89.227,
+      "time": 89.209,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 89.679,
+      "time": 89.697,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 90.172,
+      "time": 90.224,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 90.619,
+      "time": 90.669,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 91.106,
+      "time": 91.196,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 91.596,
+      "time": 91.642,
       "action": "WIPER",
       "direction": "right"
     },
@@ -464,329 +464,324 @@
       "hint": "3！タップ＋声を出そう"
     },
     {
-      "time": 109.676,
+      "time": 109.815,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 110.169,
+      "time": 110.18,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 110.659,
+      "time": 110.708,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 111.154,
+      "time": 111.195,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 111.644,
+      "time": 111.848,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 112.092,
+      "time": 112.132,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 112.583,
+      "time": 112.618,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 113.076,
+      "time": 113.063,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 113.605,
+      "time": 113.59,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 114.056,
+      "time": 114.078,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 114.547,
+      "time": 114.605,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 115.034,
+      "time": 115.012,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 115.568,
+      "time": 115.58,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 116.017,
+      "time": 116.067,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 116.548,
+      "time": 116.554,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 116.956,
+      "time": 117.041,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 117.487,
+      "time": 117.528,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 117.937,
+      "time": 117.973,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 118.466,
+      "time": 118.499,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 118.912,
+      "time": 118.944,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 119.44,
+      "time": 119.472,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 119.891,
+      "time": 119.918,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 120.38,
+      "time": 120.446,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 120.867,
+      "time": 120.893,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 121.361,
+      "time": 121.38,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 121.85,
+      "time": 121.907,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 122.342,
+      "time": 122.394,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 122.832,
+      "time": 122.881,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 123.32,
+      "time": 123.368,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 123.774,
+      "time": 123.855,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 124.264,
+      "time": 124.302,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 124.791,
+      "time": 124.789,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 160.487,
+      "time": 160.547,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 160.897,
+      "time": 160.91,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 161.384,
+      "time": 161.437,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 161.871,
+      "time": 161.842,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 162.358,
+      "time": 162.367,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 162.806,
+      "time": 162.812,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 163.293,
+      "time": 163.339,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 163.78,
+      "time": 163.824,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 164.31,
+      "time": 164.351,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 164.758,
+      "time": 164.795,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 165.248,
+      "time": 165.321,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 165.741,
+      "time": 165.807,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 166.231,
+      "time": 166.292,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 166.718,
+      "time": 166.781,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 167.292,
+      "time": 167.308,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 167.661,
+      "time": 167.712,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 168.188,
+      "time": 168.279,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 168.722,
+      "time": 168.725,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 169.168,
+      "time": 169.251,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 169.619,
+      "time": 169.696,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 170.11,
+      "time": 170.222,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 170.603,
+      "time": 170.668,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 171.093,
+      "time": 171.196,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 171.583,
+      "time": 171.642,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 172.076,
+      "time": 172.127,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 172.566,
+      "time": 172.613,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 173.06,
+      "time": 173.139,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 173.591,
+      "time": 173.584,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 174.08,
+      "time": 174.071,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 174.57,
+      "time": 174.562,
       "action": "WIPER",
       "direction": "right"
     },
     {
-      "time": 175.058,
+      "time": 175.089,
       "action": "WIPER",
       "direction": "left"
     },
     {
-      "time": 175.505,
+      "time": 175.613,
       "action": "WIPER",
       "direction": "right"
-    },
-    {
-      "time": 176.037,
-      "action": "WIPER",
-      "direction": "left"
     },
     {
       "time": 178.069,
@@ -909,163 +904,163 @@
       "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 207.45,
+      "time": 207.622,
       "action": "CLAP"
     },
     {
-      "time": 207.739,
+      "time": 207.783,
       "action": "CLAP"
     },
     {
-      "time": 208.229,
+      "time": 208.31,
       "action": "CLAP"
     },
     {
-      "time": 208.594,
+      "time": 208.673,
       "action": "CLAP"
     },
     {
-      "time": 208.96,
+      "time": 208.997,
       "action": "CLAP"
     },
     {
-      "time": 209.37,
+      "time": 209.523,
       "action": "CLAP"
     },
     {
-      "time": 209.694,
+      "time": 209.766,
       "action": "CLAP"
     },
     {
-      "time": 210.183,
+      "time": 210.21,
       "action": "CLAP"
     },
     {
-      "time": 210.552,
+      "time": 210.614,
       "action": "CLAP"
     },
     {
-      "time": 210.879,
+      "time": 210.938,
       "action": "CLAP"
     },
     {
-      "time": 211.368,
+      "time": 211.463,
       "action": "CLAP"
     },
     {
-      "time": 211.656,
+      "time": 211.706,
       "action": "CLAP"
     },
     {
-      "time": 212.143,
+      "time": 212.192,
       "action": "CLAP"
     },
     {
-      "time": 212.511,
+      "time": 212.555,
       "action": "CLAP"
     },
     {
-      "time": 212.835,
+      "time": 212.919,
       "action": "CLAP"
     },
     {
-      "time": 213.33,
+      "time": 213.405,
       "action": "CLAP"
     },
     {
-      "time": 213.573,
+      "time": 213.649,
       "action": "CLAP"
     },
     {
-      "time": 214.061,
+      "time": 214.134,
       "action": "CLAP"
     },
     {
-      "time": 214.466,
+      "time": 214.498,
       "action": "CLAP"
     },
     {
-      "time": 214.791,
+      "time": 214.863,
       "action": "CLAP"
     },
     {
-      "time": 215.282,
+      "time": 215.349,
       "action": "CLAP"
     },
     {
-      "time": 215.566,
+      "time": 215.593,
       "action": "CLAP"
     },
     {
-      "time": 215.986,
+      "time": 216.077,
       "action": "CLAP"
     },
     {
-      "time": 216.391,
+      "time": 216.481,
       "action": "CLAP"
     },
     {
-      "time": 216.757,
+      "time": 216.845,
       "action": "CLAP"
     },
     {
-      "time": 217.205,
+      "time": 217.33,
       "action": "CLAP"
     },
     {
-      "time": 217.493,
+      "time": 217.573,
       "action": "CLAP"
     },
     {
-      "time": 217.982,
+      "time": 218.059,
       "action": "CLAP"
     },
     {
-      "time": 218.347,
+      "time": 218.423,
       "action": "CLAP"
     },
     {
-      "time": 218.712,
+      "time": 218.788,
       "action": "CLAP"
     },
     {
-      "time": 219.158,
+      "time": 219.242,
       "action": "CLAP"
     },
     {
-      "time": 219.446,
+      "time": 219.526,
       "action": "CLAP"
     },
     {
-      "time": 219.892,
+      "time": 220.01,
       "action": "CLAP"
     },
     {
-      "time": 220.303,
+      "time": 220.334,
       "action": "CLAP"
     },
     {
-      "time": 220.67,
+      "time": 220.698,
       "action": "CLAP"
     },
     {
-      "time": 221.157,
+      "time": 221.183,
       "action": "CLAP"
     },
     {
-      "time": 221.401,
+      "time": 221.426,
       "action": "CLAP"
     },
     {
-      "time": 221.892,
+      "time": 221.953,
       "action": "CLAP"
     },
     {
-      "time": 222.219,
+      "time": 222.276,
       "action": "CLAP"
     },
     {
-      "time": 222.586,
+      "time": 222.68,
       "action": "CLAP"
     }
   ]

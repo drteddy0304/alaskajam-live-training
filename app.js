@@ -1,9 +1,9 @@
-import { Session, validateChart, WINDOWS } from './engine.js?v=recorded5';
-import { Music } from './audio.js?v=recorded5';
-import { lyricAt, validateLyrics } from './lyrics.js?v=recorded5';
-import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded5';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded5';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded5';
+import { Session, validateChart, WINDOWS } from './engine.js?v=recorded6';
+import { Music } from './audio.js?v=recorded6';
+import { lyricAt, validateLyrics } from './lyrics.js?v=recorded6';
+import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded6';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded6';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded6';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -257,7 +257,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'recorded5');
+  url.searchParams.set('v', 'recorded6');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
