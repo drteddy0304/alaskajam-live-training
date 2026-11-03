@@ -1,5 +1,10 @@
 export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP']);
 
+export function songTime(playbackTime, preRoll = 5) {
+  if (!Number.isFinite(playbackTime) || !Number.isFinite(preRoll) || preRoll < 0) throw new TypeError('再生時刻が不正です');
+  return Math.max(0, playbackTime - preRoll);
+}
+
 function cleanTime(time) {
   if (!Number.isFinite(time) || time < 0) throw new TypeError('記録時刻は0以上の数値が必要です');
   return Math.round(time * 1000) / 1000;
