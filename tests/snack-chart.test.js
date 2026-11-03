@@ -12,7 +12,8 @@ test('SNACK SNACK recording becomes a valid full-song chart',()=>{
   assert.equal(chart.duration,168.54);
   assert.equal(chart.audio.src,'./assets/audio/snack-snack.mp3');
   assert.equal(chart.guideVideo.videoId,'Y04dtYKy-rk');
-  assert.equal(chart.guideVideo.syncStatus,'unverified');
+  assert.equal(chart.guideVideo.syncStatus,'verified');
+  assert.equal(chart.guideVideo.audioToVideoOffset,2.303);
   assert.equal(chart.notes.length,77);
   assert.deepEqual(chart.notes.reduce((counts,note)=>({...counts,[note.action]:(counts[note.action]||0)+1}),{}),{CLAP:22,CALL:45,WIPER:10});
   assert.deepEqual(chart.notes.filter(note=>note.action==='WIPER').map(note=>note.direction),['left','right','left','left','right','left','left','right','left','right']);
