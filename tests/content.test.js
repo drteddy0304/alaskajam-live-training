@@ -55,5 +55,5 @@ test('recorder separates scored tap CALL from voice-only CALL',()=>{
 test('recorder holds prepared audio until the countdown finishes',()=>{
   assert.doesNotMatch(recorderApp,/music\.prime\([^\n]+\.then\(\(\) => music\.resume\(\)\)/);
   assert.match(recorderApp,/onReady: async \(\) => \{[\s\S]*?await music\.release\(PRE_ROLL_SECONDS \+ WINDOW\.start\)/);
-  assert.match(recorderHtml,/recorder-app\.js\?v=segment1/);
+  assert.match(recorderHtml,/recorder-app\.js\?v=segment2/);
 });
