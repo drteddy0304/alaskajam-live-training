@@ -1,9 +1,9 @@
 import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
-import { Music } from './audio.js?v=recorded8';
+import { Music } from './audio.js?v=countdown1';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded9';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded8';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth1';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown1';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -235,7 +235,7 @@ $('video-toggle').addEventListener('click', () => {
   $('video-toggle').setAttribute('aria-expanded', String(videoEnabled));
   guide?.setEnabled(videoEnabled);
 });
-$('try-demo').addEventListener('click', () => start()); $('retry').addEventListener('click', () => start());
+$('try-demo').addEventListener('click', () => $('setlist').scrollIntoView({behavior:'smooth',block:'start'})); $('retry').addEventListener('click', () => start());
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('seek').addEventListener('pointerdown', () => { seeking = true; });
 $('seek').addEventListener('input', event => { seeking = true; $('elapsed').textContent = formatTime(Number(event.target.value)); });
@@ -295,6 +295,6 @@ try {
   }));
   chart = charts.get(songs.find(song => song.chart).chart);
   configureGuide(chart.guideVideo);
-  $('try-demo').disabled = false; $('try-demo').textContent = 'CAT WALK LIFEで参戦予習 →';
+  $('try-demo').disabled = false; $('try-demo').textContent = 'セットリストから曲を選ぶ ↓';
   document.querySelectorAll('.song button').forEach(button => button.disabled = false);
 } catch (error) { $('try-demo').textContent = '読み込みできませんでした'; $('load-status').textContent = '接続を確認してページを再読み込みしてください。'; console.error(error); }

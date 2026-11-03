@@ -112,7 +112,7 @@ test('prime keeps muted playback authorized through countdown and resets its off
   assert.deepEqual(media.calls.slice(-1), [['seekTo',8.2508,true]]);
 });
 
-test('measured guide sync uses offset math and corrects drift above 0.75 seconds without forcing a new segment', () => {
+test('measured guide sync uses offset math and corrects drift above 1.25 seconds without forcing a new segment', () => {
   const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
   guide.onReady(media);guide.start(2);media.calls.length=0;
   media.currentTime=10.35;
@@ -123,13 +123,13 @@ test('measured guide sync uses offset math and corrects drift above 0.75 seconds
   assert.deepEqual(media.calls,[['seekTo',10.2508,false]]);
 });
 
-test('sync schedule checks every two seconds early and every eight seconds later', () => {
+test('sync schedule checks once after start or resume to avoid repeated mobile seeks', () => {
   const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
   guide.onReady(media);guide.start(0);media.calls.length=0;media.currentTime=0;
-  assert.equal(guide.syncIfDue(1.99),false);assert.equal(guide.nextSyncAt,2);
-  guide.syncIfDue(2);assert.equal(guide.nextSyncAt,4);
-  guide.syncIfDue(10);assert.equal(guide.nextSyncAt,18);
-  guide.resume(20);assert.equal(guide.nextSyncAt,22);
+  assert.equal(guide.syncIfDue(2.99),false);assert.equal(guide.nextSyncAt,3);
+  guide.syncIfDue(3);assert.equal(guide.nextSyncAt,Infinity);
+  assert.equal(guide.syncIfDue(10),false);assert.equal(guide.nextSyncAt,Infinity);
+  guide.resume(20);assert.equal(guide.nextSyncAt,23);
 });
 
 test('ready player is asked to hide captions when the API supports it', () => {

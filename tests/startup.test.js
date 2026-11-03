@@ -50,10 +50,10 @@ test('audio and guide are requested synchronously before audio readiness settles
 });
 test('countdown completion starts both media in one task; video OFF/failure is non-blocking',async()=>{
   const calls=[];let settle;
-  const audio={resume(){calls.push('audio-resume');return new Promise(r=>settle=r);}};
+  const audio={release(time){calls.push(['audio-release',time]);return new Promise(r=>settle=r);}};
   const guide={resume(){calls.push('guide-resume');return false;}};
   const started=startMediaTogether(audio,guide);
-  assert.deepEqual(calls,['audio-resume','guide-resume']);settle();await started;
+  assert.deepEqual(calls,[['audio-release',0],'guide-resume']);settle();await started;
   await assert.doesNotReject(startMediaTogether(null,{resume(){calls.push('guide-off');return false;}}));
   await assert.doesNotReject(startMediaTogether(null,null));
 });

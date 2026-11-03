@@ -7,7 +7,7 @@
   <meta name="description" content="ライブ参戦前に、遊びながら練習できるAlaska Jamのライブ予習ゲーム。">
   <title>AJ LIVE TRAINING | Alaska Jam</title>
   <link rel="stylesheet" href="./style.css?v=record3">
-  <script type="module" src="./app.js?v=snack2"></script>
+  <script type="module" src="./app.js?v=stability1"></script>
 </head>
 <body>
   <div id="countdown-overlay" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -23,13 +23,13 @@
         <div class="hero-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="art-type">QUATTRO<br><i>READY?</i></span><span class="art-stamp">CLAP / WIPER<br>CALL / JUMP</span><span class="art-star">✳</span></div>
         <div class="event-strip"><strong>2026.12.02 <small>WED</small></strong><span>渋谷 CLUB QUATTRO</span></div>
         <button class="primary" id="try-demo" disabled>読み込み中…</button>
-        <p class="micro">CAT WALK LIFE フル尺 3:44 / タップで音が出ます / 登録不要</p>
+        <p class="micro">2曲から選択 / タップで音が出ます / 登録不要</p>
         <p class="micro">開始すると曲が流れます。音が小さいときはメディア音量を上げてください。</p>
         <a class="record-link" href="./recorder.html"><strong>曲に合わせてタイミングを記録する</strong><span>タップ／スワイプした時刻を保存 →</span></a>
       <p id="load-status" role="status"></p>
-        <details id="guide-details" class="guide-details"><summary>公式Cheering Guideでお手本を見る ↗</summary><p class="section-note">動画は説明込みで3:54。練習は曲の最初から最後まで。細かな振付はこの動画がお手本です。</p><a href="https://youtu.be/1y5b0upSCjM" target="_blank" rel="noopener">公式ガイドをYouTubeで見る ↗</a></details>
-        <div class="section-heading"><h2>QUATTRO SETLIST</h2><span>02 TRACKS</span></div>
-        <p class="section-note">参戦予習はこの2曲。CAT WALK LIFEとSNACK SNACKをフル尺で練習できます。</p>
+        <details id="guide-details" class="guide-details"><summary>公式Cheering Guideについて</summary><p class="section-note">選んだ曲の練習画面で、対応する公式ガイド動画を一緒に表示します。</p></details>
+        <div class="section-heading" id="setlist"><h2>QUATTRO SETLIST</h2><span>02 TRACKS</span></div>
+        <p class="section-note">参戦予習はこの2曲。CATWALK LIFEとSNACK SNACKをフル尺で練習できます。</p>
         <div id="songs" class="songs"></div>
         <div class="section-heading"><h2>HOW TO TRAIN</h2><span>4 ACTIONS</span></div>
         <div class="actions"><article><b>✳ <span>CLAP</span></b><p>合図に合わせてタップ</p></article><article><b>↔ <span>WIPER</span></b><p>左右の専用ボタンを押す</p></article><article><b>〰 <span>CALL</span></b><p>タップ＋声を出してみよう</p></article><article><b>↑ <span>JUMP</span></b><p>タップでジャンプ気分</p></article></div>
@@ -37,7 +37,7 @@
       </section>
       <section id="play" hidden aria-labelledby="play-title">
         <div class="play-top"><span id="play-edition" class="eyebrow">MUSIC ON / DEMO CHART</span><button id="pause" class="small-button" aria-label="音源と動画を一時停止">⏸ 一時停止</button></div>
-        <h2 id="play-title">CAT WALK LIFE</h2><p id="chart-source" class="section-note">Cheering Guide参考・フル尺ベータ</p>
+        <h2 id="play-title">CATWALK LIFE</h2><p id="chart-source" class="section-note">Cheering Guide参考・フル尺ベータ</p>
         <section id="video-guide" class="video-guide" aria-labelledby="video-guide-title">
           <div class="video-guide-head"><strong id="video-guide-title">OFFICIAL GUIDE</strong><button id="video-toggle" class="small-button" type="button" aria-expanded="true" aria-controls="video-wrap">動画 OFF</button></div>
           <div id="video-wrap" class="video-wrap"><div id="guide-player" aria-label="公式Cheering Guideを読み込み中"></div></div>

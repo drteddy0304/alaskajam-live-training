@@ -16,6 +16,10 @@ export class Music {
   }
   async prime(src, offset = 0, duration = Infinity) {
     this.media.src = src;
+    // Keep the user-authorized playback alive but silent through countdown.
+    // Pausing here and calling play() five seconds later is blocked on some
+    // mobile browsers; playing unmuted here can leak the song before "1".
+    this.media.muted = true;
     // Do not insert an await before play(): the start button's gesture is needed.
     const playing = this.media.play();
     let timer;
@@ -35,7 +39,6 @@ export class Music {
     if (offset) this.media.currentTime = offset;
   }
   reset() {
-    this.media.pause();
     this.media.currentTime = this.offset;
   }
   time() { return this.media.ended ? this.duration : Math.max(0, this.media.currentTime - this.offset); }
@@ -45,7 +48,15 @@ export class Music {
     return target;
   }
   async pause() { this.media.pause(); }
+  async release(time = 0) {
+    this.seek(time);
+    this.media.muted = false;
+    if (!this.media.paused) return;
+    return this.resume();
+  }
   async resume() {
+    this.media.muted = false;
+    if (!this.media.paused) return;
     let timer;
     try {
       await Promise.race([this.media.play(), new Promise((_,reject) => {

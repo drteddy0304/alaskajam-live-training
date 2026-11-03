@@ -2,7 +2,7 @@ export const TAP_ACTIONS = Object.freeze(['CLAP', 'CALL', 'CLAP_CALL', 'JUMP', '
 
 const RECORDING_SONGS = Object.freeze({
   'cat-walk-life': Object.freeze({
-    id: 'cat-walk-life-timing-take', title: 'CAT WALK LIFE', duration: 224.39,
+    id: 'cat-walk-life-timing-take', title: 'CATWALK LIFE', duration: 224.39,
     audio: './assets/audio/cat-walk-life-recorder.mp3', preRoll: 5,
     guideUrl: 'https://www.youtube.com/watch?v=1y5b0upSCjM', guideVideoId: '1y5b0upSCjM'
   }),

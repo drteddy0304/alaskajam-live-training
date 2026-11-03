@@ -1,4 +1,4 @@
-# CAT WALK LIFE ガイド照合メモ
+# CATWALK LIFE ガイド照合メモ
 
 正本: https://youtu.be/1y5b0upSCjM （AlaskaJam Channel）
 

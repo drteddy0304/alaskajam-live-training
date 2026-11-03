@@ -1,7 +1,6 @@
 let apiPromise;
-export const GUIDE_SYNC_TOLERANCE = 0.75;
-export const GUIDE_EARLY_SYNC_INTERVAL = 2;
-export const GUIDE_LATE_SYNC_INTERVAL = 8;
+export const GUIDE_SYNC_TOLERANCE = 1.25;
+export const GUIDE_SYNC_CHECK_DELAY = 3;
 
 export function validGuideOffset(mapping) {
   return mapping?.syncStatus === 'verified' && Number.isFinite(mapping.audioToVideoOffset) && mapping.audioToVideoOffset >= 0;
@@ -104,10 +103,9 @@ export class GuidePlayback {
     return moved;
   }
   stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
-  resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_EARLY_SYNC_INTERVAL; }
-  // MP3 time is authoritative. Correct only measured drift while YouTube is
-  // actively PLAYING. Routine corrections stay within already-buffered video
-  // so mobile playback does not repeatedly request a new segment.
+  resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_SYNC_CHECK_DELAY; }
+  // MP3 time is authoritative. Check once just after start/resume. Repeated
+  // seeks make YouTube request new segments and cause visible mobile stutter.
   sync(audioTime, tolerance = GUIDE_SYNC_TOLERANCE) {
     if (!this.enabled || !this.ready || this.failed || this.intent !== 'playing' || !validGuideOffset(this.mapping)) return false;
     try {
@@ -121,9 +119,8 @@ export class GuidePlayback {
   }
   syncIfDue(audioTime) {
     if (!Number.isFinite(audioTime) || audioTime < this.nextSyncAt) return false;
-    const corrected = this.sync(audioTime);
-    this.nextSyncAt = audioTime + (audioTime < 10 ? GUIDE_EARLY_SYNC_INTERVAL : GUIDE_LATE_SYNC_INTERVAL);
-    return corrected;
+    this.nextSyncAt = Infinity;
+    return this.sync(audioTime);
   }
 }
 
