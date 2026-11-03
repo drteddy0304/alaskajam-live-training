@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "id": "snack-snack-user-timing-v1",
+  "title": "SNACK SNACK",
+  "kind": "guide-beta",
+  "source": {
+    "name": "公式Cheering Guide参考・ユーザー実演タイミング",
+    "url": "https://www.youtube.com/watch?v=Y04dtYKy-rk",
+    "revision": "2026-11-03-user-recorded-v1",
+    "timingStatus": "user-recorded",
+    "notes": "実演記録2周から採点操作77件を採用。声だけCALL 10件は歌詞表示データへ分離。"
+  },
+  "duration": 168.54,
+  "leadTime": 1.8,
+  "lyrics": "./data/snack-snack-lyrics.json",
+  "guideVideo": {
+    "provider": "youtube",
+    "videoId": "Y04dtYKy-rk",
+    "syncStatus": "unverified",
+    "note": "公式ガイド動画を登録済み。MP3との秒差は未検証のため自動シーク補正は行わない。"
+  },
+  "audio": {"src": "./assets/audio/snack-snack.mp3", "offset": 0},
+  "notes": [{"time":0.722,"action":"CLAP"},{"time":1.572,"action":"CLAP"},{"time":2.385,"action":"CLAP"},{"time":3.207,"action":"CLAP"},{"time":4.019,"action":"CLAP"},{"time":4.83,"action":"CLAP"},{"time":5.682,"action":"CLAP"},{"time":6.512,"action":"CLAP"},{"time":11.836,"action":"CALL","hint":"タップ＋声を出そう"},{"time":12.04,"action":"CALL","hint":"タップ＋声を出そう"},{"time":12.243,"action":"CALL","hint":"タップ＋声を出そう"},{"time":12.452,"action":"CALL","hint":"タップ＋声を出そう"},{"time":13.428,"action":"CALL","hint":"タップ＋声を出そう"},{"time":18.507,"action":"CALL","hint":"タップ＋声を出そう"},{"time":18.71,"action":"CALL","hint":"タップ＋声を出そう"},{"time":18.885,"action":"CALL","hint":"タップ＋声を出そう"},{"time":19.094,"action":"CALL","hint":"タップ＋声を出そう"},{"time":27.469,"action":"CALL","hint":"タップ＋声を出そう"},{"time":29.218,"action":"CALL","hint":"タップ＋声を出そう"},{"time":34.488,"action":"CALL","hint":"タップ＋声を出そう"},{"time":34.609,"action":"CALL","hint":"タップ＋声を出そう"},{"time":34.775,"action":"CALL","hint":"タップ＋声を出そう"},{"time":36.041,"action":"CALL","hint":"タップ＋声を出そう"},{"time":36.284,"action":"CALL","hint":"タップ＋声を出そう"},{"time":36.527,"action":"CALL","hint":"タップ＋声を出そう"},{"time":40.928,"action":"WIPER","direction":"left"},{"time":44.18,"action":"WIPER","direction":"right"},{"time":47.513,"action":"WIPER","direction":"left"},{"time":53.468,"action":"CALL","hint":"タップ＋声を出そう"},{"time":58.556,"action":"CALL","hint":"タップ＋声を出そう"},{"time":58.763,"action":"CALL","hint":"タップ＋声を出そう"},{"time":59.006,"action":"CALL","hint":"タップ＋声を出そう"},{"time":59.214,"action":"CALL","hint":"タップ＋声を出そう"},{"time":60.197,"action":"CALL","hint":"タップ＋声を出そう"},{"time":65.26,"action":"CALL","hint":"タップ＋声を出そう"},{"time":65.465,"action":"CALL","hint":"タップ＋声を出そう"},{"time":65.668,"action":"CALL","hint":"タップ＋声を出そう"},{"time":65.871,"action":"CALL","hint":"タップ＋声を出そう"},{"time":82.629,"action":"WIPER","direction":"left"},{"time":85.873,"action":"WIPER","direction":"right"},{"time":89.165,"action":"WIPER","direction":"left"},{"time":112.435,"action":"CLAP"},{"time":113.127,"action":"CLAP"},{"time":114.021,"action":"CLAP"},{"time":114.834,"action":"CLAP"},{"time":115.647,"action":"CLAP"},{"time":116.461,"action":"CLAP"},{"time":117.276,"action":"CLAP"},{"time":118.089,"action":"CLAP"},{"time":118.984,"action":"CLAP"},{"time":119.838,"action":"CLAP"},{"time":120.61,"action":"CLAP"},{"time":121.463,"action":"CLAP"},{"time":122.275,"action":"CLAP"},{"time":123.129,"action":"CLAP"},{"time":127.599,"action":"WIPER","direction":"left"},{"time":130.855,"action":"WIPER","direction":"right"},{"time":134.225,"action":"WIPER","direction":"left"},{"time":137.576,"action":"WIPER","direction":"right"},{"time":140.877,"action":"CALL","hint":"タップ＋声を出そう"},{"time":141.242,"action":"CALL","hint":"タップ＋声を出そう"},{"time":144.175,"action":"CALL","hint":"タップ＋声を出そう"},{"time":144.423,"action":"CALL","hint":"タップ＋声を出そう"},{"time":144.59,"action":"CALL","hint":"タップ＋声を出そう"},{"time":147.56,"action":"CALL","hint":"タップ＋声を出そう"},{"time":153.514,"action":"CALL","hint":"タップ＋声を出そう"},{"time":154.125,"action":"CALL","hint":"タップ＋声を出そう"},{"time":154.778,"action":"CALL","hint":"タップ＋声を出そう"},{"time":156.816,"action":"CALL","hint":"タップ＋声を出そう"},{"time":157.47,"action":"CALL","hint":"タップ＋声を出そう"},{"time":158.123,"action":"CALL","hint":"タップ＋声を出そう"},{"time":160.152,"action":"CALL","hint":"タップ＋声を出そう"},{"time":160.815,"action":"CALL","hint":"タップ＋声を出そう"},{"time":161.427,"action":"CALL","hint":"タップ＋声を出そう"},{"time":163.535,"action":"CALL","hint":"タップ＋声を出そう"},{"time":164.145,"action":"CALL","hint":"タップ＋声を出そう"},{"time":164.754,"action":"CALL","hint":"タップ＋声を出そう"}]
+}

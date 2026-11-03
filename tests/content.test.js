@@ -12,7 +12,8 @@ const recorderApp=await readFile(new URL('recorder-app.js',root),'utf8');
 test('QUATTRO training setlist contains only CAT WALK LIFE and SNACK SNACK',()=>{
   assert.deepEqual(songs.map(song=>song.title),['CAT WALK LIFE','SNACK SNACK']);
   assert.equal(songs[0].status,'ready');
-  assert.equal(songs[1].status,'recording');
+  assert.equal(songs[1].status,'ready');
+  assert.equal(songs[1].chart,'./data/snack-snack-full.json');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
 });
 
