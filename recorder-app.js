@@ -139,17 +139,21 @@ async function start(preservePreviousPasses = false) {
   barrier = new StartBarrier({
     onTick: value => showCountdown(value),
     onPreparing: () => showCountdown('音源を準備中…', true),
-    onReady: () => {
-      music.media.currentTime = PRE_ROLL_SECONDS;
-      showCountdown();
-      phase = 'playing';
-      pauseButton.disabled = false;
-      last.textContent = `${currentPass}周目を記録中です`;
-      draw();
+    onReady: async () => {
+      try {
+        music.media.currentTime = PRE_ROLL_SECONDS;
+        await music.resume();
+        if (phase !== 'countdown' || document.hidden) { await music.pause(); return; }
+        showCountdown();
+        phase = 'playing';
+        pauseButton.disabled = false;
+        last.textContent = `${currentPass}周目を記録中です`;
+        draw();
+      } catch (error) { showStartError(error); }
     },
     onError: showStartError
   });
-  const preparation = music.prime(SONG.audio, 0, PLAYBACK_DURATION).then(() => music.resume());
+  const preparation = music.prime(SONG.audio, 0, PLAYBACK_DURATION);
   barrier.start(preparation);
 }
 
