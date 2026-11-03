@@ -94,7 +94,12 @@ export class GuidePlayback {
     this.audioTime = audioTime;
     this.resetSyncSchedule(audioTime);
     const target = validGuideOffset(this.mapping) ? audioTime + this.mapping.audioToVideoOffset : audioTime;
-    return this.enabled ? this.call('seekTo', target, true) : false;
+    if (!this.enabled) return false;
+    this.call('mute');
+    const moved = this.call('seekTo', target, true);
+    if (this.intent === 'playing') this.call('playVideo');
+    else this.call('pauseVideo');
+    return moved;
   }
   stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
   resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_EARLY_SYNC_INTERVAL; }

@@ -65,7 +65,7 @@ test('manual seek moves the muted guide to the matching verified video time', ()
   const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508}, {}, 10000, timers());
   guide.onReady(media); guide.start(0); media.calls.length=0;
   assert.equal(guide.seek(170),true);
-  assert.deepEqual(media.calls,[['seekTo',178.2508,true]]);
+  assert.deepEqual(media.calls,[['mute'],['seekTo',178.2508,true],['playVideo']]);
   assert.equal(guide.audioTime,170);
 });
 
