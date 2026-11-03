@@ -142,9 +142,20 @@ export function loadYouTubeAPI(win = window, doc = document) {
   return apiPromise;
 }
 
+export function resetYouTubeMount(elementId, doc = document) {
+  const current = doc.getElementById?.(elementId);
+  if (!current || String(current.tagName).toUpperCase() !== 'IFRAME') return current;
+  const replacement = doc.createElement('div');
+  replacement.id = elementId;
+  replacement.setAttribute('aria-label', current.getAttribute?.('aria-label') || '公式Cheering Guideを読み込み中');
+  current.replaceWith(replacement);
+  return replacement;
+}
+
 export async function mountYouTubePlayer(controller, elementId, videoId, win = window, doc = document) {
   try {
     const YT = await loadYouTubeAPI(win, doc);
+    resetYouTubeMount(elementId, doc);
     return new YT.Player(elementId, {
       width: '100%', height: '200', videoId,
       playerVars: { controls: 1, playsinline: 1, mute: 1, cc_load_policy: 0 },

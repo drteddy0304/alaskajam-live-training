@@ -2,7 +2,7 @@ import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
 import { Music } from './audio.js?v=recorded8';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded8';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded9';
 import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded8';
 
 const charts = new Map();
