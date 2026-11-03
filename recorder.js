@@ -5,12 +5,13 @@ export function songTime(playbackTime, preRoll = 5) {
   return Math.max(0, playbackTime - preRoll);
 }
 
-export function rewindTake(currentTime, seconds, notes) {
+export function rewindTake(currentTime, seconds, notes, activePass = null) {
   if (!Number.isFinite(currentTime) || currentTime < 0 || !Number.isFinite(seconds) || seconds <= 0 || !Array.isArray(notes)) {
     throw new TypeError('巻き戻し情報が不正です');
   }
+  if (activePass !== null && (!Number.isInteger(activePass) || activePass < 1)) throw new TypeError('周回情報が不正です');
   const time = Math.max(0, currentTime - seconds);
-  return {time, notes: notes.filter(note => note.time < time).map(note => ({...note}))};
+  return {time, notes: notes.filter(note => activePass !== null && note.pass !== activePass || note.time < time).map(note => ({...note}))};
 }
 
 function cleanTime(time) {

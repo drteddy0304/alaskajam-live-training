@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#ecff62">
   <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
-  <link rel="stylesheet" href="./style.css?v=record7">
-  <script type="module" src="./recorder-app.js?v=record7"></script>
+  <link rel="stylesheet" href="./style.css?v=record8">
+  <script type="module" src="./recorder-app.js?v=record8"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -25,6 +25,7 @@
           <p><b>3</b><span>CLAP、CALL、CLAP＋CALL、JUMPは、それぞれのボタンを直接押す。</span></p>
         </div>
         <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。先頭の無音5秒で<strong>5・4・3・2・1</strong>を表示し、1の後から曲と記録が同時に始まります。</p>
+        <p class="notice"><strong>重ね録りできます。</strong>1周目はCLAP／WIPER、2周目はCALLのように分けて記録し、最後に1つのデータとしてコピーできます。</p>
         <button id="record-start" class="primary">5秒カウントして記録開始 →</button>
         <p id="record-saved-status" class="micro" role="status"></p>
         <a class="text-button" href="./">通常のゲームへ戻る</a>
@@ -57,6 +58,8 @@
         <div class="eyebrow">RECORDING COMPLETE</div>
         <h1 id="record-result-title">タイミングを<br>記録しました。</h1>
         <p id="record-result-summary" class="section-note"></p>
+        <button id="record-next-pass" class="primary">別の動きを重ねてもう1周 →</button>
+        <p class="micro">前の周の記録は残ります。次の周でCALLなど別の動きを記録してください。</p>
         <label class="record-output-label" for="record-output">記録データ</label>
         <textarea id="record-output" class="record-output" readonly spellcheck="false"></textarea>
         <button id="record-copy" class="primary" type="button">記録データをコピー</button>

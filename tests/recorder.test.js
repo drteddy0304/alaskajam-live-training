@@ -19,6 +19,21 @@ test('rewind removes the section that will be recorded again', () => {
   assert.deepEqual(rewindTake(3, 5, notes), {time: 0, notes: []});
 });
 
+test('rewind in a layered take keeps completed passes intact', () => {
+  const notes = [
+    {time: 8, action: 'CLAP', pass: 1},
+    {time: 3, action: 'CALL', pass: 2},
+    {time: 8, action: 'CALL', pass: 2}
+  ];
+  assert.deepEqual(rewindTake(10, 5, notes, 2), {
+    time: 5,
+    notes: [
+      {time: 8, action: 'CLAP', pass: 1},
+      {time: 3, action: 'CALL', pass: 2}
+    ]
+  });
+});
+
 test('tap and swipe use the supplied audio timestamp without release-time delay', () => {
   assert.deepEqual(noteFromGesture(12.34549, 'tap'), {time: 12.345, action: 'CLAP'});
   assert.deepEqual(noteFromGesture(22.125, 'tap', 'CALL'), {time: 22.125, action: 'CALL'});
