@@ -26,8 +26,9 @@ test('official guide lyrics cover scored and voice-only CALLs without changing s
   assert.equal(lyrics.timingStatus,'official-guide-text-verified');
   const scoredCues=lyrics.cues.filter(cue=>cue.kind==='scored-call');
   const voiceCues=lyrics.cues.filter(cue=>cue.kind==='voice-only');
-  assert.equal(scoredCues.length,16);
+  assert.equal(scoredCues.length,18);
   assert.deepEqual(scoredCues.flatMap(cue=>cue.markers),chart.notes.filter(note=>note.action==='CALL').map(note=>note.time));
+  assert.deepEqual(scoredCues.filter(cue=>cue.text==='SNACK!').map(cue=>cue.start),[7.325,13.428,60.197]);
   assert.deepEqual(voiceCues.map(cue=>cue.start),[40.98,44.23,47.578,82.614,85.869,89.243,127.553,130.882,134.215,137.52]);
   assert.deepEqual(voiceCues.map(cue=>cue.text),[
     'I I I I need a snack (Hey!)','な な な 何かない？ (Ho!)','お菓子な話 (Hey!)',
