@@ -14,10 +14,10 @@ test('QUATTRO training setlist contains only CATWALK LIFE and SNACK SNACK',()=>{
   assert.deepEqual(songs.map(song=>song.title),['CATWALK LIFE','SNACK SNACK']);
   assert.equal(songs[0].status,'ready');
   assert.equal(songs[1].status,'ready');
-  assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=opening3');
+  assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=wiper1');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
-  assert.match(app,/songs\.json\?v=opening3/);
-  assert.match(html,/app\.js\?v=stability7/);
+  assert.match(app,/songs\.json\?v=wiper1/);
+  assert.match(html,/app\.js\?v=stability8/);
 });
 
 test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{

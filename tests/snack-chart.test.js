@@ -21,7 +21,7 @@ test('SNACK SNACK recording becomes a valid full-song chart',()=>{
     {time:4.042,action:'CLAP'},{time:5.011,action:'CLAP'},{time:5.698,action:'CLAP'},{time:6.627,action:'CLAP'},
     {time:6.87,action:'CALL',hint:'SNACK！タップ＋声を出そう'}
   ]);
-  assert.deepEqual(chart.notes.filter(note=>note.action==='WIPER').map(note=>note.direction),['left','right','left','left','right','left','left','right','left','right']);
+  assert.deepEqual(chart.notes.filter(note=>note.action==='WIPER').map(note=>note.direction),['right','left','right','right','left','right','right','left','right','left']);
   assert.ok(chart.notes.every((note,index)=>index===0||note.time>chart.notes[index-1].time));
 });
 

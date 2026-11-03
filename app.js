@@ -305,7 +305,7 @@ async function json(path) {
   return response.json();
 }
 try {
-  const songs = await json('./data/songs.json?v=opening3');
+  const songs = await json('./data/songs.json?v=wiper1');
   for (const [index, song] of songs.entries()) {
     const row = document.createElement('div'); row.className = 'song';
     const number = document.createElement('span'); number.className = 'number'; number.textContent = String(index+1).padStart(2,'0');
