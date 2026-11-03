@@ -1,6 +1,6 @@
 import {Music} from './audio.js?v=record2';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
-import {buildRecording, noteFromGesture, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record7';
+import {buildRecording, noteFromGesture, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record8';
 
 const PRE_ROLL_SECONDS = 5;
 const SONG = Object.freeze({
@@ -37,6 +37,7 @@ let phase = 'idle';
 let notes = [];
 let animation = 0;
 let recordedAt = '';
+let currentPass = 1;
 
 function formatTime(time, precise = false) {
   const minutes = Math.floor(time / 60);
@@ -60,7 +61,7 @@ function showCountdown(value = null, preparing = false) {
 }
 
 function makeRecording() {
-  return buildRecording(SONG, notes, recordedAt || new Date().toISOString());
+  return {...buildRecording(SONG, notes, recordedAt || new Date().toISOString()), version: 2, passes: currentPass};
 }
 
 function saveDraft() {
@@ -68,8 +69,9 @@ function saveDraft() {
 }
 
 function updateCount() {
-  count.textContent = `${notes.length}件`;
-  undo.disabled = notes.length === 0;
+  const passCount = notes.filter(note => note.pass === currentPass).length;
+  count.textContent = `${currentPass}周目 ${passCount}件 / 合計${notes.length}件`;
+  undo.disabled = passCount === 0;
 }
 
 function stopAnimation() {
@@ -95,7 +97,7 @@ function draw() {
 
 function recordGesture(gesture, time, tapAction = 'CLAP') {
   if (phase !== 'playing') return;
-  const note = noteFromGesture(time, gesture, tapAction);
+  const note = {...noteFromGesture(time, gesture, tapAction), pass: currentPass};
   notes.push(note);
   saveDraft();
   updateCount();
@@ -105,16 +107,26 @@ function recordGesture(gesture, time, tapAction = 'CLAP') {
   try { navigator.vibrate?.(12); } catch {}
 }
 
-async function start() {
-  if (phase !== 'idle') return;
+async function start(preservePreviousPasses = false) {
+  if (phase !== 'idle' && !(preservePreviousPasses && phase === 'result')) return;
+  barrier?.cancel();
+  music?.close();
+  music = null;
+  stopAnimation();
   phase = 'countdown';
-  notes = [];
-  recordedAt = new Date().toISOString();
+  if (preservePreviousPasses) currentPass += 1;
+  else {
+    notes = [];
+    currentPass = 1;
+    recordedAt = new Date().toISOString();
+  }
+  progress.value = 0;
+  elapsed.textContent = '0:00.000';
   updateCount();
   setPage('run');
   startButton.disabled = true;
   pauseButton.disabled = true;
-  last.textContent = 'カウント後、必要なボタンを直接押してください';
+  last.textContent = `${currentPass}周目：カウント後、必要なボタンを直接押してください`;
   music = new Music();
   music.oninterrupt = () => { if (phase === 'playing') pause(); };
   barrier = new StartBarrier({
@@ -125,7 +137,7 @@ async function start() {
       showCountdown();
       phase = 'playing';
       pauseButton.disabled = false;
-      last.textContent = 'CLAP / CALL / 同時 / JUMPを直接押してください';
+      last.textContent = `${currentPass}周目を記録中です`;
       draw();
     },
     onError: showStartError
@@ -158,7 +170,7 @@ function pause() {
 function rewind() {
   if (!['playing', 'paused'].includes(phase) || !music) return;
   if (phase === 'playing') pause();
-  const rewound = rewindTake(currentSongTime(), 5, notes);
+  const rewound = rewindTake(currentSongTime(), 5, notes, currentPass);
   notes = rewound.notes;
   music.media.currentTime = PRE_ROLL_SECONDS + rewound.time;
   elapsed.textContent = formatTime(rewound.time, true);
@@ -187,7 +199,7 @@ function finish() {
   const recording = makeRecording();
   saveDraft();
   output.value = recordingText(recording);
-  $('#record-result-summary').textContent = `${notes.length}件の操作を記録しました。コピーして、このチャットへ貼ってください。`;
+  $('#record-result-summary').textContent = `${currentPass}周・合計${notes.length}件を記録しました。別の動きを重ねる場合は、もう1周追加できます。`;
   copyStatus.textContent = 'コピー後、このチャットへそのまま貼ってください。';
   setPage('result');
 }
@@ -212,6 +224,8 @@ function reset() {
   stopAnimation();
   phase = 'idle';
   notes = [];
+  currentPass = 1;
+  recordedAt = '';
   progress.value = 0;
   elapsed.textContent = '0:00.000';
   pauseButton.textContent = '⏸ 一時停止';
@@ -231,10 +245,14 @@ document.querySelectorAll('[data-record-wiper]').forEach(button => button.addEve
   event.preventDefault();
   recordGesture(button.dataset.recordWiper, currentSongTime());
 }));
-startButton.addEventListener('click', start);
+startButton.addEventListener('click', () => start(false));
 pauseButton.addEventListener('click', () => phase === 'paused' ? resume() : pause());
 undo.addEventListener('click', () => {
-  const removed = notes.pop();
+  let index = -1;
+  for (let i = notes.length - 1; i >= 0; i -= 1) {
+    if (notes[i].pass === currentPass) { index = i; break; }
+  }
+  const [removed] = index >= 0 ? notes.splice(index, 1) : [];
   if (!removed) return;
   saveDraft();
   updateCount();
@@ -244,6 +262,7 @@ undo.addEventListener('click', () => {
 rewindButton.addEventListener('click', rewind);
 finishButton.addEventListener('click', finish);
 $('#record-copy').addEventListener('click', copyRecording);
+$('#record-next-pass').addEventListener('click', () => start(true));
 $('#record-again').addEventListener('click', reset);
 
 document.addEventListener('visibilitychange', () => { if (document.hidden && phase === 'playing') pause(); });
