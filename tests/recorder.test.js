@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildRecording, noteFromGesture, recordingText, rewindTake, songTime} from '../recorder.js';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingText, rewindTake, songTime} from '../recorder.js';
 
 test('five-second audio pre-roll maps exactly to song time zero', () => {
   assert.equal(songTime(0), 0);
@@ -41,6 +41,14 @@ test('tap and swipe use the supplied audio timestamp without release-time delay'
   assert.deepEqual(noteFromGesture(33.75, 'tap', 'JUMP'), {time: 33.75, action: 'JUMP'});
   assert.deepEqual(noteFromGesture(44.9876, 'left', 'CALL'), {time: 44.988, action: 'WIPER', direction: 'left'});
   assert.deepEqual(noteFromGesture(45, 'right'), {time: 45, action: 'WIPER', direction: 'right'});
+});
+
+test('keyboard shortcuts record CLAP and both WIPER directions on keydown only', () => {
+  assert.deepEqual(recorderShortcut('Space'), {gesture:'tap',tapAction:'CLAP'});
+  assert.deepEqual(recorderShortcut('ArrowLeft'), {gesture:'left'});
+  assert.deepEqual(recorderShortcut('ArrowRight'), {gesture:'right'});
+  assert.equal(recorderShortcut('Space', true), null);
+  assert.equal(recorderShortcut('Enter'), null);
 });
 
 test('unsupported gestures, tap actions, and timestamps are rejected', () => {

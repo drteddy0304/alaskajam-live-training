@@ -1,6 +1,6 @@
 import {Music} from './audio.js?v=record2';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
-import {buildRecording, noteFromGesture, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record8';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record9';
 
 const PRE_ROLL_SECONDS = 5;
 const SONG = Object.freeze({
@@ -245,6 +245,13 @@ document.querySelectorAll('[data-record-wiper]').forEach(button => button.addEve
   event.preventDefault();
   recordGesture(button.dataset.recordWiper, currentSongTime());
 }));
+document.addEventListener('keydown', event => {
+  if (phase !== 'playing' || !music || event.altKey || event.ctrlKey || event.metaKey) return;
+  const shortcut = recorderShortcut(event.code, event.repeat);
+  if (!shortcut) return;
+  event.preventDefault();
+  recordGesture(shortcut.gesture, currentSongTime(), shortcut.tapAction);
+});
 startButton.addEventListener('click', () => start(false));
 pauseButton.addEventListener('click', () => phase === 'paused' ? resume() : pause());
 undo.addEventListener('click', () => {

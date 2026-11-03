@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#ecff62">
   <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
-  <link rel="stylesheet" href="./style.css?v=record8">
-  <script type="module" src="./recorder-app.js?v=record8"></script>
+  <link rel="stylesheet" href="./style.css?v=record9">
+  <script type="module" src="./recorder-app.js?v=record9"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -20,8 +20,8 @@
         <div class="eyebrow"><span class="dot"></span> CAT WALK LIFE</div>
         <h1 id="recorder-title">あなたの操作で、<br><span class="highlight">タイミングを記録。</span></h1>
         <div class="record-steps">
-          <p><b>1</b><span>曲を聴きながら、クラップの瞬間に大きなパッドをタップ。</span></p>
-          <p><b>2</b><span>ワイパーの瞬間は、向きに合わせて「WIPER ←」「WIPER →」を押す。</span></p>
+          <p><b>1</b><span>曲を聴きながら、クラップの瞬間に画面のCLAPかキーボードのSpaceを押す。</span></p>
+          <p><b>2</b><span>ワイパーの瞬間は「WIPER ←／→」かキーボードの←／→キーを押す。</span></p>
           <p><b>3</b><span>CLAP、CALL、CLAP＋CALL、JUMPは、それぞれのボタンを直接押す。</span></p>
         </div>
         <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。先頭の無音5秒で<strong>5・4・3・2・1</strong>を表示し、1の後から曲と記録が同時に始まります。</p>
@@ -35,13 +35,13 @@
         <div class="play-top"><span class="eyebrow">RECORDING</span><button id="record-pause" class="small-button" type="button">⏸ 一時停止</button></div>
         <h2 id="record-run-title">CAT WALK LIFE</h2>
         <fieldset class="record-actions">
-          <legend>押した瞬間に直接記録</legend>
-          <button type="button" data-record-now="CLAP">✳ <strong>CLAP</strong><small>クラップ</small></button>
+          <legend>押した瞬間に直接記録（Space＝CLAP、←／→＝WIPER）</legend>
+          <button type="button" data-record-now="CLAP">✳ <strong>CLAP</strong><small>Spaceキー対応</small></button>
           <button type="button" data-record-now="CALL">〰 <strong>CALL</strong><small>コール</small></button>
           <button type="button" data-record-now="CLAP_CALL">✳＋〰 <strong>CLAP＋CALL</strong><small>同時</small></button>
           <button type="button" data-record-now="JUMP">↑ <strong>JUMP</strong><small>ジャンプ</small></button>
-          <button type="button" data-record-wiper="left">← <strong>WIPER</strong><small>左方向</small></button>
-          <button type="button" data-record-wiper="right">→ <strong>WIPER</strong><small>右方向</small></button>
+          <button type="button" data-record-wiper="left">← <strong>WIPER</strong><small>←キー対応</small></button>
+          <button type="button" data-record-wiper="right">→ <strong>WIPER</strong><small>→キー対応</small></button>
         </fieldset>
         <div class="progress-meta"><span id="record-elapsed">0:00.000</span><span id="record-note-count">0件</span><span>3:44</span></div>
         <progress id="record-progress" value="0" max="224.39" aria-label="曲の進み具合"></progress>
