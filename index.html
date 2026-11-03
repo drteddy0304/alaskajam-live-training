@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#ecff62">
   <meta name="description" content="2026.12.02 渋谷CLUB QUATTROに向けて、Alaska Jamのコールとライブアクションを曲に合わせて予習するトレーニング。">
   <title>QUATTRO参戦予習 | Alaska Jam LIVE TRAINING</title>
-  <link rel="stylesheet" href="./style.css?v=record1">
-  <script type="module" src="./app.js?v=recorded7"></script>
+  <link rel="stylesheet" href="./style.css?v=record2">
+  <script type="module" src="./app.js?v=recorded8"></script>
 </head>
 <body>
   <div id="countdown-overlay" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -32,7 +32,7 @@
         <p class="section-note">参戦予習はこの2曲。CAT WALK LIFEはフル尺で公開中、SNACK SNACKは準備中です。</p>
         <div id="songs" class="songs"></div>
         <div class="section-heading"><h2>HOW TO TRAIN</h2><span>4 ACTIONS</span></div>
-        <div class="actions"><article><b>✳ <span>CLAP</span></b><p>合図に合わせてタップ</p></article><article><b>↔ <span>WIPER</span></b><p>矢印の向きにスワイプ</p></article><article><b>〰 <span>CALL</span></b><p>タップ＋声を出してみよう</p></article><article><b>↑ <span>JUMP</span></b><p>タップでジャンプ気分</p></article></div>
+        <div class="actions"><article><b>✳ <span>CLAP</span></b><p>合図に合わせてタップ</p></article><article><b>↔ <span>WIPER</span></b><p>左右の専用ボタンを押す</p></article><article><b>〰 <span>CALL</span></b><p>タップ＋声を出してみよう</p></article><article><b>↑ <span>JUMP</span></b><p>タップでジャンプ気分</p></article></div>
         <p class="notice">CALLは声を出さなくてもOK。マイクは使いません。JUMPは実際に跳ばず、画面のタップで遊べます。</p>
       </section>
       <section id="play" hidden aria-labelledby="play-title">
@@ -50,7 +50,8 @@
         <div class="rhythm-lane" aria-label="右から左へ流れるアクションノーツ"><div class="lane-track"></div><div class="judge-line"><span>AJ</span><small>HIT</small></div><div id="lane-notes" class="lane-notes"></div></div>
         <div class="cue-readout"><span id="cue-label" class="eyebrow">READY?</span><strong id="cue-action">3</strong><p id="cue-hint">スマホを持って、準備しよう</p><span id="next-time">NEXT —</span></div>
         <div class="feedback-line"><strong id="feedback" role="status" aria-live="polite">LET’S TRAIN</strong><span id="next">NEXT —</span></div>
-        <button id="pad" class="pad" aria-label="アクションパッド。タップ、または左右にスワイプ"><span class="pad-icon" aria-hidden="true">✳</span><b>ここでアクション</b><small>タップ / 左右にスワイプ</small></button>
+        <button id="pad" class="pad" aria-label="CLAP、CALL、JUMP用アクションパッド"><span class="pad-icon" aria-hidden="true">✳</span><b>ここでタップ</b><small>CLAP / CALL / JUMP</small></button>
+        <div class="wiper-controls" aria-label="WIPER専用ボタン"><button id="wiper-left" type="button" disabled>← <strong>WIPER</strong><small>左</small></button><button id="wiper-right" type="button" disabled><strong>WIPER</strong> →<small>右</small></button></div>
         <p class="micro">PC：Spaceでタップ / ← →でWIPER</p>
         <div id="pause-panel" class="pause-panel" hidden><h3>ひと呼吸、入れよう。</h3><p>続きから再開できます。</p><button id="resume" class="primary">練習を再開 →</button><button id="quit" class="text-button">曲一覧に戻る</button></div>
       </section>

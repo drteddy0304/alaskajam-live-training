@@ -19,3 +19,10 @@ test('home copy leads with QUATTRO participation training',()=>{
   assert.doesNotMatch(html,/その手で/);
   assert.doesNotMatch(html,/フロアを(?:<[^>]+>)*沸かせ/);
 });
+
+test('play screen uses dedicated left and right WIPER buttons instead of swipe instructions',()=>{
+  assert.match(html,/id="wiper-left"/);
+  assert.match(html,/id="wiper-right"/);
+  assert.match(html,/WIPER専用ボタン/);
+  assert.doesNotMatch(html,/左右にスワイプ/);
+});

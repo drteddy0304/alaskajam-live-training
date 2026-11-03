@@ -1,7 +1,7 @@
 let apiPromise;
-export const GUIDE_SYNC_TOLERANCE = 0.15;
-export const GUIDE_EARLY_SYNC_INTERVAL = 0.5;
-export const GUIDE_LATE_SYNC_INTERVAL = 1;
+export const GUIDE_SYNC_TOLERANCE = 0.75;
+export const GUIDE_EARLY_SYNC_INTERVAL = 2;
+export const GUIDE_LATE_SYNC_INTERVAL = 8;
 
 export function validGuideOffset(mapping) {
   return mapping?.syncStatus === 'verified' && Number.isFinite(mapping.audioToVideoOffset) && mapping.audioToVideoOffset >= 0;
@@ -27,6 +27,8 @@ export class GuidePlayback {
     this.player = player;
     this.ready = true;
     this.clearTimeout(this.timeout);
+    try { player.setOption?.('captions', 'track', {}); } catch {}
+    try { player.unloadModule?.('captions'); } catch {}
     this.callbacks.onReady?.();
     this.apply();
   }
@@ -104,7 +106,8 @@ export class GuidePlayback {
   stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
   resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_EARLY_SYNC_INTERVAL; }
   // MP3 time is authoritative. Correct only measured drift while YouTube is
-  // actively PLAYING; the tight threshold keeps the guide visually aligned.
+  // actively PLAYING. Routine corrections stay within already-buffered video
+  // so mobile playback does not repeatedly request a new segment.
   sync(audioTime, tolerance = GUIDE_SYNC_TOLERANCE) {
     if (!this.enabled || !this.ready || this.failed || this.intent !== 'playing' || !validGuideOffset(this.mapping)) return false;
     try {
@@ -113,7 +116,7 @@ export class GuidePlayback {
       const current = this.player.getCurrentTime();
       const expected = audioTime + this.mapping.audioToVideoOffset;
       if (!Number.isFinite(current) || !Number.isFinite(expected) || Math.abs(current - expected) <= tolerance) return false;
-      return this.call('seekTo', expected, true);
+      return this.call('seekTo', expected, false);
     } catch { return false; }
   }
   syncIfDue(audioTime) {
@@ -144,7 +147,7 @@ export async function mountYouTubePlayer(controller, elementId, videoId, win = w
     const YT = await loadYouTubeAPI(win, doc);
     return new YT.Player(elementId, {
       width: '100%', height: '200', videoId,
-      playerVars: { controls: 1, playsinline: 1, mute: 1 },
+      playerVars: { controls: 1, playsinline: 1, mute: 1, cc_load_policy: 0 },
       events: {
         onReady: event => controller.onReady(event.target),
         onError: event => controller.onError(event.data),

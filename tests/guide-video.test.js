@@ -75,6 +75,7 @@ test('official API error, autoplay block, and ready timeout report real state wi
   let options;
   class Player { constructor(id, config) { assert.equal(id,'guide-player'); options=config; } }
   await mountYouTubePlayer(guide, 'guide-player', 'video-id', {YT:{Player}}, {});
+  assert.equal(options.playerVars.cc_load_policy,0);
   options.events.onAutoplayBlocked();
   options.events.onError({data:101});
   assert.deepEqual(reports, ['blocked','error:101']);
@@ -94,7 +95,7 @@ test('prime keeps muted playback authorized through countdown and resets its off
   assert.deepEqual(media.calls.slice(-1), [['seekTo',8.2508,true]]);
 });
 
-test('measured guide sync uses offset math and corrects drift above 0.15 seconds', () => {
+test('measured guide sync uses offset math and corrects drift above 0.75 seconds without forcing a new segment', () => {
   const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
   guide.onReady(media);guide.start(2);media.calls.length=0;
   media.currentTime=10.35;
@@ -102,16 +103,23 @@ test('measured guide sync uses offset math and corrects drift above 0.15 seconds
   assert.deepEqual(media.calls,[]);
   media.currentTime=9;
   assert.equal(guide.sync(2),true);
-  assert.deepEqual(media.calls,[['seekTo',10.2508,true]]);
+  assert.deepEqual(media.calls,[['seekTo',10.2508,false]]);
 });
 
-test('sync schedule checks twice a second early and once a second later', () => {
+test('sync schedule checks every two seconds early and every eight seconds later', () => {
   const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
   guide.onReady(media);guide.start(0);media.calls.length=0;media.currentTime=0;
-  assert.equal(guide.syncIfDue(.49),false);assert.equal(guide.nextSyncAt,.5);
-  guide.syncIfDue(.5);assert.equal(guide.nextSyncAt,1);
-  guide.syncIfDue(10);assert.equal(guide.nextSyncAt,11);
-  guide.resume(20);assert.equal(guide.nextSyncAt,20.5);
+  assert.equal(guide.syncIfDue(1.99),false);assert.equal(guide.nextSyncAt,2);
+  guide.syncIfDue(2);assert.equal(guide.nextSyncAt,4);
+  guide.syncIfDue(10);assert.equal(guide.nextSyncAt,18);
+  guide.resume(20);assert.equal(guide.nextSyncAt,22);
+});
+
+test('ready player is asked to hide captions when the API supports it', () => {
+  const calls=[], media={...player(),setOption:(...args)=>calls.push(['setOption',...args]),unloadModule:name=>calls.push(['unloadModule',name])};
+  const guide=new GuidePlayback({}, {}, 10000, timers());
+  guide.onReady(media);
+  assert.deepEqual(calls,[['setOption','captions','track',{}],['unloadModule','captions']]);
 });
 
 test('a manual YouTube pause requests one shared game pause', () => {
