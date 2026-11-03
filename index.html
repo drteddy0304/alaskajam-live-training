@@ -4,23 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ecff62">
-  <meta name="description" content="Alaska Jam LIVE TRAINING — タップとスワイプでライブの一体感を練習。音楽つきの体験版。">
-  <title>Alaska Jam LIVE TRAINING</title>
+  <meta name="description" content="2026.12.02 渋谷CLUB QUATTROに向けて、Alaska Jamのコールとライブアクションを曲に合わせて予習するトレーニング。">
+  <title>QUATTRO参戦予習 | Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css?v=record1">
-  <script type="module" src="./app.js?v=recorded6"></script>
+  <script type="module" src="./app.js?v=recorded7"></script>
 </head>
 <body>
   <div id="countdown-overlay" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
     <span id="countdown-label">START IN</span><strong id="countdown-value">5</strong>
   </div>
   <div class="shell">
-    <header class="masthead"><a href="./" aria-label="Alaska Jam ホーム">AJ<span>ALASKA JAM<br>LIVE TRAINING</span></a><span class="edition">VOL. 01<br>FULL SONG BETA</span></header>
+    <header class="masthead"><a href="./" aria-label="Alaska Jam ホーム">AJ<span>ALASKA JAM<br>LIVE TRAINING</span></a><span class="edition">2026.12.02<br>SHIBUYA</span></header>
     <main>
       <section id="home" aria-labelledby="hero-title">
-        <div class="eyebrow"><span class="dot"></span> ROAD TO SHIBUYA QUATTRO</div>
-        <h1 id="hero-title">その手で、<br>フロアを<span class="highlight">沸かせ。</span></h1>
-        <p class="lead">聴くだけじゃ、もったいない。<br>ライブの動きを、指先から。</p>
-        <div class="hero-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="art-type">GET<br><i>READY!</i></span><span class="art-stamp">CLAP / WIPER<br>CALL / JUMP</span><span class="art-star">✳</span></div>
+        <div class="eyebrow"><span class="dot"></span> 2026.12.02 SHIBUYA CLUB QUATTRO</div>
+        <h1 id="hero-title">渋谷QUATTRO<br><span class="highlight">参戦予習。</span></h1>
+        <p class="lead">コールも、クラップも、ワイパーも。<br>本番前に曲に合わせて練習しよう。</p>
+        <div class="hero-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="art-type">QUATTRO<br><i>READY?</i></span><span class="art-stamp">CLAP / WIPER<br>CALL / JUMP</span><span class="art-star">✳</span></div>
         <div class="event-strip"><strong>2026.12.02 <small>WED</small></strong><span>渋谷 CLUB QUATTRO</span></div>
         <button class="primary" id="try-demo" disabled>読み込み中…</button>
         <p class="micro">CAT WALK LIFE フル尺 3:44 / タップで音が出ます / 登録不要</p>
@@ -28,10 +28,10 @@
         <a class="record-link" href="./recorder.html"><strong>曲に合わせてタイミングを記録する</strong><span>タップ／スワイプした時刻を保存 →</span></a>
       <p id="load-status" role="status"></p>
         <details id="guide-details" class="guide-details"><summary>公式Cheering Guideでお手本を見る ↗</summary><p class="section-note">動画は説明込みで3:54。練習は曲の最初から最後まで。細かな振付はこの動画がお手本です。</p><a href="https://youtu.be/1y5b0upSCjM" target="_blank" rel="noopener">公式ガイドをYouTubeで見る ↗</a></details>
-        <div class="section-heading"><h2>SETLIST</h2><span>08 TRACKS</span></div>
-        <p class="section-note">CAT WALK LIFEはガイド参考のフル尺版。動作のタイミングは調整中です。</p>
+        <div class="section-heading"><h2>QUATTRO SETLIST</h2><span>02 TRACKS</span></div>
+        <p class="section-note">参戦予習はこの2曲。CAT WALK LIFEはフル尺で公開中、SNACK SNACKは準備中です。</p>
         <div id="songs" class="songs"></div>
-        <div class="section-heading"><h2>HOW TO JAM</h2><span>4 ACTIONS</span></div>
+        <div class="section-heading"><h2>HOW TO TRAIN</h2><span>4 ACTIONS</span></div>
         <div class="actions"><article><b>✳ <span>CLAP</span></b><p>合図に合わせてタップ</p></article><article><b>↔ <span>WIPER</span></b><p>矢印の向きにスワイプ</p></article><article><b>〰 <span>CALL</span></b><p>タップ＋声を出してみよう</p></article><article><b>↑ <span>JUMP</span></b><p>タップでジャンプ気分</p></article></div>
         <p class="notice">CALLは声を出さなくてもOK。マイクは使いません。JUMPは実際に跳ばず、画面のタップで遊べます。</p>
       </section>
@@ -49,22 +49,22 @@
         <div id="singalong" class="singalong" role="status" aria-live="polite" hidden><span id="singalong-label">まもなく一緒に！</span><strong id="singalong-text"></strong></div>
         <div class="rhythm-lane" aria-label="右から左へ流れるアクションノーツ"><div class="lane-track"></div><div class="judge-line"><span>AJ</span><small>HIT</small></div><div id="lane-notes" class="lane-notes"></div></div>
         <div class="cue-readout"><span id="cue-label" class="eyebrow">READY?</span><strong id="cue-action">3</strong><p id="cue-hint">スマホを持って、準備しよう</p><span id="next-time">NEXT —</span></div>
-        <div class="feedback-line"><strong id="feedback" role="status" aria-live="polite">LET’S JAM</strong><span id="next">NEXT —</span></div>
+        <div class="feedback-line"><strong id="feedback" role="status" aria-live="polite">LET’S TRAIN</strong><span id="next">NEXT —</span></div>
         <button id="pad" class="pad" aria-label="アクションパッド。タップ、または左右にスワイプ"><span class="pad-icon" aria-hidden="true">✳</span><b>ここでアクション</b><small>タップ / 左右にスワイプ</small></button>
         <p class="micro">PC：Spaceでタップ / ← →でWIPER</p>
         <div id="pause-panel" class="pause-panel" hidden><h3>ひと呼吸、入れよう。</h3><p>続きから再開できます。</p><button id="resume" class="primary">練習を再開 →</button><button id="quit" class="text-button">曲一覧に戻る</button></div>
       </section>
       <section id="result" hidden aria-labelledby="result-title">
         <div class="eyebrow">TRAINING COMPLETE</div><h1 id="result-title" class="result-title">QUATTRO<br>参戦準備度</h1>
-        <div class="score-disc"><strong id="readiness">0<span>%</span></strong><span>READY FOR THE FLOOR</span></div>
+        <div class="score-disc"><strong id="readiness">0<span>%</span></strong><span>READY FOR QUATTRO</span></div>
         <h2 id="result-message"></h2><p id="result-detail" class="section-note"></p>
         <div class="stats"><div><span>PERFECT</span><b id="perfect-count">0</b></div><div><span>GOOD</span><b id="good-count">0</b></div><div><span>MISS</span><b id="miss-count">0</b></div></div>
         <p class="best" id="best"></p><p class="micro">練習譜面のスコアです。自由にノる区間は採点に含みません。</p>
-        <button id="retry" class="primary">もう一度、フロアへ →</button><button id="back" class="text-button">曲一覧に戻る</button>
-        <aside class="event-card"><span class="eyebrow">NEXT DESTINATION</span><h2>次は、ライブで。</h2><strong>2026.12.02 WED</strong><p>渋谷 CLUB QUATTRO</p><p class="micro">公演・チケット情報のリンクは準備中</p></aside>
+        <button id="retry" class="primary">もう一度トレーニング →</button><button id="back" class="text-button">曲一覧に戻る</button>
+        <aside class="event-card"><span class="eyebrow">LIVE INFORMATION</span><h2>目標は、渋谷QUATTRO。</h2><strong>2026.12.02 WED</strong><p>渋谷 CLUB QUATTRO</p><p class="micro">公演・チケット情報のリンクは準備中</p></aside>
       </section>
     </main>
-    <footer><b>ALASKA JAM LIVE TRAINING</b><span>Cheering Guide参考・フル尺ベータ</span></footer>
+    <footer><b>ALASKA JAM LIVE TRAINING</b><span>2026.12.02 SHIBUYA CLUB QUATTRO 参戦予習</span></footer>
   </div>
   <noscript>この練習にはJavaScriptを有効にしてください。</noscript>
 </body>

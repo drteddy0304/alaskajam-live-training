@@ -1,9 +1,9 @@
-import { Session, validateChart, WINDOWS } from './engine.js?v=recorded6';
-import { Music } from './audio.js?v=recorded6';
-import { lyricAt, validateLyrics } from './lyrics.js?v=recorded6';
-import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded6';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded6';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded6';
+import { Session, validateChart, WINDOWS } from './engine.js?v=recorded7';
+import { Music } from './audio.js?v=recorded7';
+import { lyricAt, validateLyrics } from './lyrics.js?v=recorded7';
+import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded7';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded7';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded7';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -212,7 +212,7 @@ function finish() {
   const result = session.summary();
   $('readiness').replaceChildren(document.createTextNode(result.readiness), Object.assign(document.createElement('span'), {textContent:'%'}));
   for (const grade of ['PERFECT','GOOD','MISS']) $(`${grade.toLowerCase()}-count`).textContent = result[grade];
-  $('result-message').textContent = result.readiness >= 85 ? 'フロアを沸かす準備、できてる！' : result.readiness >= 50 ? 'いい感じ！ その調子でいこう。' : 'ここから始まる、ライブの予習。';
+  $('result-message').textContent = result.readiness >= 85 ? 'QUATTRO参戦準備、できています！' : result.readiness >= 50 ? 'あと少し。もう一度確認しよう。' : 'ここから参戦予習を始めよう。';
   $('result-detail').textContent = `最大 ${result.maxCombo} COMBO。${result.readiness >= 85 ? '次はライブ会場で、一緒に。' : 'ノーツがAJ判定ラインに重なる瞬間を狙おう。'}`;
   let best = result.readiness, saved = false;
   try { const key = `aj-best:${chart.id}`; const previous = Number(localStorage.getItem(key)); best = Math.max(best, Number.isFinite(previous) && previous <= 100 ? previous : 0); localStorage.setItem(key, String(best)); saved = true; } catch {}
@@ -257,7 +257,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'recorded6');
+  url.searchParams.set('v', 'recorded7');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
@@ -284,6 +284,6 @@ try {
   }));
   chart = charts.get(songs.find(song => song.chart).chart);
   configureGuide(chart.guideVideo);
-  $('try-demo').disabled = false; $('try-demo').textContent = 'フル尺で練習する →';
+  $('try-demo').disabled = false; $('try-demo').textContent = 'CAT WALK LIFEで参戦予習 →';
   document.querySelectorAll('.song button').forEach(button => button.disabled = false);
 } catch (error) { $('try-demo').textContent = '読み込みできませんでした'; $('load-status').textContent = '接続を確認してページを再読み込みしてください。'; console.error(error); }

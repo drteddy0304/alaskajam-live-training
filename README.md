@@ -5,8 +5,8 @@
 
 ## MVP
 
-- 8曲の一覧。CAT WALK LIFEのみ約3分44秒のフル尺ベータ。残り7曲は準備中。
-- 提供されたCAT WALK LIFE.mp3を最後まで再生。公式Cheering Guideを見ながら2周に分けて実演記録したタイミングを反映しています。現在の採点譜面はCLAP 102件・WIPER 97件・タップCALL 30件です。
+- QUATTRO参戦予習のセットリストはCAT WALK LIFEとSNACK SNACKの2曲。CAT WALK LIFEは約3分44秒のフル尺版、SNACK SNACKは準備中。
+- 提供されたCAT WALK LIFE.mp3を最後まで再生。公式Cheering Guideとユーザーの実演記録を反映しています。現在の採点譜面はCLAP 102件・WIPER 96件・タップCALL 30件です。
 - 音あり練習は開始タップで曲を再生、1.8秒前から予告、タイミングバー、PERFECT / GOOD / MISS。
 - CLAP / CALL / JUMP = タップ。WIPER = 指示方向へ左右スワイプ。
 - CALLの声やJUMPの実動作は任意。マイク・カメラ・位置情報は一切使用しません。
