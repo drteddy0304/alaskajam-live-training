@@ -9,5 +9,52 @@
 [data-page=play] .masthead,[data-page=play] footer{display:none}[data-page=play] .shell{padding:8px 12px}[data-page=play] #play-title{font-size:20px;margin:5px 0 0}[data-page=play] #chart-source{margin:2px 0}[data-page=play] .video-guide{margin:5px 0}[data-page=play] .video-guide-head{margin-bottom:3px}[data-page=play] .video-wrap,[data-page=play] .video-wrap iframe{height:200px;min-height:200px}[data-page=play] .video-status{min-height:13px;margin:3px 0 0;line-height:1.25}[data-page=play] .progress-meta{margin:5px 0 3px}[data-page=play] .rhythm-lane{height:106px;margin-top:6px}[data-page=play] .lane-track{top:51px}[data-page=play] .judge-line{top:6px;bottom:6px;width:42px;transform:translateX(-21px)}[data-page=play] .lane-note{top:52px;width:48px;height:48px;transform:translate(-24px,-24px)}[data-page=play] .lane-note b{font-size:19px}[data-page=play] .cue-readout{padding:5px 2px 0}[data-page=play] .cue-readout>strong{font-size:20px}[data-page=play] .feedback-line{min-height:34px}[data-page=play] .feedback-line strong{font-size:17px}[data-page=play] .pad{height:96px;gap:4px}[data-page=play] .pad-icon{font-size:28px}[data-page=play] .wiper-controls button{min-height:58px}[data-page=play] #play>.micro{margin:3px 0}[data-page=play] .singalong{margin:5px 0;padding:7px}
 [data-page=play] #pause{position:fixed;z-index:20;top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));background:var(--lime);border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink);font-weight:900;padding:11px 13px}
 
+/* Smartphone play view: keep the guide, lane and every action button in one viewport. */
+@media(max-width:599px){
+body[data-page=play]{height:100dvh;overflow:hidden}
+body[data-page=play] .shell{height:100dvh;min-height:0;padding:max(4px,env(safe-area-inset-top)) 8px max(4px,env(safe-area-inset-bottom));overflow:hidden}
+body[data-page=play] main,body[data-page=play] #play{height:100%;min-height:0;overflow:hidden}
+[data-page=play] .play-top{height:0}
+[data-page=play] .play-top .eyebrow,[data-page=play] #chart-source,[data-page=play] #play>.micro{display:none}
+[data-page=play] #play-title{margin:0;padding-right:96px;font-size:17px;line-height:24px}
+[data-page=play] #pause{top:max(4px,env(safe-area-inset-top));right:8px;min-height:34px;padding:6px 9px}
+[data-page=play] .video-guide{margin:1px 0}
+[data-page=play] .video-guide-head{min-height:20px;margin:0}
+[data-page=play] .video-guide-head .small-button{min-height:26px;padding:3px 7px}
+[data-page=play] .video-wrap,[data-page=play] .video-wrap iframe{height:clamp(112px,19dvh,150px);min-height:0}
+[data-page=play] .video-status{display:none}
+[data-page=play] .progress-meta{margin:2px 0 0;line-height:12px}
+[data-page=play] .seek{height:18px}
+[data-page=play] .seek-controls{grid-template-columns:58px 1fr 58px;gap:4px;margin:0}
+[data-page=play] .seek-controls .small-button{min-height:26px;padding:2px}
+[data-page=play] .singalong{margin:2px 0;padding:3px 6px}
+[data-page=play] .singalong span{font-size:7px}
+[data-page=play] .singalong strong,[data-page=play] .singalong[data-phase=active] strong{margin-top:2px;font-size:18px;line-height:1.05}
+[data-page=play] .rhythm-lane{height:clamp(68px,12dvh,86px);margin-top:2px}
+[data-page=play] .lane-track{top:50%}
+[data-page=play] .judge-line{top:4px;bottom:4px}
+[data-page=play] .lane-note{top:50%;width:44px;height:44px;transform:translate(-22px,-22px)}
+[data-page=play] .lane-note b{font-size:17px}
+[data-page=play] .cue-readout{gap:0 8px;padding:2px 2px 0}
+[data-page=play] .cue-readout>strong{font-size:17px}
+[data-page=play] .cue-readout p{margin:0;font-size:9px;line-height:1.25}
+[data-page=play] .cue-readout>span:last-child{font-size:9px}
+[data-page=play] .feedback-line{min-height:22px}
+[data-page=play] .feedback-line strong{font-size:15px}
+[data-page=play] .pad{height:clamp(54px,10dvh,72px);gap:0}
+[data-page=play] .pad-icon{font-size:21px}
+[data-page=play] .pad b{font-size:13px}
+[data-page=play] .pad small{font-size:8px}
+[data-page=play] .wiper-controls{gap:6px;margin-top:4px}
+[data-page=play] .wiper-controls button{min-height:clamp(46px,8dvh,56px);padding:4px 8px;font-size:21px}
+}
+@media(max-width:599px) and (max-height:650px){
+[data-page=play] .video-wrap,[data-page=play] .video-wrap iframe{height:96px}
+[data-page=play] .seek-controls span,[data-page=play] .cue-readout p{display:none}
+[data-page=play] .rhythm-lane{height:64px}
+[data-page=play] .pad{height:48px}
+[data-page=play] .wiper-controls button{min-height:44px}
+}
+
 .countdown-overlay{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:max(24px,env(safe-area-inset-top)) 24px max(24px,env(safe-area-inset-bottom));background:#17231ff2;color:var(--lime);text-align:center}.countdown-overlay span{font-size:14px;font-weight:900;letter-spacing:2px}.countdown-overlay strong{font-size:clamp(112px,42vw,210px);line-height:.9;letter-spacing:-8px}.countdown-overlay.is-preparing strong{max-width:18em;font-size:22px;line-height:1.6;letter-spacing:0}
 .record-link{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0;padding:16px;border:2px solid var(--ink);background:var(--lime);text-decoration:none}.record-link strong{font-size:13px}.record-link span{font-size:9px;text-align:right}.record-steps{margin:22px 0}.record-steps p{display:flex;align-items:flex-start;gap:12px;margin:12px 0;font-size:12px;line-height:1.7}.record-steps b{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:50%;background:var(--ink);color:var(--lime)}.record-steps span{padding-top:3px}.record-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0 0;padding:0;border:0}.record-actions legend{grid-column:1/-1;width:100%;margin-bottom:2px;font-size:11px;font-weight:900}.record-actions button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:74px;padding:8px;border:2px solid var(--ink);border-radius:4px;background:var(--lime);font-size:17px;font-weight:900;touch-action:manipulation;user-select:none}.record-actions button:active{background:var(--ink);color:var(--lime)}.record-actions button strong{font-size:12px}.record-actions button small{font-size:8px;font-weight:700}.record-tip{margin:7px 0 10px}.record-feedback{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center}.record-feedback strong{font-size:12px;line-height:1.6}.record-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.record-controls .small-button{min-height:46px}.record-finish-button{margin-top:8px;min-height:48px;padding:12px}.record-output-label{display:block;margin:25px 0 8px;font-size:11px;font-weight:900}.record-output{display:block;width:100%;height:220px;resize:vertical;border:2px solid var(--ink);border-radius:3px;padding:12px;background:#fff;font:11px/1.5 monospace;color:var(--ink)}[data-page=recorder] #record-pause{position:fixed;z-index:20;top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));background:var(--lime);border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink);font-weight:900;padding:11px 13px}[data-page=recorder] #record-run h2{margin:12px 0 0}[data-page=recorder] #record-run .progress-meta{margin:10px 0 5px}[data-page=recorder] .countdown-overlay{inset:max(8px,env(safe-area-inset-top)) auto auto 50%;width:min(170px,44vw);min-height:138px;transform:translateX(-50%);padding:14px;background:#17231ff2;border:3px solid var(--lime);border-radius:8px;box-shadow:0 4px 0 var(--ink);pointer-events:none}[data-page=recorder] .countdown-overlay strong{font-size:74px;letter-spacing:-4px}[data-page=recorder] .countdown-overlay span{font-size:10px}[data-page=recorder] .countdown-overlay.is-preparing strong{font-size:15px}@media(max-height:720px){.record-actions{margin-top:8px}.record-actions button{min-height:58px}.record-feedback{min-height:38px}}
