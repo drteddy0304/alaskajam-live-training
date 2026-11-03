@@ -104,13 +104,21 @@ test('switching songs replaces the existing YouTube iframe mount', () => {
   assert.equal(replacement['aria-label'], 'old guide');
 });
 
-test('prime keeps the guide stopped at its mapped start through countdown', () => {
+test('prime prewarms muted playback, then pauses and rewinds for countdown', async () => {
   const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508}, {}, 10000, timers());
   guide.onReady(media); media.calls.length = 0;
-  guide.prime(0);
-  assert.deepEqual(media.calls, [['seekTo',8.2508,true],['pauseVideo']]);
-  guide.reset(0);
-  assert.deepEqual(media.calls.slice(-2), [['seekTo',8.2508,true],['pauseVideo']]);
+  const primed = guide.prime(0);
+  assert.deepEqual(media.calls, [['mute'],['seekTo',8.2508,true],['playVideo']]);
+  guide.onStateChange(1);
+  assert.equal(await primed,true);
+  assert.equal(guide.requiresUserGesture(),false);
+  assert.deepEqual(media.calls.slice(-3), [['pauseVideo'],['seekTo',8.2508,true],['pauseVideo']]);
+});
+
+test('blocked prewarm requests one explicit user gesture instead of drifting audio', async () => {
+  const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:2.303},{},10000,timers());
+  guide.onReady(media);const primed=guide.prime(0);guide.onAutoplayBlocked();
+  assert.equal(await primed,false);assert.equal(guide.requiresUserGesture(),true);
 });
 
 test('preparation waits for YouTube ready and requests low playback quality', async () => {
