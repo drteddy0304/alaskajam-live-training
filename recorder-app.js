@@ -1,5 +1,5 @@
 import {Music} from './audio.js?v=record2';
-import {StartBarrier, countdownOverlayState, primeMedia, startMediaTogether} from './startup.js?v=record2';
+import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
 import {buildRecording, noteFromGesture, recordingText, TAP_ACTIONS} from './recorder.js?v=record2';
 
 const SONG = Object.freeze({
@@ -123,21 +123,26 @@ async function start() {
   pauseButton.disabled = true;
   last.textContent = '音源を準備しています';
   music = new Music();
+  // Keep a muted playback alive through the countdown. This preserves the
+  // mobile start-button authorization without letting the song begin audibly.
+  music.media.muted = true;
   music.oninterrupt = () => { if (phase === 'playing') pause(); };
   barrier = new StartBarrier({
     onTick: value => showCountdown(value),
     onPreparing: () => showCountdown('音源を準備中…', true),
     onReady: () => {
+      music.media.currentTime = music.offset;
+      music.media.muted = false;
       showCountdown();
       phase = 'playing';
       pauseButton.disabled = false;
       last.textContent = '曲に合わせて操作してください';
-      startMediaTogether(music, null, 0).catch(showStartError);
       draw();
     },
     onError: showStartError
   });
-  barrier.start(primeMedia(music, null, {src: SONG.audio, offset: 0, duration: SONG.duration}));
+  const preparation = music.prime(SONG.audio, 0, SONG.duration).then(() => music.resume());
+  barrier.start(preparation);
 }
 
 function showStartError(error) {
