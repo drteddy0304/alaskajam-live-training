@@ -5,10 +5,10 @@
   "source": {
     "name": "公式 SNACK SNACK Cheering Guide・ユーザー実演記録",
     "url": "https://www.youtube.com/watch?v=Y04dtYKy-rk",
-    "revision": "2026-11-03-official-guide-call-text-v3"
+    "revision": "2026-11-03-official-guide-call-text-v4-opening-correction"
   },
   "cues": [
-    {"start":7.325,"end":8.125,"text":"SNACK!","kind":"scored-call","source":"user-specified CALL after opening CLAP sequence; timing derived from recorded beat grid","markers":[7.325]},
+    {"start":6.87,"end":7.67,"text":"SNACK!","kind":"scored-call","source":"user-recorded 0-10 second correction take","markers":[6.87]},
     {"start":11.836,"end":13.252,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[11.836,12.04,12.243,12.452]},
     {"start":13.428,"end":14.228,"text":"SNACK!","kind":"scored-call","source":"official guide video; user-recorded CALL marker","markers":[13.428]},
     {"start":18.507,"end":19.894,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[18.507,18.71,18.885,19.094]},
