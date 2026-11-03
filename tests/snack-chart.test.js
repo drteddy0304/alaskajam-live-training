@@ -21,9 +21,10 @@ test('SNACK SNACK recording becomes a valid full-song chart',()=>{
 
 test('voice-only CALLs stay display-only and never become scored notes',()=>{
   validateLyrics(lyrics,chart.duration);
-  assert.equal(lyrics.timingStatus,'user-recorded-text-pending');
+  assert.equal(lyrics.timingStatus,'user-recorded-text-verified');
   assert.deepEqual(lyrics.cues.map(cue=>cue.start),[40.98,44.23,47.578,82.614,85.869,89.243,127.553,130.882,134.215,137.52]);
-  assert.ok(lyrics.cues.every(cue=>cue.text==='声を出そう！'));
+  assert.ok(lyrics.cues.every(cue=>cue.text==='I I I I need a snack (Hey!)'));
+  assert.ok(lyrics.cues.every(cue=>cue.end-cue.start>3));
   assert.equal(chart.notes.some(note=>note.action==='VOICE_CALL'),false);
 });
 
