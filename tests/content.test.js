@@ -5,6 +5,7 @@ import {readFile} from 'node:fs/promises';
 const root=new URL('../',import.meta.url);
 const songs=JSON.parse(await readFile(new URL('data/songs.json',root),'utf8'));
 const html=await readFile(new URL('index.html',root),'utf8');
+const css=await readFile(new URL('style.css',root),'utf8');
 
 test('QUATTRO training setlist contains only CAT WALK LIFE and SNACK SNACK',()=>{
   assert.deepEqual(songs.map(song=>song.title),['CAT WALK LIFE','SNACK SNACK']);
@@ -25,4 +26,10 @@ test('play screen uses dedicated left and right WIPER buttons instead of swipe i
   assert.match(html,/id="wiper-right"/);
   assert.match(html,/WIPER専用ボタン/);
   assert.doesNotMatch(html,/左右にスワイプ/);
+});
+
+test('smartphone play view keeps all controls inside the dynamic viewport',()=>{
+  assert.match(css,/body\[data-page=play\]\{height:100dvh;overflow:hidden\}/);
+  assert.match(css,/\.wiper-controls button\{min-height:clamp\(46px,8dvh,56px\)/);
+  assert.match(html,/style\.css\?v=record3/);
 });
