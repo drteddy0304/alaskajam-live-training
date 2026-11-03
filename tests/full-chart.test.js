@@ -7,33 +7,29 @@ test('full song chart has playable spacing and stays within supplied audio',()=>
   validateChart(chart);
   assert.ok(chart.duration>224 && chart.duration<=224.3918);
   assert.equal(chart.audio.offset,0);
-  assert.equal(chart.source.timingStatus,'provisional');
+  assert.equal(chart.source.timingStatus,'user-recorded');
   assert.equal(chart.guideVideo.syncStatus,'verified');
   assert.equal(chart.guideVideo.audioToVideoOffset,8.2508);
   assert.ok(chart.notes.at(-1).time>220);
   assert.ok(!chart.notes.some(n=>n.action==='JUMP'));
 });
-test('rebuilt chart preserves verified calls and uses quarter-note wipers',()=>{
-  assert.deepEqual(chart.notes.filter(note=>note.time===27.7792),[{time:27.7792,action:'CALL',hint:'AJ！タップ＋声を出そう'}]);
-  const calls=chart.notes.filter(note=>note.time===104.9792);
-  assert.deepEqual(calls,[{
-    time:104.9792,
-    action:'CALL',
-    hint:'1・2・3！「1」でタップ＋声を出そう'
-  }]);
-  assert.equal(chart.id,'cat-walk-life-guide-beta-v5-clap-quarter-wiper');
-  assert.equal(chart.source.revision,'2026-10-02-beta5-clap-quarter-wiper');
-  assert.equal(chart.source.timingStatus,'provisional');
-  assert.equal(chart.notes.length,144);
-  assert.deepEqual(chart.notes.filter(note=>note.action==='CLAP').slice(0,3).map(note=>note.time),[1.195,2.18,3.135]);
+test('recorded pass 1 supplies every scored CLAP, WIPER, and tap CALL',()=>{
+  assert.deepEqual(chart.notes.filter(note=>note.time===27.973),[{time:27.973,action:'CALL',hint:'AJ！タップ＋声を出そう'}]);
+  assert.deepEqual(chart.notes.filter(note=>note.action==='CALL' && note.time>=104 && note.time<106).map(note=>note.time),[104.785,105.036,105.322]);
+  assert.equal(chart.id,'cat-walk-life-user-timing-v1');
+  assert.equal(chart.source.revision,'2026-11-03-user-recorded-two-pass-v1');
+  assert.equal(chart.source.timingStatus,'user-recorded');
+  assert.equal(chart.notes.length,268);
+  assert.deepEqual(chart.notes.filter(note=>note.action==='CLAP').slice(0,3).map(note=>note.time),[0.642,0.885,1.336]);
   const firstWipers=chart.notes.filter(note=>note.action==='WIPER').slice(0,3);
   assert.deepEqual(firstWipers.map(note=>note.direction),['left','right','left']);
-  assert.ok(Math.abs(firstWipers[1].time-firstWipers[0].time-60/123)<.0001);
+  assert.deepEqual(firstWipers.map(note=>note.time),[76.578,77.027,77.473]);
+  assert.deepEqual(chart.notes.reduce((counts,note)=>({...counts,[note.action]:(counts[note.action]||0)+1}),{}),{CLAP:102,CALL:6,WIPER:160});
   assert.ok(chart.notes.every((note,index)=>index===0 || note.time>chart.notes[index-1].time));
   validateChart(chart);
 
   const session=new Session(chart);
-  assert.equal(session.input(104.9792,'tap').grade,'PERFECT');
+  assert.equal(session.input(104.785,'tap').grade,'PERFECT');
   assert.equal(session.summary().PERFECT,1);
   assert.equal(session.summary().MISS,chart.notes.length-1);
 });
