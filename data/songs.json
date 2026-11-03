@@ -1,4 +1,4 @@
 [
   {"id":"cat-walk-life","title":"CATWALK LIFE","chart":"./data/cat-walk-life-full.json","status":"ready"},
-  {"id":"snack-snack","title":"SNACK SNACK","chart":"./data/snack-snack-full.json?v=opening2","status":"ready","recorder":"./recorder.html?song=snack-snack"}
+  {"id":"snack-snack","title":"SNACK SNACK","chart":"./data/snack-snack-full.json?v=opening3","status":"ready","recorder":"./recorder.html?song=snack-snack"}
 ]

@@ -2,8 +2,8 @@ import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
 import { Music } from './audio.js?v=countdown3';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth2';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown3';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth3';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown4';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -164,7 +164,7 @@ async function start(song = null) {
       $('cue-label').textContent = 'COUNTDOWN'; $('cue-action').textContent = number;
       $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
     },
-    onPreparing: () => showCountdown('音源を準備中…', true),
+    onPreparing: () => showCountdown('音源と動画を準備中…', true),
     onReady: async () => {
       if (phase !== 'countdown' || document.hidden) { home(); return; }
       showCountdown('開始位置を調整中…', true);
@@ -282,7 +282,7 @@ async function json(path) {
   return response.json();
 }
 try {
-  const songs = await json('./data/songs.json?v=opening2');
+  const songs = await json('./data/songs.json?v=opening3');
   for (const [index, song] of songs.entries()) {
     const row = document.createElement('div'); row.className = 'song';
     const number = document.createElement('span'); number.className = 'number'; number.textContent = String(index+1).padStart(2,'0');

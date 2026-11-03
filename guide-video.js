@@ -18,6 +18,7 @@ export class GuidePlayback {
     this.audioTime = 0;
     this.restart = false;
     this.nextSyncAt = Infinity;
+    this.readiness = new Promise(resolve => { this.resolveReadiness = resolve; });
     this.timeout = timers.setTimeout(() => this.fail('timeout'), timeoutMs);
     this.clearTimeout = timers.clearTimeout.bind(timers);
   }
@@ -26,6 +27,9 @@ export class GuidePlayback {
     this.player = player;
     this.ready = true;
     this.clearTimeout(this.timeout);
+    this.resolveReadiness?.(true);
+    this.resolveReadiness = null;
+    try { player.setPlaybackQuality?.('small'); } catch {}
     try { player.setOption?.('captions', 'track', {}); } catch {}
     try { player.unloadModule?.('captions'); } catch {}
     this.callbacks.onReady?.();
@@ -45,7 +49,14 @@ export class GuidePlayback {
     this.failed = true;
     this.ready = false;
     this.clearTimeout(this.timeout);
+    this.resolveReadiness?.(false);
+    this.resolveReadiness = null;
     this.callbacks.onFailure?.(reason);
+  }
+  whenReady() {
+    if (!this.enabled || this.failed) return Promise.resolve(false);
+    if (this.ready) return Promise.resolve(true);
+    return this.readiness;
   }
   call(method, ...args) {
     if (!this.ready || this.failed || typeof this.player?.[method] !== 'function') return false;
@@ -153,7 +164,7 @@ export async function mountYouTubePlayer(controller, elementId, videoId, win = w
     resetYouTubeMount(elementId, doc);
     return new YT.Player(elementId, {
       width: '100%', height: '200', videoId,
-      playerVars: { controls: 1, playsinline: 1, mute: 1, cc_load_policy: 0 },
+      playerVars: { controls: 1, playsinline: 1, mute: 1, cc_load_policy: 0, vq: 'small' },
       events: {
         onReady: event => controller.onReady(event.target),
         onError: event => controller.onError(event.data),

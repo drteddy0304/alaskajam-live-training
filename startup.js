@@ -99,16 +99,16 @@ export class StartBarrier {
 export function primeMedia(audio, guide, {src, offset, duration}) {
   const audioReady = audio ? audio.prime(src, offset, duration) : Promise.resolve();
   guide?.prime(0);
-  return Promise.resolve(audioReady).then(() => {
+  const guideReady = guide?.whenReady?.() ?? Promise.resolve(false);
+  return Promise.all([audioReady, guideReady]).then(() => {
     audio?.reset();
     guide?.reset(0);
   });
 }
 
 // Keep both calls in the same task; callers may observe the returned promise later.
-export async function startMediaTogether(audio, guide, audioTime = 0) {
-  // The native audio clock is authoritative. Wait until its seek back to the
-  // requested start position is confirmed before releasing the guide.
-  if (audio) await audio.release(audioTime);
+export function startMediaTogether(audio, guide, audioTime = 0) {
+  const audioStarted = audio ? audio.release(audioTime) : Promise.resolve();
   guide?.resume(audioTime);
+  return Promise.resolve(audioStarted);
 }
