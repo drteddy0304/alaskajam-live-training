@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildRecording, noteFromGesture, recordingText} from '../recorder.js';
+import {buildRecording, noteFromGesture, recordingText, songTime} from '../recorder.js';
+
+test('five-second audio pre-roll maps exactly to song time zero', () => {
+  assert.equal(songTime(0), 0);
+  assert.equal(songTime(4.999), 0);
+  assert.equal(songTime(5), 0);
+  assert.ok(Math.abs(songTime(5.2) - .2) < 1e-9);
+});
 
 test('tap and swipe use the supplied audio timestamp without release-time delay', () => {
   assert.deepEqual(noteFromGesture(12.34549, 'tap'), {time: 12.345, action: 'CLAP'});

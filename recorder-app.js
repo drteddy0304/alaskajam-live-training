@@ -1,13 +1,15 @@
 import {Music} from './audio.js?v=record2';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=record2';
-import {buildRecording, noteFromGesture, recordingText, TAP_ACTIONS} from './recorder.js?v=record2';
+import {buildRecording, noteFromGesture, recordingText, songTime, TAP_ACTIONS} from './recorder.js?v=record5';
 
+const PRE_ROLL_SECONDS = 5;
 const SONG = Object.freeze({
   id: 'cat-walk-life-timing-take',
   title: 'CAT WALK LIFE',
   duration: 224.39,
-  audio: './assets/audio/cat-walk-life.mp3'
+  audio: './assets/audio/cat-walk-life-recorder.mp3'
 });
+const PLAYBACK_DURATION = SONG.duration + PRE_ROLL_SECONDS;
 const DRAFT_KEY = 'aj-timing-recorder-draft-v1';
 const $ = selector => document.querySelector(selector);
 const intro = $('#recorder-intro');
@@ -76,9 +78,13 @@ function stopAnimation() {
   animation = 0;
 }
 
+function currentSongTime() {
+  return music ? songTime(music.time(), PRE_ROLL_SECONDS) : 0;
+}
+
 function draw() {
   if (phase !== 'playing' || !music) return;
-  const time = Math.min(music.time(), SONG.duration);
+  const time = Math.min(currentSongTime(), SONG.duration);
   elapsed.textContent = formatTime(time, true);
   progress.value = time;
   if (time >= SONG.duration - .02) {
@@ -111,16 +117,12 @@ async function start() {
   pauseButton.disabled = true;
   last.textContent = 'カウント後、必要なボタンを直接押してください';
   music = new Music();
-  // Keep a muted playback alive through the countdown. This preserves the
-  // mobile start-button authorization without letting the song begin audibly.
-  music.media.muted = true;
   music.oninterrupt = () => { if (phase === 'playing') pause(); };
   barrier = new StartBarrier({
     onTick: value => showCountdown(value),
     onPreparing: () => showCountdown('音源を準備中…', true),
     onReady: () => {
-      music.media.currentTime = music.offset;
-      music.media.muted = false;
+      music.media.currentTime = PRE_ROLL_SECONDS;
       showCountdown();
       phase = 'playing';
       pauseButton.disabled = false;
@@ -129,7 +131,7 @@ async function start() {
     },
     onError: showStartError
   });
-  const preparation = music.prime(SONG.audio, 0, SONG.duration).then(() => music.resume());
+  const preparation = music.prime(SONG.audio, 0, PLAYBACK_DURATION).then(() => music.resume());
   barrier.start(preparation);
 }
 
@@ -213,7 +215,7 @@ function reset() {
 document.querySelectorAll('[data-record-now]').forEach(button => button.addEventListener('pointerdown', event => {
   if (phase !== 'playing' || !music || !TAP_ACTIONS.includes(button.dataset.recordNow)) return;
   event.preventDefault();
-  recordGesture('tap', music.time(), button.dataset.recordNow);
+  recordGesture('tap', currentSongTime(), button.dataset.recordNow);
 }));
 startButton.addEventListener('click', start);
 pauseButton.addEventListener('click', () => phase === 'paused' ? resume() : pause());
@@ -233,7 +235,7 @@ pad.addEventListener('pointerdown', event => {
   if (phase !== 'playing') return;
   event.preventDefault();
   pad.setPointerCapture(event.pointerId);
-  pointer = {id: event.pointerId, x: event.clientX, y: event.clientY, started: performance.now(), time: music.time()};
+  pointer = {id: event.pointerId, x: event.clientX, y: event.clientY, started: performance.now(), time: currentSongTime()};
 });
 pad.addEventListener('pointerup', event => {
   if (!pointer || pointer.id !== event.pointerId || phase !== 'playing') return;
