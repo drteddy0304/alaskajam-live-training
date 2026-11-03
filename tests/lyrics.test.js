@@ -87,6 +87,16 @@ test('simultaneous audience words do not add to or replace CLAP scoring', () => 
   assert.equal(chart.notes.filter(note => note.time === clap.time).length, 1);
 });
 
+test('final chorus rounds two and three use recorded CALL taps instead of WIPER', () => {
+  const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
+  const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));
+  const scoredCues = data.cues.filter(cue => cue.start >= 178 && cue.start < 208);
+  const markerTimes = scoredCues.flatMap(cue => cue.markers);
+  assert.ok(scoredCues.every(cue => cue.input === 'tap-call'));
+  assert.deepEqual(chart.notes.filter(note => note.action === 'CALL' && note.time >= 178 && note.time < 208).map(note => note.time), markerTimes);
+  assert.ok(!chart.notes.some(note => note.action === 'WIPER' && note.time >= 178.069));
+});
+
 test('2A 1 2 3 sing-along cue is active at its independent CALL note', () => {
   const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
   const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));

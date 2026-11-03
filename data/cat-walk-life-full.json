@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "id": "cat-walk-life-user-timing-v1",
+  "id": "cat-walk-life-user-timing-v2-final-chorus-calls",
   "title": "CAT WALK LIFE",
   "kind": "guide-beta",
   "source": {
     "name": "公式Cheering Guide参考・ユーザー実演タイミング",
     "url": "https://youtu.be/1y5b0upSCjM",
-    "revision": "2026-11-03-user-recorded-two-pass-v1",
+    "revision": "2026-11-03-user-recorded-final-chorus-calls-v2",
     "timingStatus": "user-recorded",
-    "notes": "1周目のCLAP・WIPER・タップCALLを採点ノーツに採用。2周目のCALLはタップ判定を追加せず、歌詞表示の発声マーカーとして採用。"
+    "notes": "1周目のCLAP・WIPER・タップCALLを基礎に採用。ラストサビは1周目のWIPERだけを残し、2・3周目（178.069秒以降）のWIPER 59件を削除して、2周目に記録したCALL 24件をタップ＋発声ノーツへ変更。その他の2周目CALLは歌詞表示のみ。"
   },
   "duration": 224.39,
   "leadTime": 1.8,
@@ -809,299 +809,124 @@
       "direction": "left"
     },
     {
-      "time": 178.448,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 178.069,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 178.941,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 178.476,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 179.387,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 178.721,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 179.916,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 179.005,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 180.408,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 179.466,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 180.859,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 182.351,
+      "action": "CALL",
+      "hint": "yeah (yeah) yeah (yeah)：タップ＋声を出そう"
     },
     {
-      "time": 181.353,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 183.369,
+      "action": "CALL",
+      "hint": "yeah (yeah) yeah (yeah)：タップ＋声を出そう"
     },
     {
-      "time": 181.801,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 185.755,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 182.292,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 186.281,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 182.787,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 186.565,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 183.276,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 186.808,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 183.809,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 187.256,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 184.297,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 190.179,
+      "action": "CALL",
+      "hint": "yeah (yeah) yeah (yeah)：タップ＋声を出そう"
     },
     {
-      "time": 184.791,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 191.156,
+      "action": "CALL",
+      "hint": "yeah (yeah) yeah (yeah)：タップ＋声を出そう"
     },
     {
-      "time": 185.282,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 193.602,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 185.772,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 194.088,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 186.259,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 194.333,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 186.75,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 194.581,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 187.243,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 195.029,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 187.732,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 201.421,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 188.222,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 201.87,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 188.672,
-      "action": "WIPER",
-      "direction": "left"
+      "time": 202.159,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 189.158,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 202.404,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
-      "time": 189.652,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 190.141,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 190.636,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 191.123,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 191.608,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 192.1,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 192.59,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 193.039,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 193.569,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 194.018,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 194.546,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 195.032,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 195.52,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 196.047,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 196.454,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 196.982,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 197.468,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 197.959,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 198.405,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 198.932,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 199.421,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 199.913,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 200.44,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 200.889,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 201.376,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 201.864,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 202.31,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 202.843,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 203.336,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 203.786,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 204.273,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 204.722,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 205.209,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 205.742,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 206.229,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 206.719,
-      "action": "WIPER",
-      "direction": "right"
+      "time": 202.852,
+      "action": "CALL",
+      "hint": "Na Na Na Na Na：タップ＋声を出そう"
     },
     {
       "time": 207.45,

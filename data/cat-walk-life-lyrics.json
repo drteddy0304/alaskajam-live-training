@@ -5,7 +5,7 @@
   "source": {
     "name": "公式 CAT WALK LIFE Cheering Guide",
     "url": "https://www.youtube.com/watch?v=1y5b0upSCjM",
-    "revision": "2026-11-03-user-recorded-pass2-v1"
+    "revision": "2026-11-03-final-chorus-tap-calls-v2"
   },
   "cues": [
     {
@@ -107,7 +107,8 @@
         178.721,
         179.005,
         179.466
-      ]
+      ],
+      "input": "tap-call"
     },
     {
       "start": 182.351,
@@ -117,7 +118,8 @@
       "markers": [
         182.351,
         183.369
-      ]
+      ],
+      "input": "tap-call"
     },
     {
       "start": 185.755,
@@ -130,7 +132,8 @@
         186.565,
         186.808,
         187.256
-      ]
+      ],
+      "input": "tap-call"
     },
     {
       "start": 190.179,
@@ -140,7 +143,8 @@
       "markers": [
         190.179,
         191.156
-      ]
+      ],
+      "input": "tap-call"
     },
     {
       "start": 193.602,
@@ -153,7 +157,8 @@
         194.333,
         194.581,
         195.029
-      ]
+      ],
+      "input": "tap-call"
     },
     {
       "start": 201.421,
@@ -166,7 +171,8 @@
         202.159,
         202.404,
         202.852
-      ]
+      ],
+      "input": "tap-call"
     },
     {
       "start": 208.231,
@@ -260,5 +266,5 @@
       "status": "screen-observation-boundary-unverified"
     }
   ],
-  "notes": "公式ガイドの文言を正本とし、2周目の声だけCALL実演を表示開始・終了・発声マーカーへ反映。markersは採点対象外。"
+  "notes": "公式ガイドの文言を正本とし、2周目のCALL実演を表示開始・終了・発声マーカーへ反映。ラストサビ2・3周目（178.069–202.852秒）のmarkersはタップ＋発声CALLとして採点し、それ以外の重複CALLは表示のみ。"
 }
