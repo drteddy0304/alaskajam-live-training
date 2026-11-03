@@ -1,22 +1,37 @@
 {
   "version": 1,
-  "timingStatus": "user-recorded-text-verified",
+  "timingStatus": "official-guide-text-verified",
   "leadTime": 2,
   "source": {
     "name": "公式 SNACK SNACK Cheering Guide・ユーザー実演記録",
     "url": "https://www.youtube.com/watch?v=Y04dtYKy-rk",
-    "revision": "2026-11-03-official-guide-text-v1"
+    "revision": "2026-11-03-official-guide-call-text-v2"
   },
   "cues": [
-    {"start":40.98,"end":44.13,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[40.98]},
-    {"start":44.23,"end":47.478,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[44.23]},
-    {"start":47.578,"end":50.78,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[47.578]},
-    {"start":82.614,"end":85.769,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[82.614]},
-    {"start":85.869,"end":89.143,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[85.869]},
-    {"start":89.243,"end":92.443,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[89.243]},
-    {"start":127.553,"end":130.782,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[127.553]},
-    {"start":130.882,"end":134.115,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[130.882]},
-    {"start":134.215,"end":137.42,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[134.215]},
-    {"start":137.52,"end":140.72,"text":"I I I I need a snack (Hey!)","source":"user-recorded pass 2; wording verified from official guide video","markers":[137.52]}
+    {"start":11.836,"end":14.228,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[11.836,12.04,12.243,12.452,13.428]},
+    {"start":18.507,"end":19.894,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[18.507,18.71,18.885,19.094]},
+    {"start":27.469,"end":28.669,"text":"杏仁？ 好吃（ハオチー）","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[27.469]},
+    {"start":29.218,"end":30.418,"text":"マドレーヌ？ C'est bon（セ・ボン）","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[29.218]},
+    {"start":34.488,"end":37.327,"text":"パリポリ デリバリー 止まんない","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[34.488,34.609,34.775,36.041,36.284,36.527]},
+    {"start":40.98,"end":44.13,"text":"I I I I need a snack (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[40.98]},
+    {"start":44.23,"end":47.478,"text":"な な な 何かない？ (Ho!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[44.23]},
+    {"start":47.578,"end":50.78,"text":"お菓子な話 (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[47.578]},
+    {"start":53.468,"end":54.668,"text":"Baby, I really want","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[53.468]},
+    {"start":58.556,"end":60.997,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[58.556,58.763,59.006,59.214,60.197]},
+    {"start":65.26,"end":66.671,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[65.26,65.465,65.668,65.871]},
+    {"start":82.614,"end":85.769,"text":"I I I I need a snack (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[82.614]},
+    {"start":85.869,"end":89.143,"text":"な な な 何かない？ (Ho!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[85.869]},
+    {"start":89.243,"end":92.443,"text":"別腹ギャラクシー (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[89.243]},
+    {"start":127.553,"end":130.782,"text":"I I I I need a snack (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[127.553]},
+    {"start":130.882,"end":134.115,"text":"な な な 何かない？ (Ho!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[130.882]},
+    {"start":134.215,"end":137.42,"text":"お菓子な話 (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[134.215]},
+    {"start":137.52,"end":140.72,"text":"もっと聞かせて all night (Ho!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[137.52]},
+    {"start":140.877,"end":142.042,"text":"I I I I need a snack snack (snack snack!)","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[140.877,141.242]},
+    {"start":144.175,"end":145.39,"text":"き き き 君を食べたい（食べたい！）","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[144.175,144.423,144.59]},
+    {"start":147.56,"end":148.76,"text":"不可避なグラビティ (Ahhhhh!)","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[147.56]},
+    {"start":153.514,"end":155.578,"text":"Piece of cake!","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[153.514,154.125,154.778]},
+    {"start":156.816,"end":158.923,"text":"All for snacks!","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[156.816,157.47,158.123]},
+    {"start":160.152,"end":162.227,"text":"Piece of cake!","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[160.152,160.815,161.427]},
+    {"start":163.535,"end":165.554,"text":"All for snacks!","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[163.535,164.145,164.754]}
   ]
 }

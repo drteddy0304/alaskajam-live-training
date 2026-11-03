@@ -20,12 +20,19 @@ test('SNACK SNACK recording becomes a valid full-song chart',()=>{
   assert.ok(chart.notes.every((note,index)=>index===0||note.time>chart.notes[index-1].time));
 });
 
-test('voice-only CALLs stay display-only and never become scored notes',()=>{
+test('official guide lyrics cover scored and voice-only CALLs without changing scoring',()=>{
   validateLyrics(lyrics,chart.duration);
-  assert.equal(lyrics.timingStatus,'user-recorded-text-verified');
-  assert.deepEqual(lyrics.cues.map(cue=>cue.start),[40.98,44.23,47.578,82.614,85.869,89.243,127.553,130.882,134.215,137.52]);
-  assert.ok(lyrics.cues.every(cue=>cue.text==='I I I I need a snack (Hey!)'));
-  assert.ok(lyrics.cues.every(cue=>cue.end-cue.start>3));
+  assert.equal(lyrics.timingStatus,'official-guide-text-verified');
+  const scoredCues=lyrics.cues.filter(cue=>cue.kind==='scored-call');
+  const voiceCues=lyrics.cues.filter(cue=>cue.kind==='voice-only');
+  assert.equal(scoredCues.length,15);
+  assert.deepEqual(scoredCues.flatMap(cue=>cue.markers),chart.notes.filter(note=>note.action==='CALL').map(note=>note.time));
+  assert.deepEqual(voiceCues.map(cue=>cue.start),[40.98,44.23,47.578,82.614,85.869,89.243,127.553,130.882,134.215,137.52]);
+  assert.deepEqual(voiceCues.map(cue=>cue.text),[
+    'I I I I need a snack (Hey!)','な な な 何かない？ (Ho!)','お菓子な話 (Hey!)',
+    'I I I I need a snack (Hey!)','な な な 何かない？ (Ho!)','別腹ギャラクシー (Hey!)',
+    'I I I I need a snack (Hey!)','な な な 何かない？ (Ho!)','お菓子な話 (Hey!)','もっと聞かせて all night (Ho!)'
+  ]);
   assert.equal(chart.notes.some(note=>note.action==='VOICE_CALL'),false);
 });
 
