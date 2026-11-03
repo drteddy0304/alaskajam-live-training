@@ -106,8 +106,9 @@ export function primeMedia(audio, guide, {src, offset, duration}) {
 }
 
 // Keep both calls in the same task; callers may observe the returned promise later.
-export function startMediaTogether(audio, guide, audioTime = 0) {
-  const audioStarted = audio ? audio.release(audioTime) : Promise.resolve();
+export async function startMediaTogether(audio, guide, audioTime = 0) {
+  // The native audio clock is authoritative. Wait until its seek back to the
+  // requested start position is confirmed before releasing the guide.
+  if (audio) await audio.release(audioTime);
   guide?.resume(audioTime);
-  return Promise.resolve(audioStarted);
 }

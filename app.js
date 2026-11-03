@@ -1,9 +1,9 @@
 import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
-import { Music } from './audio.js?v=countdown1';
+import { Music } from './audio.js?v=countdown2';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
 import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth1';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown1';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown2';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -165,15 +165,24 @@ async function start(song = null) {
       $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
     },
     onPreparing: () => showCountdown('音源を準備中…', true),
-    onReady: () => {
+    onReady: async () => {
+      if (phase !== 'countdown' || document.hidden) { home(); return; }
+      showCountdown('開始位置を調整中…', true);
+      try {
+        await startMediaTogether(audio, guide, 0);
+      } catch (error) {
+        if (phase !== 'countdown') return;
+        hideCountdown(); audio?.close(); audio = null; guide?.stop(); starting = false; phase = 'home';
+        $('try-demo').disabled = false; $('retry').disabled = false;
+        $('load-status').textContent = error?.message || '音源を再生できませんでした。もう一度開始してください。'; show('home');
+        return;
+      }
       if (phase !== 'countdown' || document.hidden) { home(); return; }
       hideCountdown(); $('load-status').textContent = '';
       startAt = performance.now(); phase = 'playing'; starting = false;
       $('try-demo').disabled = false; $('retry').disabled = false;
       $('pad').disabled = false; $('wiper-left').disabled = false; $('wiper-right').disabled = false; $('pause').disabled = false; $('seek').disabled = false; $('seek-back').disabled = false; $('seek-forward').disabled = false;
-      const started = startMediaTogether(audio, guide, 0);
       $('pause').focus({preventScroll:true}); draw();
-      started.catch(() => { if (phase === 'playing') pause(); document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; });
     },
     onError: () => {
       if (phase !== 'countdown') return;
