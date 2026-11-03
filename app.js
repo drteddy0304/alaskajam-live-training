@@ -2,8 +2,8 @@ import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
 import { Music } from './audio.js?v=countdown3';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth3';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown4';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth4';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown5';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -11,15 +11,22 @@ const $ = id => document.getElementById(id);
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印と同じ向きのWIPERボタンを押そう！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
-let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false;
+let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false, pendingStart = null;
 function showCountdown(value, preparing = false) {
   const state = countdownOverlayState(value, preparing);
   $('countdown-overlay').hidden = state.hidden;
   $('countdown-overlay').classList.toggle('is-preparing', state.preparing);
   $('countdown-label').textContent = state.label;
   $('countdown-value').textContent = state.value;
+  $('countdown-start').hidden = true;
 }
-function hideCountdown() { const state = countdownOverlayState(); $('countdown-overlay').hidden = state.hidden; $('countdown-overlay').classList.remove('is-preparing'); }
+function hideCountdown() { const state = countdownOverlayState(); $('countdown-overlay').hidden = state.hidden; $('countdown-overlay').classList.remove('is-preparing'); $('countdown-start').hidden = true; pendingStart = null; }
+function askForStartTap(callback) {
+  pendingStart = callback;
+  showCountdown('動画の再生にはタップが必要です', true);
+  $('countdown-start').hidden = false;
+  $('countdown-start').focus({preventScroll:true});
+}
 function drawLyrics(time) {
   const data = lyrics.get(chart.lyrics);
   const state = data ? lyricAt(data.cues, time, data.leadTime) : null;
@@ -167,22 +174,29 @@ async function start(song = null) {
     onPreparing: () => showCountdown('音源と動画を準備中…', true),
     onReady: async () => {
       if (phase !== 'countdown' || document.hidden) { home(); return; }
-      showCountdown('開始位置を調整中…', true);
-      try {
-        await startMediaTogether(audio, guide, 0);
-      } catch (error) {
-        if (phase !== 'countdown') return;
-        hideCountdown(); audio?.close(); audio = null; guide?.stop(); starting = false; phase = 'home';
+      let releasing = false;
+      const beginPlayback = async () => {
+        if (phase !== 'countdown' || releasing) return;
+        releasing = true; pendingStart = null; $('countdown-start').hidden = true;
+        showCountdown('開始位置を調整中…', true);
+        try {
+          await startMediaTogether(audio, guide, 0);
+        } catch (error) {
+          if (phase !== 'countdown') return;
+          hideCountdown(); audio?.close(); audio = null; guide?.stop(); starting = false; phase = 'home';
+          $('try-demo').disabled = false; $('retry').disabled = false;
+          $('load-status').textContent = error?.message || '音源を再生できませんでした。もう一度開始してください。'; show('home');
+          return;
+        }
+        if (phase !== 'countdown' || document.hidden) { home(); return; }
+        hideCountdown(); $('load-status').textContent = '';
+        startAt = performance.now(); phase = 'playing'; starting = false;
         $('try-demo').disabled = false; $('retry').disabled = false;
-        $('load-status').textContent = error?.message || '音源を再生できませんでした。もう一度開始してください。'; show('home');
-        return;
-      }
-      if (phase !== 'countdown' || document.hidden) { home(); return; }
-      hideCountdown(); $('load-status').textContent = '';
-      startAt = performance.now(); phase = 'playing'; starting = false;
-      $('try-demo').disabled = false; $('retry').disabled = false;
-      $('pad').disabled = false; $('wiper-left').disabled = false; $('wiper-right').disabled = false; $('pause').disabled = false; $('seek').disabled = false; $('seek-back').disabled = false; $('seek-forward').disabled = false;
-      $('pause').focus({preventScroll:true}); draw();
+        $('pad').disabled = false; $('wiper-left').disabled = false; $('wiper-right').disabled = false; $('pause').disabled = false; $('seek').disabled = false; $('seek-back').disabled = false; $('seek-forward').disabled = false;
+        $('pause').focus({preventScroll:true}); draw();
+      };
+      if (guide?.requiresUserGesture?.()) { askForStartTap(beginPlayback); return; }
+      await beginPlayback();
     },
     onError: () => {
       if (phase !== 'countdown') return;
@@ -245,6 +259,7 @@ $('video-toggle').addEventListener('click', () => {
   guide?.setEnabled(videoEnabled);
 });
 $('try-demo').addEventListener('click', () => $('setlist').scrollIntoView({behavior:'smooth',block:'start'})); $('retry').addEventListener('click', () => start());
+$('countdown-start').addEventListener('click', () => pendingStart?.());
 $('pause').addEventListener('click', pause); $('resume').addEventListener('click', resume);
 $('seek').addEventListener('pointerdown', () => { seeking = true; });
 $('seek').addEventListener('input', event => { seeking = true; $('elapsed').textContent = formatTime(Number(event.target.value)); });

@@ -40,14 +40,14 @@ test('countdown overlay state is visible for ticks, switches to preparing, and h
   assert.deepEqual(countdownOverlayState('音源を準備中…',true),{hidden:false,preparing:true,label:'PLEASE WAIT',value:'音源を準備中…'});
   assert.equal(countdownOverlayState().hidden,true);
 });
-test('audio and guide are requested synchronously before audio readiness settles, then reset',async()=>{
+test('audio and muted guide prewarm are requested synchronously before settling, then reset',async()=>{
   const calls=[];let settle,guideSettle;
   const audio={prime(){calls.push('audio-play');return new Promise(r=>settle=r);},reset(){calls.push('audio-reset');}};
-  const guide={prime(){calls.push('guide-prime');},whenReady(){calls.push('guide-wait');return new Promise(r=>guideSettle=r);},reset(){calls.push('guide-reset');}};
+  const guide={prime(){calls.push('guide-prime');return new Promise(r=>guideSettle=r);},reset(){calls.push('guide-reset');}};
   const ready=primeMedia(audio,guide,{src:'x',offset:0,duration:10});
-  assert.deepEqual(calls,['audio-play','guide-prime','guide-wait']);settle();await Promise.resolve();
-  assert.deepEqual(calls,['audio-play','guide-prime','guide-wait']);guideSettle();await ready;
-  assert.deepEqual(calls,['audio-play','guide-prime','guide-wait','audio-reset','guide-reset']);
+  assert.deepEqual(calls,['audio-play','guide-prime']);settle();await Promise.resolve();
+  assert.deepEqual(calls,['audio-play','guide-prime']);guideSettle();await ready;
+  assert.deepEqual(calls,['audio-play','guide-prime','audio-reset','guide-reset']);
 });
 test('countdown completion starts both media in one task; video OFF/failure is non-blocking',async()=>{
   const calls=[];let settle;

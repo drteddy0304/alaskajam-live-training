@@ -98,8 +98,7 @@ export class StartBarrier {
 // Both playback requests happen before this function returns its first promise.
 export function primeMedia(audio, guide, {src, offset, duration}) {
   const audioReady = audio ? audio.prime(src, offset, duration) : Promise.resolve();
-  guide?.prime(0);
-  const guideReady = guide?.whenReady?.() ?? Promise.resolve(false);
+  const guideReady = guide?.prime?.(0) ?? Promise.resolve(false);
   return Promise.all([audioReady, guideReady]).then(() => {
     audio?.reset();
     guide?.reset(0);

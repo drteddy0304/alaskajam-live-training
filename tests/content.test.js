@@ -17,7 +17,7 @@ test('QUATTRO training setlist contains only CATWALK LIFE and SNACK SNACK',()=>{
   assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=opening3');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
   assert.match(app,/songs\.json\?v=opening3/);
-  assert.match(html,/app\.js\?v=stability5/);
+  assert.match(html,/app\.js\?v=stability6/);
 });
 
 test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
@@ -45,7 +45,13 @@ test('play screen uses dedicated left and right WIPER buttons instead of swipe i
 test('smartphone play view keeps all controls inside the dynamic viewport',()=>{
   assert.match(css,/body\[data-page=play\]\{height:100dvh;overflow:hidden\}/);
   assert.match(css,/\.wiper-controls button\{min-height:clamp\(46px,8dvh,56px\)/);
-  assert.match(html,/style\.css\?v=record3/);
+  assert.match(html,/style\.css\?v=record4/);
+});
+
+test('blocked mobile YouTube start falls back to an explicit synchronized start tap',()=>{
+  assert.match(html,/id="countdown-start"[^>]*>動画と曲を開始</);
+  assert.match(app,/guide\?\.requiresUserGesture\?\.\(\)/);
+  assert.match(app,/askForStartTap\(beginPlayback\)/);
 });
 
 test('recorder separates scored tap CALL from voice-only CALL',()=>{

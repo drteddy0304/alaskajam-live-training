@@ -17,8 +17,12 @@ export class GuidePlayback {
     this.intent = 'stopped';
     this.audioTime = 0;
     this.restart = false;
+    this.primed = false;
+    this.needsUserGesture = false;
+    this.primeWait = null;
     this.nextSyncAt = Infinity;
     this.readiness = new Promise(resolve => { this.resolveReadiness = resolve; });
+    this.setTimeout = timers.setTimeout.bind(timers);
     this.timeout = timers.setTimeout(() => this.fail('timeout'), timeoutMs);
     this.clearTimeout = timers.clearTimeout.bind(timers);
   }
@@ -37,9 +41,22 @@ export class GuidePlayback {
   }
   onError(code) { this.fail(`error:${code}`); }
   onAutoplayBlocked() {
+    this.needsUserGesture = true;
+    this.settlePrime(false);
+    if (this.intent === 'priming') this.intent = 'paused';
     this.callbacks.onAutoplayBlocked?.();
   }
   onStateChange(state) {
+    if (state === 1) this.needsUserGesture = false;
+    if (state === 1 && this.intent === 'priming') {
+      this.primed = true;
+      this.needsUserGesture = false;
+      this.intent = 'paused';
+      this.call('pauseVideo');
+      this.reset(this.audioTime);
+      this.settlePrime(true);
+      return;
+    }
     // Programmatic pauses change intent first. PAUSED while the guide still
     // intends to play therefore came from the YouTube player controls.
     if (state === 2 && this.intent === 'playing' && this.enabled) this.callbacks.onPauseRequest?.();
@@ -51,7 +68,15 @@ export class GuidePlayback {
     this.clearTimeout(this.timeout);
     this.resolveReadiness?.(false);
     this.resolveReadiness = null;
+    this.settlePrime(false);
     this.callbacks.onFailure?.(reason);
+  }
+  settlePrime(value) {
+    if (!this.primeWait) return;
+    this.clearTimeout(this.primeWait.timer);
+    const resolve = this.primeWait.resolve;
+    this.primeWait = null;
+    resolve(value);
   }
   whenReady() {
     if (!this.enabled || this.failed) return Promise.resolve(false);
@@ -66,9 +91,16 @@ export class GuidePlayback {
   apply() {
     if (!this.ready || this.failed) return false;
     this.call('mute');
+    if (this.intent === 'priming') {
+      const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
+      this.call('seekTo', target, true);
+      return this.call('playVideo');
+    }
     if (!this.enabled || this.intent !== 'playing') return this.call('pauseVideo');
     const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
-    if (this.restart || validGuideOffset(this.mapping)) this.call('seekTo', target, true);
+    let current = NaN;
+    try { current = this.player?.getCurrentTime?.(); } catch {}
+    if (this.restart || !Number.isFinite(current) || Math.abs(current - target) > .35) this.call('seekTo', target, true);
     this.restart = false;
     return this.call('playVideo');
   }
@@ -77,10 +109,22 @@ export class GuidePlayback {
     return this.apply();
   }
   prime(audioTime = 0) {
-    // Muted YouTube playback does not need to run behind the countdown. Keep
-    // the player stopped at its mapped start until the MP3 is released.
-    this.intent = 'paused'; this.audioTime = audioTime; this.restart = false;
-    return this.reset(audioTime);
+    // Start muted playback while the song-selection tap is still active. This
+    // authorizes and buffers the iframe before the five-second countdown ends.
+    if (!this.enabled || this.failed) return Promise.resolve(false);
+    if (this.primeWait) return this.primeWait.promise;
+    this.intent = 'priming'; this.audioTime = audioTime; this.restart = false;
+    this.needsUserGesture = false;
+    let resolve;
+    const promise = new Promise(done => { resolve = done; });
+    const timer = this.setTimeout(() => {
+      this.needsUserGesture = true;
+      if (this.intent === 'priming') this.reset(this.audioTime);
+      this.settlePrime(false);
+    }, 9000);
+    this.primeWait = {promise, resolve, timer};
+    this.apply();
+    return promise;
   }
   reset(audioTime = 0) {
     this.audioTime = audioTime; this.restart = false;
@@ -111,7 +155,8 @@ export class GuidePlayback {
     else this.call('pauseVideo');
     return moved;
   }
-  stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
+  stop() { this.intent = 'stopped'; this.restart = false; this.settlePrime(false); return this.call('pauseVideo'); }
+  requiresUserGesture() { return this.enabled && !this.failed && this.needsUserGesture; }
   resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_SYNC_CHECK_DELAY; }
   // MP3 time is authoritative. Check once just after start/resume. Repeated
   // seeks make YouTube request new segments and cause visible mobile stutter.
