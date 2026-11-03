@@ -5,6 +5,14 @@ export function songTime(playbackTime, preRoll = 5) {
   return Math.max(0, playbackTime - preRoll);
 }
 
+export function rewindTake(currentTime, seconds, notes) {
+  if (!Number.isFinite(currentTime) || currentTime < 0 || !Number.isFinite(seconds) || seconds <= 0 || !Array.isArray(notes)) {
+    throw new TypeError('巻き戻し情報が不正です');
+  }
+  const time = Math.max(0, currentTime - seconds);
+  return {time, notes: notes.filter(note => note.time < time).map(note => ({...note}))};
+}
+
 function cleanTime(time) {
   if (!Number.isFinite(time) || time < 0) throw new TypeError('記録時刻は0以上の数値が必要です');
   return Math.round(time * 1000) / 1000;
