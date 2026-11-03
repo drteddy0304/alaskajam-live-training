@@ -1,9 +1,9 @@
-import { Session, validateChart, WINDOWS } from './engine.js?v=sync4';
-import { Music } from './audio.js?v=sync4';
-import { lyricAt, validateLyrics } from './lyrics.js?v=sync4';
-import { noteStyle, visibleLaneNotes } from './lane.js?v=sync4';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=sync4';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=sync4';
+import { Session, validateChart, WINDOWS } from './engine.js?v=recorded1';
+import { Music } from './audio.js?v=recorded1';
+import { lyricAt, validateLyrics } from './lyrics.js?v=recorded1';
+import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded1';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded1';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded1';
 
 const charts = new Map();
 const lyrics = new Map();
@@ -140,7 +140,7 @@ async function start(song = null) {
   $('play-title').textContent = chart.title; $('progress').max = chart.duration; $('progress').value = 0;
   $('elapsed').textContent = formatTime(0); $('duration').textContent = formatTime(chart.duration);
   $('play-edition').textContent = chart.kind === 'demo' ? (audio ? 'MUSIC ON / DEMO CHART' : 'SOUNDLESS DEMO') : 'LIVE TRAINING';
-  $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : 'Cheering Guide参考 / フル尺 / タイミングは調整中';
+  $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : '実演記録反映 / フル尺 / 声だけCALLは歌詞表示';
   $('combo').textContent = '0 COMBO'; $('next').textContent = 'NEXT —'; $('next-time').textContent = '開始後に採点します';
   $('cue-label').textContent = 'COUNTDOWN'; $('cue-action').textContent = '準備中';
   $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
@@ -239,7 +239,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'sync4');
+  url.searchParams.set('v', 'recorded1');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();

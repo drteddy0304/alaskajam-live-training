@@ -31,6 +31,20 @@ test('all missed scores zero; good scores 70; new session resets', () => {
   assert.equal(good.summary().readiness,70);
   assert.equal(new Session(chart).results.filter(Boolean).length,0);
 });
-test('bad charts fail before play: empty, unordered, invalid action, overlapping windows, duration', () => {
-  for (const patch of [{notes:[]},{notes:[{time:2,action:'FLY'}]},{notes:[{time:2,action:'WIPER'}]},{notes:[{time:2,action:'CLAP'},{time:2.1,action:'CALL'}]},{duration:38},{leadTime:0},{audio:{src:'test.mp3'}}]) assert.throws(() => validateChart({...chart,...patch}));
+test('dense rhythms choose the nearest compatible note inside overlapping windows', () => {
+  const dense = {...chart, notes:[
+    {time:2,action:'CLAP'},
+    {time:2.18,action:'CLAP'},
+    {time:2.36,action:'WIPER',direction:'left'},
+    {time:2.54,action:'WIPER',direction:'right'}
+  ]};
+  const session = new Session(dense);
+  assert.equal(session.input(2.17,'tap').index,1);
+  assert.equal(session.input(2.01,'tap').index,0);
+  assert.equal(session.input(2.53,'right').index,3);
+  assert.equal(session.input(2.37,'left').index,2);
+  assert.equal(session.summary().readiness,100);
+});
+test('bad charts fail before play: empty, unordered, duplicate, invalid action, and duration', () => {
+  for (const patch of [{notes:[]},{notes:[{time:2,action:'FLY'}]},{notes:[{time:2,action:'WIPER'}]},{notes:[{time:2,action:'CLAP'},{time:2,action:'CALL'}]},{notes:[{time:2.1,action:'CLAP'},{time:2,action:'CALL'}]},{duration:38},{leadTime:0},{audio:{src:'test.mp3'}}]) assert.throws(() => validateChart({...chart,...patch}));
 });

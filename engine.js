@@ -4,7 +4,7 @@ export function validateChart(chart) {
   if (chart.version !== 1 || !chart.id || !chart.title || !Number.isFinite(chart.duration) || chart.duration <= 0 || !Number.isFinite(chart.leadTime) || chart.leadTime < WINDOWS.good || !Array.isArray(chart.notes) || !chart.notes.length) throw new Error('譜面の形式が正しくありません');
   let previous = -Infinity;
   for (const note of chart.notes) {
-    if (!Number.isFinite(note.time) || note.time < 0 || note.time + WINDOWS.good > chart.duration || note.time - previous <= 2 * WINDOWS.good || !actions.includes(note.action) || (note.action === 'WIPER' && !['left', 'right'].includes(note.direction))) throw new Error('譜面の時刻・アクションが正しくありません');
+    if (!Number.isFinite(note.time) || note.time < 0 || note.time + WINDOWS.good > chart.duration || note.time <= previous || !actions.includes(note.action) || (note.action === 'WIPER' && !['left', 'right'].includes(note.direction))) throw new Error('譜面の時刻・アクションが正しくありません');
     previous = note.time;
   }
   if (chart.audio !== null && (!chart.audio || typeof chart.audio.src !== 'string' || !chart.audio.src || !Number.isFinite(chart.audio.offset) || chart.audio.offset < 0)) throw new Error('音源設定が正しくありません');
@@ -27,7 +27,15 @@ export class Session {
   }
   input(time, gesture) {
     this.advance(time);
-    const index = this.chart.notes.findIndex((note, i) => !this.results[i] && Math.abs(time - note.time) <= WINDOWS.good + 1e-9);
+    const candidates = this.chart.notes
+      .map((note, index) => ({ note, index, delta: Math.abs(time - note.time) }))
+      .filter(({ index, delta }) => !this.results[index] && delta <= WINDOWS.good + 1e-9)
+      .sort((a, b) => {
+        const aMatches = a.note.action === 'WIPER' ? gesture === a.note.direction : gesture === 'tap';
+        const bMatches = b.note.action === 'WIPER' ? gesture === b.note.direction : gesture === 'tap';
+        return Number(bMatches) - Number(aMatches) || a.delta - b.delta || a.index - b.index;
+      });
+    const index = candidates[0]?.index ?? -1;
     if (index < 0) return null;
     const note = this.chart.notes[index];
     const correct = note.action === 'WIPER' ? gesture === note.direction : gesture === 'tap';

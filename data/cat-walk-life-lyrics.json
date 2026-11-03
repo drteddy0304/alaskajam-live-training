@@ -1,24 +1,34 @@
 {
   "version": 1,
-  "timingStatus": "verified",
+  "timingStatus": "user-recorded",
   "leadTime": 2,
   "source": {
     "name": "公式 CAT WALK LIFE Cheering Guide",
     "url": "https://www.youtube.com/watch?v=1y5b0upSCjM",
-    "revision": "2026-09-23-red-active-10fps-waveform-sync"
+    "revision": "2026-11-03-user-recorded-pass2-v1"
   },
   "cues": [
     {
-      "start": 1.2492,
-      "end": 2.4492,
+      "start": 1.415,
+      "end": 2.422,
       "text": "MEOW MEOW MEOW",
-      "source": "official guide video 9.5–10.7s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        1.415,
+        1.74,
+        2.072
+      ]
     },
     {
-      "start": 3.1492,
-      "end": 4.3492,
+      "start": 3.333,
+      "end": 4.373,
       "text": "PURR PURR PURR",
-      "source": "official guide video 11.4–12.6s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        3.333,
+        3.657,
+        4.023
+      ]
     },
     {
       "start": 10.7492,
@@ -33,22 +43,40 @@
       "source": "official guide video 35.7–37.3s red-active"
     },
     {
-      "start": 61.7492,
-      "end": 62.9492,
+      "start": 61.964,
+      "end": 62.924,
       "text": "MEOW MEOW MEOW",
-      "source": "official guide video 70.0–71.2s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        61.964,
+        62.248,
+        62.574
+      ]
     },
     {
-      "start": 63.6492,
-      "end": 64.8492,
+      "start": 63.808,
+      "end": 64.853,
       "text": "PURR PURR PURR",
-      "source": "official guide video 71.9–73.1s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        63.808,
+        64.175,
+        64.503
+      ]
     },
     {
-      "start": 66.6492,
-      "end": 68.8492,
+      "start": 66.78,
+      "end": 68.77,
       "text": "ki-ki-ki-ki kitty hey!",
-      "source": "official guide video 74.9–77.1s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        66.78,
+        67.023,
+        67.27,
+        67.513,
+        67.757,
+        68.42
+      ]
     },
     {
       "start": 99.5492,
@@ -69,81 +97,155 @@
       "source": "official guide video 134.0–136.0s red-active"
     },
     {
-      "start": 177.9492,
-      "end": 179.9492,
+      "start": 178.069,
+      "end": 179.816,
       "text": "Na Na Na Na Na",
-      "source": "official guide video 186.2–188.2s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        178.069,
+        178.476,
+        178.721,
+        179.005,
+        179.466
+      ]
     },
     {
-      "start": 181.7492,
-      "end": 183.8492,
+      "start": 182.351,
+      "end": 183.719,
       "text": "yeah (yeah) yeah (yeah)",
-      "source": "official guide video 190.0–192.1s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        182.351,
+        183.369
+      ]
     },
     {
-      "start": 185.6492,
-      "end": 187.6492,
+      "start": 185.755,
+      "end": 187.606,
       "text": "Na Na Na Na Na",
-      "source": "official guide video 193.9–195.9s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        185.755,
+        186.281,
+        186.565,
+        186.808,
+        187.256
+      ]
     },
     {
-      "start": 189.5492,
-      "end": 191.6492,
+      "start": 190.179,
+      "end": 191.506,
       "text": "yeah (yeah) yeah (yeah)",
-      "source": "official guide video 197.8–199.9s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        190.179,
+        191.156
+      ]
     },
     {
-      "start": 193.4492,
-      "end": 197.1492,
+      "start": 193.602,
+      "end": 195.379,
       "text": "Na Na Na Na Na",
-      "source": "official guide video 201.7–205.4s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        193.602,
+        194.088,
+        194.333,
+        194.581,
+        195.029
+      ]
     },
     {
-      "start": 201.3492,
-      "end": 205.0492,
+      "start": 201.421,
+      "end": 203.202,
       "text": "Na Na Na Na Na",
-      "source": "official guide video 209.6–213.3s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        201.421,
+        201.87,
+        202.159,
+        202.404,
+        202.852
+      ]
     },
     {
-      "start": 208.0492,
-      "end": 209.2492,
+      "start": 208.231,
+      "end": 209.31,
       "text": "MEOW MEOW MEOW",
-      "source": "official guide video 216.3–217.5s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        208.231,
+        208.594,
+        208.96
+      ]
     },
     {
-      "start": 209.9492,
-      "end": 211.1492,
+      "start": 210.22,
+      "end": 211.269,
       "text": "PURR PURR PURR",
-      "source": "official guide video 218.2–219.4s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        210.22,
+        210.55,
+        210.919
+      ]
     },
     {
-      "start": 213.0492,
-      "end": 215.0492,
+      "start": 213.115,
+      "end": 215.135,
       "text": "ki-ki-ki-ki kitty hey!",
-      "source": "official guide video 221.3–223.3s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        213.115,
+        213.401,
+        213.647,
+        213.891,
+        214.135,
+        214.257,
+        214.785
+      ]
     },
     {
-      "start": 215.8492,
-      "end": 217.0492,
+      "start": 216.053,
+      "end": 217.096,
       "text": "MEOW MEOW MEOW",
-      "source": "official guide video 224.1–225.3s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        216.053,
+        216.422,
+        216.746
+      ]
     },
     {
-      "start": 217.7492,
-      "end": 218.9492,
+      "start": 218.009,
+      "end": 219.054,
       "text": "PURR PURR PURR",
-      "source": "official guide video 226.0–227.2s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        218.009,
+        218.336,
+        218.704
+      ]
     },
     {
-      "start": 220.8492,
-      "end": 223.2492,
+      "start": 220.937,
+      "end": 222.918,
       "text": "ki-ki-ki-ki kitty hey!",
-      "source": "official guide video 229.1–231.5s red-active"
+      "source": "user-recorded pass 2 (2026-11-03)",
+      "markers": [
+        220.937,
+        221.221,
+        221.424,
+        221.667,
+        221.914,
+        221.995,
+        222.568
+      ]
     }
   ],
   "observations": [
     {
-      "videoTime": 8.0,
+      "videoTime": 8,
       "text": "intro shout",
       "status": "screen-observation-boundary-unverified"
     },
@@ -158,5 +260,5 @@
       "status": "screen-observation-boundary-unverified"
     }
   ],
-  "notes": "赤色アクティブ区間を10 fpsで走査し、動画時刻から確認済みオフセット8.2508秒を引いてMP3時刻へ変換。134.0–136.0秒の歓声は目視確認済みで境界は丸め値。intro shout / woo / Hiは短い画面表示を確認したが赤色境界未確定のため観測記録のみ。表示は採点と独立。"
+  "notes": "公式ガイドの文言を正本とし、2周目の声だけCALL実演を表示開始・終了・発声マーカーへ反映。markersは採点対象外。"
 }

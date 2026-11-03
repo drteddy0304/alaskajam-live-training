@@ -10,7 +10,10 @@ export function validateLyrics(data, duration = Infinity) {
     if (!Number.isFinite(cue.start) || !Number.isFinite(cue.end) || cue.start < 0 ||
         cue.end <= cue.start || cue.end > duration || cue.start < previousEnd ||
         typeof cue.text !== 'string' || !cue.text.trim() ||
-        typeof cue.source !== 'string' || !cue.source.trim()) {
+        typeof cue.source !== 'string' || !cue.source.trim() ||
+        (cue.markers !== undefined && (!Array.isArray(cue.markers) || !cue.markers.length ||
+          cue.markers.some((marker, index) => !Number.isFinite(marker) || marker < cue.start || marker >= cue.end ||
+            (index > 0 && marker <= cue.markers[index - 1]))))) {
       throw new Error('歌詞の時刻・並び・文字列が正しくありません');
     }
     previousEnd = cue.end;

@@ -50,13 +50,14 @@ test('display is derived only from playback time across scoring, pause, resume, 
 test('production cues use verified MP3 boundaries and retain uncertain observations', () => {
   const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
   validateLyrics(data, 224.391875);
-  assert.equal(data.timingStatus, 'verified');
+  assert.equal(data.timingStatus, 'user-recorded');
   assert.equal(data.leadTime, 2);
   assert.equal(data.cues.length, 22);
   assert.deepEqual(data.observations.map(item => item.videoTime), [8, 51.9, 59.9]);
 
   const first = data.cues[0];
-  assert.deepEqual([first.start, first.end, first.text], [1.2492, 2.4492, 'MEOW MEOW MEOW']);
+  assert.deepEqual([first.start, first.end, first.text], [1.415, 2.422, 'MEOW MEOW MEOW']);
+  assert.deepEqual(first.markers, [1.415, 1.74, 2.072]);
   assert.equal(lyricAt(data.cues, first.start - 2.0001, data.leadTime), null);
   assert.equal(lyricAt(data.cues, first.start - 2, data.leadTime).phase, 'upcoming');
   assert.equal(lyricAt(data.cues, first.start, data.leadTime).phase, 'active');
@@ -89,7 +90,7 @@ test('simultaneous audience words do not add to or replace CLAP scoring', () => 
 test('2A 1 2 3 sing-along cue is active at its independent CALL note', () => {
   const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
   const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));
-  const call = chart.notes.find(note => note.time === 104.9792);
+  const call = chart.notes.find(note => note.time === 104.785);
   const display = lyricAt(data.cues, call.time, data.leadTime);
   assert.equal(call.action, 'CALL');
   assert.equal(display.cue.text, '1 2 3');
@@ -99,7 +100,7 @@ test('2A 1 2 3 sing-along cue is active at its independent CALL note', () => {
 test('AJ sing-along cue is active at its independent scored CALL note', () => {
   const data = JSON.parse(readFileSync(new URL('../data/cat-walk-life-lyrics.json', import.meta.url)));
   const chart = JSON.parse(readFileSync(new URL('../data/cat-walk-life-full.json', import.meta.url)));
-  const call = chart.notes.find(note => note.time === 27.7792);
+  const call = chart.notes.find(note => note.time === 27.973);
   const display = lyricAt(data.cues, call.time, data.leadTime);
   assert.equal(call.action, 'CALL');
   assert.equal(call.hint, 'AJ！タップ＋声を出そう');

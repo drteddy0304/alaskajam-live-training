@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "id": "cat-walk-life-guide-beta-v5-clap-quarter-wiper",
+  "id": "cat-walk-life-user-timing-v1",
   "title": "CAT WALK LIFE",
   "kind": "guide-beta",
   "source": {
-    "name": "公式Cheering Guide参考・暫定練習譜面",
+    "name": "公式Cheering Guide参考・ユーザー実演タイミング",
     "url": "https://youtu.be/1y5b0upSCjM",
-    "revision": "2026-10-02-beta5-clap-quarter-wiper",
-    "timingStatus": "provisional",
-    "notes": "CLAPは提供MP3内で約0.976秒ごとに反復する高域打音列へ再配置。WIPERはサビ頭77.53 / 109.81 / 163.47秒から123 BPMの四分音符（約0.488秒）で再構築。AJの27.7792秒CALLと2Aの104.9792秒CALLはフレーム確認値を維持。その他のCALLと区間終端は引き続き暫定。"
+    "revision": "2026-11-03-user-recorded-two-pass-v1",
+    "timingStatus": "user-recorded",
+    "notes": "1周目のCLAP・WIPER・タップCALLを採点ノーツに採用。2周目のCALLはタップ判定を追加せず、歌詞表示の発声マーカーとして採用。"
   },
   "duration": 224.39,
   "leadTime": 1.8,
@@ -26,685 +26,1242 @@
   },
   "notes": [
     {
-      "time": 1.195,
+      "time": 0.642,
       "action": "CLAP"
     },
     {
-      "time": 2.18,
+      "time": 0.885,
       "action": "CLAP"
     },
     {
-      "time": 3.135,
+      "time": 1.336,
       "action": "CLAP"
     },
     {
-      "time": 4.115,
+      "time": 1.742,
       "action": "CLAP"
     },
     {
-      "time": 5.11,
+      "time": 2.07,
       "action": "CLAP"
     },
     {
-      "time": 6.08,
+      "time": 2.562,
       "action": "CLAP"
     },
     {
-      "time": 7.07,
+      "time": 2.807,
       "action": "CLAP"
     },
     {
-      "time": 8.02,
+      "time": 3.297,
       "action": "CLAP"
     },
     {
-      "time": 9.01,
+      "time": 3.663,
       "action": "CLAP"
     },
     {
-      "time": 27.7792,
+      "time": 3.996,
+      "action": "CLAP"
+    },
+    {
+      "time": 4.28,
+      "action": "CLAP"
+    },
+    {
+      "time": 4.564,
+      "action": "CLAP"
+    },
+    {
+      "time": 4.808,
+      "action": "CLAP"
+    },
+    {
+      "time": 5.092,
+      "action": "CLAP"
+    },
+    {
+      "time": 5.335,
+      "action": "CLAP"
+    },
+    {
+      "time": 5.579,
+      "action": "CLAP"
+    },
+    {
+      "time": 5.822,
+      "action": "CLAP"
+    },
+    {
+      "time": 6.075,
+      "action": "CLAP"
+    },
+    {
+      "time": 6.318,
+      "action": "CLAP"
+    },
+    {
+      "time": 6.561,
+      "action": "CLAP"
+    },
+    {
+      "time": 6.806,
+      "action": "CLAP"
+    },
+    {
+      "time": 7.05,
+      "action": "CLAP"
+    },
+    {
+      "time": 7.293,
+      "action": "CLAP"
+    },
+    {
+      "time": 7.537,
+      "action": "CLAP"
+    },
+    {
+      "time": 7.744,
+      "action": "CLAP"
+    },
+    {
+      "time": 7.987,
+      "action": "CLAP"
+    },
+    {
+      "time": 27.973,
       "action": "CALL",
       "hint": "AJ！タップ＋声を出そう"
     },
     {
-      "time": 51,
-      "action": "CALL"
-    },
-    {
-      "time": 61.675,
-      "action": "CLAP"
-    },
-    {
-      "time": 62.6506,
-      "action": "CLAP"
-    },
-    {
-      "time": 63.6262,
-      "action": "CLAP"
-    },
-    {
-      "time": 64.6018,
-      "action": "CLAP"
-    },
-    {
-      "time": 65.5774,
-      "action": "CLAP"
-    },
-    {
-      "time": 66.553,
-      "action": "CLAP"
-    },
-    {
-      "time": 67.5287,
-      "action": "CLAP"
-    },
-    {
-      "time": 68.5043,
-      "action": "CLAP"
-    },
-    {
-      "time": 69.4799,
-      "action": "CLAP"
-    },
-    {
-      "time": 70.4555,
-      "action": "CLAP"
-    },
-    {
-      "time": 71.4311,
-      "action": "CLAP"
-    },
-    {
-      "time": 72.4067,
-      "action": "CLAP"
-    },
-    {
-      "time": 73.3823,
-      "action": "CLAP"
-    },
-    {
-      "time": 74.3579,
-      "action": "CLAP"
-    },
-    {
-      "time": 77.53,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 78.0178,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 78.5056,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 78.9934,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 79.4812,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 79.969,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 80.4568,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 80.9446,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 81.4324,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 81.9202,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 82.408,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 82.8959,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 83.3837,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 83.8715,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 84.3593,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 84.8471,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 85.3349,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 85.8227,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 86.3105,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 86.7983,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 87.2861,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 87.7739,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 88.2617,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 88.7495,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 89.2373,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 89.7251,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 90.2129,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 90.7007,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 91.1885,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 101,
-      "action": "CALL"
-    },
-    {
-      "time": 104.9792,
+      "time": 50.923,
       "action": "CALL",
-      "hint": "1・2・3！「1」でタップ＋声を出そう"
+      "hint": "CALL！タップ＋声を出そう"
     },
     {
-      "time": 109.81,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 110.2978,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 110.7856,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 111.2734,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 111.7612,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 112.249,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 112.7368,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 113.2246,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 113.7124,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 114.2002,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 114.688,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 115.1759,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 115.6637,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 116.1515,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 116.6393,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 117.1271,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 117.6149,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 118.1027,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 118.5905,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 119.0783,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 119.5661,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 120.0539,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 120.5417,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 121.0295,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 121.5173,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 122.0051,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 122.4929,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 122.9807,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 123.4685,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 163.47,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 163.9578,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 164.4456,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 164.9334,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 165.4212,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 165.909,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 166.3968,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 166.8846,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 167.3724,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 167.8602,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 168.348,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 168.8359,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 169.3237,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 169.8115,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 170.2993,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 170.7871,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 171.2749,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 171.7627,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 172.2505,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 172.7383,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 173.2261,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 173.7139,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 174.2017,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 174.6895,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 175.1773,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 175.6651,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 176.1529,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 176.6407,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 177.1285,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 177.6163,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 178.1041,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 178.592,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 179.0798,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 179.5676,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 180.0554,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 180.5432,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 181.031,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 181.5188,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 182.0066,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 182.4944,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 182.9822,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 183.47,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 183.9578,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 184.4456,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 184.9334,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 208.025,
+      "time": 61.259,
       "action": "CLAP"
     },
     {
-      "time": 209.0006,
+      "time": 61.421,
       "action": "CLAP"
     },
     {
-      "time": 209.9762,
+      "time": 61.909,
       "action": "CLAP"
     },
     {
-      "time": 210.9518,
+      "time": 62.284,
       "action": "CLAP"
     },
     {
-      "time": 211.9274,
+      "time": 62.664,
       "action": "CLAP"
     },
     {
-      "time": 212.903,
+      "time": 63.074,
       "action": "CLAP"
     },
     {
-      "time": 213.8787,
+      "time": 63.363,
       "action": "CLAP"
     },
     {
-      "time": 214.8543,
+      "time": 63.81,
       "action": "CLAP"
     },
     {
-      "time": 215.8299,
+      "time": 64.216,
       "action": "CLAP"
     },
     {
-      "time": 216.8055,
+      "time": 64.58,
       "action": "CLAP"
     },
     {
-      "time": 217.7811,
+      "time": 65.027,
       "action": "CLAP"
     },
     {
-      "time": 218.7567,
+      "time": 65.312,
       "action": "CLAP"
     },
     {
-      "time": 219.7323,
+      "time": 65.76,
       "action": "CLAP"
     },
     {
-      "time": 221,
-      "action": "CALL"
+      "time": 66.167,
+      "action": "CLAP"
+    },
+    {
+      "time": 66.494,
+      "action": "CLAP"
+    },
+    {
+      "time": 66.985,
+      "action": "CLAP"
+    },
+    {
+      "time": 67.23,
+      "action": "CLAP"
+    },
+    {
+      "time": 67.717,
+      "action": "CLAP"
+    },
+    {
+      "time": 68.128,
+      "action": "CLAP"
+    },
+    {
+      "time": 68.495,
+      "action": "CLAP"
+    },
+    {
+      "time": 68.739,
+      "action": "CLAP"
+    },
+    {
+      "time": 69.023,
+      "action": "CLAP"
+    },
+    {
+      "time": 69.267,
+      "action": "CLAP"
+    },
+    {
+      "time": 69.516,
+      "action": "CLAP"
+    },
+    {
+      "time": 69.763,
+      "action": "CLAP"
+    },
+    {
+      "time": 70.01,
+      "action": "CLAP"
+    },
+    {
+      "time": 70.213,
+      "action": "CLAP"
+    },
+    {
+      "time": 70.467,
+      "action": "CLAP"
+    },
+    {
+      "time": 70.711,
+      "action": "CLAP"
+    },
+    {
+      "time": 70.957,
+      "action": "CLAP"
+    },
+    {
+      "time": 71.2,
+      "action": "CLAP"
+    },
+    {
+      "time": 71.449,
+      "action": "CLAP"
+    },
+    {
+      "time": 71.694,
+      "action": "CLAP"
+    },
+    {
+      "time": 71.937,
+      "action": "CLAP"
+    },
+    {
+      "time": 72.141,
+      "action": "CLAP"
+    },
+    {
+      "time": 72.389,
+      "action": "CLAP"
+    },
+    {
+      "time": 76.578,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 77.027,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 77.473,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 77.961,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 78.449,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 78.935,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 79.422,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 79.909,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 80.442,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 80.928,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 81.414,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 81.86,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 82.425,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 82.87,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 83.357,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 83.802,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 84.33,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 84.779,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 85.267,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 85.757,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 86.252,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 86.698,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 87.186,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 87.673,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 88.207,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 88.739,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 89.227,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 89.679,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 90.172,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 90.619,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 91.106,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 91.596,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 101.923,
+      "action": "CALL",
+      "hint": "chipi！タップ＋声を出そう"
+    },
+    {
+      "time": 104.785,
+      "action": "CALL",
+      "hint": "1！タップ＋声を出そう"
+    },
+    {
+      "time": 105.036,
+      "action": "CALL",
+      "hint": "2！タップ＋声を出そう"
+    },
+    {
+      "time": 105.322,
+      "action": "CALL",
+      "hint": "3！タップ＋声を出そう"
+    },
+    {
+      "time": 109.676,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 110.169,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 110.659,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 111.154,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 111.644,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 112.092,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 112.583,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 113.076,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 113.605,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 114.056,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 114.547,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 115.034,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 115.568,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 116.017,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 116.548,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 116.956,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 117.487,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 117.937,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 118.466,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 118.912,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 119.44,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 119.891,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 120.38,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 120.867,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 121.361,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 121.85,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 122.342,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 122.832,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 123.32,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 123.774,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 124.264,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 124.791,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 160.487,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 160.897,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 161.384,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 161.871,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 162.358,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 162.806,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 163.293,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 163.78,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 164.31,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 164.758,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 165.248,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 165.741,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 166.231,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 166.718,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 167.292,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 167.661,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 168.188,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 168.722,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 169.168,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 169.619,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 170.11,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 170.603,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 171.093,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 171.583,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 172.076,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 172.566,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 173.06,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 173.591,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 174.08,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 174.57,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 175.058,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 175.505,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 176.037,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 176.527,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 177.017,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 177.51,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 177.957,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 178.448,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 178.941,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 179.387,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 179.916,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 180.408,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 180.859,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 181.353,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 181.801,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 182.292,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 182.787,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 183.276,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 183.809,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 184.297,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 184.791,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 185.282,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 185.772,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 186.259,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 186.75,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 187.243,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 187.732,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 188.222,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 188.672,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 189.158,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 189.652,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 190.141,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 190.636,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 191.123,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 191.608,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 192.1,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 192.59,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 193.039,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 193.569,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 194.018,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 194.546,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 195.032,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 195.52,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 196.047,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 196.454,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 196.982,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 197.468,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 197.959,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 198.405,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 198.932,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 199.421,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 199.913,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 200.44,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 200.889,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 201.376,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 201.864,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 202.31,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 202.843,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 203.336,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 203.786,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 204.273,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 204.722,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 205.209,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 205.742,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 206.229,
+      "action": "WIPER",
+      "direction": "left"
+    },
+    {
+      "time": 206.719,
+      "action": "WIPER",
+      "direction": "right"
+    },
+    {
+      "time": 207.45,
+      "action": "CLAP"
+    },
+    {
+      "time": 207.739,
+      "action": "CLAP"
+    },
+    {
+      "time": 208.229,
+      "action": "CLAP"
+    },
+    {
+      "time": 208.594,
+      "action": "CLAP"
+    },
+    {
+      "time": 208.96,
+      "action": "CLAP"
+    },
+    {
+      "time": 209.37,
+      "action": "CLAP"
+    },
+    {
+      "time": 209.694,
+      "action": "CLAP"
+    },
+    {
+      "time": 210.183,
+      "action": "CLAP"
+    },
+    {
+      "time": 210.552,
+      "action": "CLAP"
+    },
+    {
+      "time": 210.879,
+      "action": "CLAP"
+    },
+    {
+      "time": 211.368,
+      "action": "CLAP"
+    },
+    {
+      "time": 211.656,
+      "action": "CLAP"
+    },
+    {
+      "time": 212.143,
+      "action": "CLAP"
+    },
+    {
+      "time": 212.511,
+      "action": "CLAP"
+    },
+    {
+      "time": 212.835,
+      "action": "CLAP"
+    },
+    {
+      "time": 213.33,
+      "action": "CLAP"
+    },
+    {
+      "time": 213.573,
+      "action": "CLAP"
+    },
+    {
+      "time": 214.061,
+      "action": "CLAP"
+    },
+    {
+      "time": 214.466,
+      "action": "CLAP"
+    },
+    {
+      "time": 214.791,
+      "action": "CLAP"
+    },
+    {
+      "time": 215.282,
+      "action": "CLAP"
+    },
+    {
+      "time": 215.566,
+      "action": "CLAP"
+    },
+    {
+      "time": 215.986,
+      "action": "CLAP"
+    },
+    {
+      "time": 216.391,
+      "action": "CLAP"
+    },
+    {
+      "time": 216.757,
+      "action": "CLAP"
+    },
+    {
+      "time": 217.205,
+      "action": "CLAP"
+    },
+    {
+      "time": 217.493,
+      "action": "CLAP"
+    },
+    {
+      "time": 217.982,
+      "action": "CLAP"
+    },
+    {
+      "time": 218.347,
+      "action": "CLAP"
+    },
+    {
+      "time": 218.712,
+      "action": "CLAP"
+    },
+    {
+      "time": 219.158,
+      "action": "CLAP"
+    },
+    {
+      "time": 219.446,
+      "action": "CLAP"
+    },
+    {
+      "time": 219.892,
+      "action": "CLAP"
+    },
+    {
+      "time": 220.303,
+      "action": "CLAP"
+    },
+    {
+      "time": 220.67,
+      "action": "CLAP"
+    },
+    {
+      "time": 221.157,
+      "action": "CLAP"
+    },
+    {
+      "time": 221.401,
+      "action": "CLAP"
+    },
+    {
+      "time": 221.892,
+      "action": "CLAP"
+    },
+    {
+      "time": 222.219,
+      "action": "CLAP"
+    },
+    {
+      "time": 222.586,
+      "action": "CLAP"
     }
   ]
 }
