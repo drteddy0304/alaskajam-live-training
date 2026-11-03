@@ -17,7 +17,6 @@ const run = $('#recorder-run');
 const result = $('#recorder-result');
 const startButton = $('#record-start');
 const pauseButton = $('#record-pause');
-const pad = $('#record-pad');
 const elapsed = $('#record-elapsed');
 const progress = $('#record-progress');
 const count = $('#record-note-count');
@@ -35,7 +34,6 @@ let music = null;
 let barrier = null;
 let phase = 'idle';
 let notes = [];
-let pointer = null;
 let animation = 0;
 let recordedAt = '';
 
@@ -153,7 +151,6 @@ function pause() {
   music?.pause();
   stopAnimation();
   pauseButton.textContent = '▶ 再開';
-  pad.disabled = true;
   last.textContent = '一時停止中です';
 }
 
@@ -163,7 +160,6 @@ async function resume() {
     await music.resume();
     phase = 'playing';
     pauseButton.textContent = '⏸ 一時停止';
-    pad.disabled = false;
     last.textContent = '記録を再開しました';
     draw();
   } catch (error) { showStartError(error); }
@@ -206,7 +202,6 @@ function reset() {
   elapsed.textContent = '0:00.000';
   pauseButton.textContent = '⏸ 一時停止';
   pauseButton.disabled = false;
-  pad.disabled = false;
   startButton.disabled = false;
   savedStatus.textContent = '前の記録はこの端末に残っています。開始すると新しい記録になります。';
   setPage('intro');
@@ -216,6 +211,11 @@ document.querySelectorAll('[data-record-now]').forEach(button => button.addEvent
   if (phase !== 'playing' || !music || !TAP_ACTIONS.includes(button.dataset.recordNow)) return;
   event.preventDefault();
   recordGesture('tap', currentSongTime(), button.dataset.recordNow);
+}));
+document.querySelectorAll('[data-record-wiper]').forEach(button => button.addEventListener('pointerdown', event => {
+  if (phase !== 'playing' || !music || !['left', 'right'].includes(button.dataset.recordWiper)) return;
+  event.preventDefault();
+  recordGesture(button.dataset.recordWiper, currentSongTime());
 }));
 startButton.addEventListener('click', start);
 pauseButton.addEventListener('click', () => phase === 'paused' ? resume() : pause());
@@ -231,25 +231,6 @@ finishButton.addEventListener('click', finish);
 $('#record-copy').addEventListener('click', copyRecording);
 $('#record-again').addEventListener('click', reset);
 
-pad.addEventListener('pointerdown', event => {
-  if (phase !== 'playing') return;
-  event.preventDefault();
-  pad.setPointerCapture(event.pointerId);
-  pointer = {id: event.pointerId, x: event.clientX, y: event.clientY, started: performance.now(), time: currentSongTime()};
-});
-pad.addEventListener('pointerup', event => {
-  if (!pointer || pointer.id !== event.pointerId || phase !== 'playing') return;
-  event.preventDefault();
-  const dx = event.clientX - pointer.x;
-  const dy = event.clientY - pointer.y;
-  const held = performance.now() - pointer.started;
-  const gesture = Math.abs(dx) >= 36 && Math.abs(dx) > Math.abs(dy) * 1.3 && held < 800 ? (dx < 0 ? 'left' : 'right') : Math.hypot(dx, dy) < 20 && held < 400 ? 'tap' : null;
-  const time = pointer.time;
-  pointer = null;
-  if (gesture && gesture !== 'tap') recordGesture(gesture, time);
-  else last.textContent = 'WIPERは横へ大きくスワイプしてください。CLAPなどは上の専用ボタンを押します。';
-});
-pad.addEventListener('pointercancel', () => { pointer = null; });
 document.addEventListener('visibilitychange', () => { if (document.hidden && phase === 'playing') pause(); });
 window.addEventListener('pagehide', () => music?.close());
 
