@@ -90,6 +90,12 @@ export class GuidePlayback {
     this.resetSyncSchedule(audioTime);
     return this.apply();
   }
+  seek(audioTime = 0) {
+    this.audioTime = audioTime;
+    this.resetSyncSchedule(audioTime);
+    const target = validGuideOffset(this.mapping) ? audioTime + this.mapping.audioToVideoOffset : audioTime;
+    return this.enabled ? this.call('seekTo', target, true) : false;
+  }
   stop() { this.intent = 'stopped'; this.restart = false; return this.call('pauseVideo'); }
   resetSyncSchedule(audioTime = 0) { this.nextSyncAt = audioTime + GUIDE_EARLY_SYNC_INTERVAL; }
   // MP3 time is authoritative. Correct only measured drift while YouTube is

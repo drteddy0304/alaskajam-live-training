@@ -7,7 +7,7 @@
   <meta name="description" content="Alaska Jam LIVE TRAINING — タップとスワイプでライブの一体感を練習。音楽つきの体験版。">
   <title>Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css?v=record1">
-  <script type="module" src="./app.js?v=recorded2"></script>
+  <script type="module" src="./app.js?v=recorded4"></script>
 </head>
 <body>
   <div id="countdown-overlay" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -44,7 +44,8 @@
           <p id="video-status" class="video-status" role="status">動画はミュートです。確認済みの対応位置で連携します。</p>
         </section>
         <div class="progress-meta"><span id="elapsed">0:00</span><span id="combo">0 COMBO</span><span id="duration">3:44</span></div>
-        <progress id="progress" value="0" max="40" aria-label="練習の進み具合"></progress>
+        <input id="seek" class="seek" type="range" value="0" min="0" max="40" step="0.1" aria-label="確認したい再生位置" disabled>
+        <div class="seek-controls"><button id="seek-back" class="small-button" type="button" disabled>−10秒</button><span>つまみを動かして部分確認</span><button id="seek-forward" class="small-button" type="button" disabled>＋10秒</button></div>
         <div id="singalong" class="singalong" role="status" aria-live="polite" hidden><span id="singalong-label">まもなく一緒に！</span><strong id="singalong-text"></strong></div>
         <div class="rhythm-lane" aria-label="右から左へ流れるアクションノーツ"><div class="lane-track"></div><div class="judge-line"><span>AJ</span><small>HIT</small></div><div id="lane-notes" class="lane-notes"></div></div>
         <div class="cue-readout"><span id="cue-label" class="eyebrow">READY?</span><strong id="cue-action">3</strong><p id="cue-hint">スマホを持って、準備しよう</p><span id="next-time">NEXT —</span></div>

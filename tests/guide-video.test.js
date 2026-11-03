@@ -61,6 +61,13 @@ test('verified mapping seeks only on start/resume lifecycle transitions', () => 
   guide.start(0); guide.pause(); guide.resume(12);
   assert.deepEqual(media.calls, [['mute'],['seekTo',8.2508,true],['playVideo'],['pauseVideo'],['mute'],['seekTo',12 + 8.2508,true],['playVideo']]);
 });
+test('manual seek moves the muted guide to the matching verified video time', () => {
+  const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508}, {}, 10000, timers());
+  guide.onReady(media); guide.start(0); media.calls.length=0;
+  assert.equal(guide.seek(170),true);
+  assert.deepEqual(media.calls,[['seekTo',178.2508,true]]);
+  assert.equal(guide.audioTime,170);
+});
 
 test('official API error, autoplay block, and ready timeout report real state without throwing', async () => {
   const time = timers(), reports = [];

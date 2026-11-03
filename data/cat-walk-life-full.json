@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "id": "cat-walk-life-user-timing-v2-final-chorus-calls",
+  "id": "cat-walk-life-user-timing-v3-final-chorus-trim",
   "title": "CAT WALK LIFE",
   "kind": "guide-beta",
   "source": {
     "name": "公式Cheering Guide参考・ユーザー実演タイミング",
     "url": "https://youtu.be/1y5b0upSCjM",
-    "revision": "2026-11-03-user-recorded-final-chorus-calls-v2",
+    "revision": "2026-11-03-user-recorded-final-chorus-trim-v3",
     "timingStatus": "user-recorded",
-    "notes": "1周目のCLAP・WIPER・タップCALLを基礎に採用。ラストサビは1周目のWIPERだけを残し、2・3周目（178.069秒以降）のWIPER 59件を削除して、2周目に記録したCALL 24件をタップ＋発声ノーツへ変更。その他の2周目CALLは歌詞表示のみ。"
+    "notes": "1周目のCLAP・WIPER・タップCALLを基礎に採用。ラストサビは1周目末尾の余分なWIPER 4件と、2・3周目（178.069秒以降）のWIPER 59件を削除し、2周目に記録したCALL 24件をタップ＋発声ノーツへ変更。その他の2周目CALLは歌詞表示のみ。"
   },
   "duration": 224.39,
   "leadTime": 1.8,
@@ -785,26 +785,6 @@
     },
     {
       "time": 176.037,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 176.527,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 177.017,
-      "action": "WIPER",
-      "direction": "left"
-    },
-    {
-      "time": 177.51,
-      "action": "WIPER",
-      "direction": "right"
-    },
-    {
-      "time": 177.957,
       "action": "WIPER",
       "direction": "left"
     },
