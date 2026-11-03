@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#ecff62">
   <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
-  <link rel="stylesheet" href="./style.css?v=record3">
-  <script type="module" src="./recorder-app.js?v=record3"></script>
+  <link rel="stylesheet" href="./style.css?v=record4">
+  <script type="module" src="./recorder-app.js?v=record4"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -22,7 +22,7 @@
         <div class="record-steps">
           <p><b>1</b><span>曲を聴きながら、クラップの瞬間に大きなパッドをタップ。</span></p>
           <p><b>2</b><span>ワイパーの瞬間は、パッドを左右にスワイプ。</span></p>
-          <p><b>3</b><span>CALL、CLAP＋CALL、JUMPは、タップ前に種類を切り替える。</span></p>
+          <p><b>3</b><span>CLAP、CALL、CLAP＋CALL、JUMPは、それぞれのボタンを直接押す。</span></p>
         </div>
         <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。開始後は<strong>5・4・3・2・1</strong>を表示し、1の後から曲と記録が同時に始まります。</p>
         <button id="record-start" class="primary">5秒カウントして記録開始 →</button>
@@ -33,22 +33,21 @@
       <section id="recorder-run" hidden aria-labelledby="record-run-title">
         <div class="play-top"><span class="eyebrow">RECORDING</span><button id="record-pause" class="small-button" type="button">⏸ 一時停止</button></div>
         <h2 id="record-run-title">CAT WALK LIFE</h2>
+        <fieldset class="record-actions">
+          <legend>押した瞬間に直接記録</legend>
+          <button type="button" data-record-now="CLAP">✳ <strong>CLAP</strong><small>クラップ</small></button>
+          <button type="button" data-record-now="CALL">〰 <strong>CALL</strong><small>コール</small></button>
+          <button type="button" data-record-now="CLAP_CALL">✳＋〰 <strong>CLAP＋CALL</strong><small>同時</small></button>
+          <button type="button" data-record-now="JUMP">↑ <strong>JUMP</strong><small>ジャンプ</small></button>
+        </fieldset>
         <div class="progress-meta"><span id="record-elapsed">0:00.000</span><span id="record-note-count">0件</span><span>3:44</span></div>
         <progress id="record-progress" value="0" max="224.39" aria-label="曲の進み具合"></progress>
+        <p class="micro record-tip">4つのボタンは切替不要です。必要なボタンをそのまま押してください。</p>
 
-        <fieldset class="record-actions">
-          <legend>タップで記録する種類</legend>
-          <button type="button" data-record-action="CLAP" aria-pressed="true">✳ CLAP</button>
-          <button type="button" data-record-action="CALL" aria-pressed="false">〰 CALL</button>
-          <button type="button" data-record-action="CLAP_CALL" aria-pressed="false">✳＋〰 CLAP＋CALL</button>
-          <button type="button" data-record-action="JUMP" aria-pressed="false">↑ JUMP</button>
-        </fieldset>
-        <p class="micro record-tip">左右スワイプは、選択に関係なくWIPERになります。</p>
-
-        <button id="record-pad" class="pad record-pad" aria-label="記録パッド。タップ、または左右にスワイプ">
-          <span id="record-pad-icon" class="pad-icon" aria-hidden="true">✳</span>
-          <b id="record-pad-label">CLAPを記録</b>
-          <small>タップ / 左右にスワイプ</small>
+        <button id="record-pad" class="pad record-pad" aria-label="WIPER記録エリア。左右にスワイプ">
+          <span class="pad-icon" aria-hidden="true">↔</span>
+          <b>WIPERを記録</b>
+          <small>ここだけ左右にスワイプ</small>
         </button>
         <div class="record-feedback"><strong id="record-last" role="status" aria-live="polite">曲に合わせて操作してください</strong></div>
         <div class="record-controls">
