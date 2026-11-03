@@ -5,7 +5,7 @@
 
 ## MVP
 
-- QUATTRO参戦予習のセットリストはCAT WALK LIFEとSNACK SNACKの2曲。CAT WALK LIFEは約3分44秒のフル尺版を公開中。SNACK SNACKは提供音源（約2分48.54秒）と公式Cheering Guideを登録し、タイミング記録中。
+- QUATTRO参戦予習のセットリストはCAT WALK LIFEとSNACK SNACKの2曲。両曲とも提供音源・公式Cheering Guide・ユーザー実演タイミングによるフル尺版を公開中。SNACK SNACKの声だけCALL 10件は採点から分離し、言葉の確定前は仮表示にしています。
 - 提供されたCAT WALK LIFE.mp3を最後まで再生。公式Cheering Guideとユーザーの実演記録を反映しています。現在の採点譜面はCLAP 102件・WIPER 96件・タップCALL 30件です。
 - 音あり練習は開始タップで曲を再生、1.8秒前から予告、タイミングバー、PERFECT / GOOD / MISS。
 - CLAP / CALL / JUMP = 中央パッドをタップ。WIPER = 指示方向の左右専用ボタンをタップ。
@@ -65,6 +65,7 @@ GitHub Freeの公開リポジトリでPagesを利用できます。
 - `data/songs.json`：一覧と譜面参照
 - `data/cat-walk-life-full.json`：現在のフル尺ベータ譜面と出典情報
 - `data/cat-walk-life-lyrics.json`：確認済みの客席コール表示キュー、出典、境界未確定の動画内文字観測
+- `data/snack-snack-full.json` / `data/snack-snack-lyrics.json`：SNACK SNACKの実演記録譜面と、採点しない声だけCALL表示
 - `data/demo.json`：旧40秒ダミー譜面（テスト用）
 - `GUIDE-NOTES.md`：動画確認箇所と暫定時刻の記録
 - `tests/engine.test.js`：採点・方向・境界・譜面検証

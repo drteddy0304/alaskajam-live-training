@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "timingStatus": "user-recorded-text-pending",
+  "leadTime": 2,
+  "source": {
+    "name": "公式 SNACK SNACK Cheering Guide・ユーザー実演記録",
+    "url": "https://www.youtube.com/watch?v=Y04dtYKy-rk",
+    "revision": "2026-11-03-voice-markers-v1"
+  },
+  "cues": [
+    {"start":40.98,"end":41.78,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[40.98]},
+    {"start":44.23,"end":45.03,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[44.23]},
+    {"start":47.578,"end":48.378,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[47.578]},
+    {"start":82.614,"end":83.414,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[82.614]},
+    {"start":85.869,"end":86.669,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[85.869]},
+    {"start":89.243,"end":90.043,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[89.243]},
+    {"start":127.553,"end":128.353,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[127.553]},
+    {"start":130.882,"end":131.682,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[130.882]},
+    {"start":134.215,"end":135.015,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[134.215]},
+    {"start":137.52,"end":138.32,"text":"声を出そう！","source":"user-recorded pass 2; wording pending","markers":[137.52]}
+  ]
+}
