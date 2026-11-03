@@ -1,9 +1,9 @@
 import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
-import { Music } from './audio.js?v=countdown2';
+import { Music } from './audio.js?v=countdown3';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth1';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown2';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth2';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown3';
 
 const charts = new Map();
 const lyrics = new Map();

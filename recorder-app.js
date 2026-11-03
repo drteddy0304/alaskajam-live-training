@@ -1,5 +1,5 @@
-import {Music} from './audio.js?v=countdown2';
-import {StartBarrier, countdownOverlayState} from './startup.js?v=countdown2';
+import {Music} from './audio.js?v=countdown3';
+import {StartBarrier, countdownOverlayState} from './startup.js?v=countdown3';
 import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record11';
 
 const SONG = recordingSong(new URLSearchParams(location.search).get('song') || 'cat-walk-life');

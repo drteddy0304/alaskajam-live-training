@@ -28,6 +28,9 @@ export class Music {
         timer = setTimeout(() => reject(new Error('音源の読み込みがタイムアウトしました')), 30000);
       })]);
       if (this.closed) throw new Error('再生を中止しました');
+      // The tap has now authorized this element. Stop it immediately so the
+      // actual song cannot advance or leak during the visible countdown.
+      this.media.pause();
       if (Number.isFinite(duration)) { this.start(0, offset, duration); this.reset(); }
     } finally { clearTimeout(timer); }
   }

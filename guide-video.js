@@ -55,7 +55,7 @@ export class GuidePlayback {
   apply() {
     if (!this.ready || this.failed) return false;
     this.call('mute');
-    if (!this.enabled || !['playing', 'priming'].includes(this.intent)) return this.call('pauseVideo');
+    if (!this.enabled || this.intent !== 'playing') return this.call('pauseVideo');
     const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
     if (this.restart || validGuideOffset(this.mapping)) this.call('seekTo', target, true);
     this.restart = false;
@@ -66,17 +66,15 @@ export class GuidePlayback {
     return this.apply();
   }
   prime(audioTime = 0) {
-    this.intent = 'priming'; this.audioTime = audioTime; this.restart = true;
-    return this.apply();
+    // Muted YouTube playback does not need to run behind the countdown. Keep
+    // the player stopped at its mapped start until the MP3 is released.
+    this.intent = 'paused'; this.audioTime = audioTime; this.restart = false;
+    return this.reset(audioTime);
   }
   reset(audioTime = 0) {
     this.audioTime = audioTime; this.restart = false;
     const target = validGuideOffset(this.mapping) ? audioTime + this.mapping.audioToVideoOffset : 0;
     if (this.ready && this.enabled) this.call('seekTo', target, true);
-    // Keep the muted iframe playing behind the countdown after the user's
-    // start tap. Mobile browsers can block a second play request five seconds
-    // later, while seeking an already-authorized player remains allowed.
-    if (this.intent === 'priming' && this.enabled) return true;
     this.intent = 'paused';
     return this.call('pauseVideo');
   }
