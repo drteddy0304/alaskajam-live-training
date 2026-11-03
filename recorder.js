@@ -17,6 +17,19 @@ export function recordingSong(id = 'cat-walk-life') {
   return RECORDING_SONGS[id] || RECORDING_SONGS['cat-walk-life'];
 }
 
+export function recordingWindow(song, from, to, actions) {
+  if (!song || !Number.isFinite(song.duration) || song.duration <= 0) throw new TypeError('曲情報が不正です');
+  const start = from === undefined || from === null || from === '' ? 0 : Number(from);
+  const end = to === undefined || to === null || to === '' ? song.duration : Number(to);
+  const selected = actions === undefined || actions === null || actions === ''
+    ? [...TAP_ACTIONS, 'WIPER']
+    : (Array.isArray(actions) ? actions : String(actions).split(',')).map(action => action.trim()).filter(Boolean);
+  const supported = new Set([...TAP_ACTIONS, 'WIPER']);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start < 0 || end <= start || end > song.duration) throw new TypeError('記録範囲が不正です');
+  if (!selected.length || selected.some(action => !supported.has(action))) throw new TypeError('記録操作が不正です');
+  return {start, end, actions: [...new Set(selected)]};
+}
+
 export function recorderShortcut(code, repeat = false) {
   if (repeat) return null;
   if (code === 'Space') return {gesture: 'tap', tapAction: 'CLAP'};

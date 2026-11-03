@@ -1,11 +1,16 @@
 import {Music} from './audio.js?v=countdown3';
 import {StartBarrier, countdownOverlayState} from './startup.js?v=countdown3';
-import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record11';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, recordingWindow, rewindTake, songTime, TAP_ACTIONS} from './recorder.js?v=record12';
 
-const SONG = recordingSong(new URLSearchParams(location.search).get('song') || 'cat-walk-life');
+const PARAMS = new URLSearchParams(location.search);
+const SONG = recordingSong(PARAMS.get('song') || 'cat-walk-life');
+let WINDOW;
+try { WINDOW = recordingWindow(SONG, PARAMS.get('from'), PARAMS.get('to'), PARAMS.get('actions')); }
+catch { WINDOW = recordingWindow(SONG); }
+const IS_SEGMENT = WINDOW.start > 0 || WINDOW.end < SONG.duration || WINDOW.actions.length < TAP_ACTIONS.length + 1;
 const PRE_ROLL_SECONDS = SONG.preRoll;
 const PLAYBACK_DURATION = SONG.duration + PRE_ROLL_SECONDS;
-const DRAFT_KEY = SONG.id === 'cat-walk-life-timing-take' ? 'aj-timing-recorder-draft-v1' : `aj-timing-recorder-draft-v1-${SONG.id}`;
+const DRAFT_KEY = `aj-timing-recorder-draft-v1-${SONG.id}-${WINDOW.start}-${WINDOW.end}-${WINDOW.actions.join('-')}`;
 const $ = selector => document.querySelector(selector);
 const intro = $('#recorder-intro');
 const run = $('#recorder-run');
@@ -29,9 +34,25 @@ const countdownValue = $('#record-countdown-value');
 document.title = `${SONG.title} タイミング記録 | Alaska Jam LIVE TRAINING`;
 $('#record-song-label').textContent = SONG.title;
 $('#record-run-title').textContent = SONG.title;
-$('#record-duration').textContent = formatTime(SONG.duration);
-progress.max = SONG.duration;
+$('#record-duration').textContent = formatTime(WINDOW.end, true);
+progress.max = WINDOW.end;
 $('#record-guide-link').href = SONG.guideUrl;
+if (IS_SEGMENT) {
+  $('#recorder-title').replaceChildren(document.createTextNode(`${formatTime(WINDOW.start, true)}〜${formatTime(WINDOW.end, true)}だけ、`), document.createElement('br'), Object.assign(document.createElement('span'), {className:'highlight', textContent:'タイミングを修正。'}));
+  $('.record-steps').hidden = true;
+  $('#record-intro-notice').textContent = `5秒カウント後、${formatTime(WINDOW.start, true)}から再生し、${formatTime(WINDOW.end, true)}で自動終了します。ほかの時間の譜面は変更しません。`;
+  $('#record-layer-notice').textContent = `今回はCLAPとタップCALLだけを記録します。WIPER・声だけCALL・ほかの操作は対象外です。`;
+  startButton.textContent = `5秒カウントして${formatTime(WINDOW.start)}〜${formatTime(WINDOW.end)}を記録 →`;
+  $('#record-actions-legend').textContent = '押した瞬間に直接記録（Space＝CLAP）';
+  $('.record-tip').textContent = 'CLAPは画面ボタンまたはSpaceキー、タップCALLは画面ボタンを直接押してください。';
+  $('#record-next-pass').hidden = true;
+}
+document.querySelectorAll('[data-record-now], [data-record-wiper]').forEach(button => {
+  const action = button.dataset.recordWiper ? 'WIPER' : button.dataset.recordNow;
+  const allowed = WINDOW.actions.includes(action);
+  button.hidden = !allowed;
+  button.disabled = !allowed;
+});
 
 let music = null;
 let barrier = null;
@@ -63,7 +84,9 @@ function showCountdown(value = null, preparing = false) {
 }
 
 function makeRecording() {
-  return {...buildRecording(SONG, notes, recordedAt || new Date().toISOString()), version: 2, passes: currentPass};
+  const recording = {...buildRecording(SONG, notes, recordedAt || new Date().toISOString()), version: 2, passes: currentPass};
+  if (IS_SEGMENT) recording.correction = {from: WINDOW.start, to: WINDOW.end, actions: [...WINDOW.actions]};
+  return recording;
 }
 
 function saveDraft() {
@@ -87,10 +110,10 @@ function currentSongTime() {
 
 function draw() {
   if (phase !== 'playing' || !music) return;
-  const time = Math.min(currentSongTime(), SONG.duration);
+  const time = Math.min(currentSongTime(), WINDOW.end);
   elapsed.textContent = formatTime(time, true);
   progress.value = time;
-  if (time >= SONG.duration - .02) {
+  if (time >= WINDOW.end - .02) {
     finish();
     return;
   }
@@ -99,6 +122,8 @@ function draw() {
 
 function recordGesture(gesture, time, tapAction = 'CLAP') {
   if (phase !== 'playing') return;
+  const requestedAction = gesture === 'tap' ? tapAction : 'WIPER';
+  if (!WINDOW.actions.includes(requestedAction) || time < WINDOW.start || time > WINDOW.end) return;
   const note = {...noteFromGesture(time, gesture, tapAction), pass: currentPass};
   notes.push(note);
   saveDraft();
@@ -127,8 +152,8 @@ async function start(preservePreviousPasses = false) {
     currentPass = 1;
     recordedAt = new Date().toISOString();
   }
-  progress.value = 0;
-  elapsed.textContent = '0:00.000';
+  progress.value = WINDOW.start;
+  elapsed.textContent = formatTime(WINDOW.start, true);
   updateCount();
   setPage('run');
   startButton.disabled = true;
@@ -142,12 +167,12 @@ async function start(preservePreviousPasses = false) {
     onReady: async () => {
       try {
         showCountdown('開始位置を調整中…', true);
-        await music.release(PRE_ROLL_SECONDS);
+        await music.release(PRE_ROLL_SECONDS + WINDOW.start);
         if (phase !== 'countdown' || document.hidden) { await music.pause(); return; }
         showCountdown();
         phase = 'playing';
         pauseButton.disabled = false;
-        last.textContent = `${currentPass}周目を記録中です`;
+        last.textContent = IS_SEGMENT ? `${formatTime(WINDOW.start, true)}〜${formatTime(WINDOW.end, true)}を記録中です` : `${currentPass}周目を記録中です`;
         draw();
       } catch (error) { showStartError(error); }
     },
@@ -181,7 +206,10 @@ function pause() {
 function rewind() {
   if (!['playing', 'paused'].includes(phase) || !music) return;
   if (phase === 'playing') pause();
-  const rewound = rewindTake(currentSongTime(), 5, notes, currentPass);
+  const rewindSeconds = Math.max(.001, Math.min(5, currentSongTime() - WINDOW.start));
+  const rewound = rewindTake(currentSongTime(), rewindSeconds, notes, currentPass);
+  rewound.time = Math.max(WINDOW.start, rewound.time);
+  rewound.notes = rewound.notes.filter(note => note.pass !== currentPass || note.time < rewound.time);
   notes = rewound.notes;
   music.media.currentTime = PRE_ROLL_SECONDS + rewound.time;
   elapsed.textContent = formatTime(rewound.time, true);
@@ -210,7 +238,9 @@ function finish() {
   const recording = makeRecording();
   saveDraft();
   output.value = recordingText(recording);
-  $('#record-result-summary').textContent = `${currentPass}周・合計${notes.length}件を記録しました。別の動きを重ねる場合は、もう1周追加できます。`;
+  $('#record-result-summary').textContent = IS_SEGMENT
+    ? `${formatTime(WINDOW.start, true)}〜${formatTime(WINDOW.end, true)}のCLAP／タップCALLを${notes.length}件記録しました。`
+    : `${currentPass}周・合計${notes.length}件を記録しました。別の動きを重ねる場合は、もう1周追加できます。`;
   copyStatus.textContent = 'コピー後、このチャットへそのまま貼ってください。';
   setPage('result');
 }
@@ -237,8 +267,8 @@ function reset() {
   notes = [];
   currentPass = 1;
   recordedAt = '';
-  progress.value = 0;
-  elapsed.textContent = '0:00.000';
+  progress.value = WINDOW.start;
+  elapsed.textContent = formatTime(WINDOW.start, true);
   pauseButton.textContent = '⏸ 一時停止';
   pauseButton.disabled = false;
   startButton.disabled = false;

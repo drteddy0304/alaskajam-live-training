@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, rewindTake, songTime} from '../recorder.js';
+import {buildRecording, noteFromGesture, recorderShortcut, recordingSong, recordingText, recordingWindow, rewindTake, songTime} from '../recorder.js';
 
 test('SNACK SNACK recorder uses the supplied audio and official guide', () => {
   const song = recordingSong('snack-snack');
@@ -10,6 +10,13 @@ test('SNACK SNACK recorder uses the supplied audio and official guide', () => {
   assert.equal(song.preRoll, 0);
   assert.equal(song.guideVideoId, 'Y04dtYKy-rk');
   assert.equal(song.guideUrl, 'https://www.youtube.com/watch?v=Y04dtYKy-rk');
+});
+
+test('SNACK SNACK opening correction is limited to 0-10 seconds and scored CLAP/CALL', () => {
+  const song = recordingSong('snack-snack');
+  assert.deepEqual(recordingWindow(song, '0', '10', 'CLAP,CALL'), {start:0,end:10,actions:['CLAP','CALL']});
+  assert.throws(() => recordingWindow(song, 10, 5, 'CLAP,CALL'), /範囲/);
+  assert.throws(() => recordingWindow(song, 0, 10, 'VOICE'), /操作/);
 });
 
 test('five-second audio pre-roll maps exactly to song time zero', () => {
