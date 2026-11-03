@@ -33,7 +33,6 @@ let music = null;
 let barrier = null;
 let phase = 'idle';
 let notes = [];
-let selectedAction = 'CLAP';
 let pointer = null;
 let animation = 0;
 let recordedAt = '';
@@ -57,17 +56,6 @@ function showCountdown(value = null, preparing = false) {
   countdown.classList.toggle('is-preparing', state.preparing);
   countdownLabel.textContent = state.label;
   countdownValue.textContent = state.value;
-}
-
-function setAction(action) {
-  if (!TAP_ACTIONS.includes(action)) return;
-  selectedAction = action;
-  document.querySelectorAll('[data-record-action]').forEach(button => {
-    button.setAttribute('aria-pressed', String(button.dataset.recordAction === action));
-  });
-  const labels = {CLAP: ['✳', 'CLAPを記録'], CALL: ['〰', 'CALLを記録'], CLAP_CALL: ['✳＋〰', 'CLAP＋CALLを同時記録'], JUMP: ['↑', 'JUMPを記録']};
-  $('#record-pad-icon').textContent = labels[action][0];
-  $('#record-pad-label').textContent = labels[action][1];
 }
 
 function makeRecording() {
@@ -100,9 +88,9 @@ function draw() {
   animation = requestAnimationFrame(draw);
 }
 
-function recordGesture(gesture, time) {
+function recordGesture(gesture, time, tapAction = 'CLAP') {
   if (phase !== 'playing') return;
-  const note = noteFromGesture(time, gesture, selectedAction);
+  const note = noteFromGesture(time, gesture, tapAction);
   notes.push(note);
   saveDraft();
   updateCount();
@@ -121,7 +109,7 @@ async function start() {
   setPage('run');
   startButton.disabled = true;
   pauseButton.disabled = true;
-  last.textContent = '音源を準備しています';
+  last.textContent = 'カウント後、必要なボタンを直接押してください';
   music = new Music();
   // Keep a muted playback alive through the countdown. This preserves the
   // mobile start-button authorization without letting the song begin audibly.
@@ -136,7 +124,7 @@ async function start() {
       showCountdown();
       phase = 'playing';
       pauseButton.disabled = false;
-      last.textContent = '曲に合わせて操作してください';
+      last.textContent = 'CLAP / CALL / 同時 / JUMPを直接押してください';
       draw();
     },
     onError: showStartError
@@ -222,7 +210,11 @@ function reset() {
   setPage('intro');
 }
 
-document.querySelectorAll('[data-record-action]').forEach(button => button.addEventListener('click', () => setAction(button.dataset.recordAction)));
+document.querySelectorAll('[data-record-now]').forEach(button => button.addEventListener('pointerdown', event => {
+  if (phase !== 'playing' || !music || !TAP_ACTIONS.includes(button.dataset.recordNow)) return;
+  event.preventDefault();
+  recordGesture('tap', music.time(), button.dataset.recordNow);
+}));
 startButton.addEventListener('click', start);
 pauseButton.addEventListener('click', () => phase === 'paused' ? resume() : pause());
 undo.addEventListener('click', () => {
@@ -230,7 +222,8 @@ undo.addEventListener('click', () => {
   if (!removed) return;
   saveDraft();
   updateCount();
-  last.textContent = `${formatTime(removed.time, true)} の ${removed.action} を取り消しました`;
+  const action = removed.simultaneous?.includes('CLAP') ? 'CLAP＋CALL' : removed.action;
+  last.textContent = `${formatTime(removed.time, true)} の ${action} を取り消しました`;
 });
 finishButton.addEventListener('click', finish);
 $('#record-copy').addEventListener('click', copyRecording);
@@ -251,8 +244,8 @@ pad.addEventListener('pointerup', event => {
   const gesture = Math.abs(dx) >= 36 && Math.abs(dx) > Math.abs(dy) * 1.3 && held < 800 ? (dx < 0 ? 'left' : 'right') : Math.hypot(dx, dy) < 20 && held < 400 ? 'tap' : null;
   const time = pointer.time;
   pointer = null;
-  if (gesture) recordGesture(gesture, time);
-  else last.textContent = '操作を記録できませんでした。短くタップするか、横へ大きくスワイプしてください。';
+  if (gesture && gesture !== 'tap') recordGesture(gesture, time);
+  else last.textContent = 'WIPERは横へ大きくスワイプしてください。CLAPなどは上の専用ボタンを押します。';
 });
 pad.addEventListener('pointercancel', () => { pointer = null; });
 document.addEventListener('visibilitychange', () => { if (document.hidden && phase === 'playing') pause(); });
@@ -262,4 +255,3 @@ try {
   const draft = JSON.parse(localStorage.getItem(DRAFT_KEY));
   if (draft?.notes?.length) savedStatus.textContent = `この端末に前回の記録 ${draft.notes.length}件があります。新しく開始すると上書きします。`;
 } catch {}
-setAction('CLAP');
