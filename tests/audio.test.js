@@ -9,7 +9,7 @@ class Media extends EventTarget {
 }
 globalThis.Audio=Media;
 test('native audio requests playback before load returns, and clock follows buffering',async()=>{
- const m=new Music();const loaded=m.load('song.mp3');assert.deepEqual(m.media.calls,['play']);await loaded;m.start(3,0,224.39);
+ const m=new Music();const loaded=m.prime('song.mp3',0,224.39);assert.deepEqual(m.media.calls,['play']);await loaded;assert.equal(m.media.paused,true);assert.equal(m.media.currentTime,0);
  m.media.currentTime=61.2;assert.equal(m.time(),61.2);assert.equal(m.time(),61.2);
  await m.pause();assert.equal(m.time(),61.2);await m.resume();assert.equal(m.media.paused,false);
  assert.equal(m.seek(170),170);assert.equal(m.media.currentTime,170);

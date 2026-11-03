@@ -7,6 +7,7 @@ const songs=JSON.parse(await readFile(new URL('data/songs.json',root),'utf8'));
 const html=await readFile(new URL('index.html',root),'utf8');
 const css=await readFile(new URL('style.css',root),'utf8');
 const recorderHtml=await readFile(new URL('recorder.html',root),'utf8');
+const recorderApp=await readFile(new URL('recorder-app.js',root),'utf8');
 
 test('QUATTRO training setlist contains only CAT WALK LIFE and SNACK SNACK',()=>{
   assert.deepEqual(songs.map(song=>song.title),['CAT WALK LIFE','SNACK SNACK']);
@@ -42,4 +43,10 @@ test('recorder separates scored tap CALL from voice-only CALL',()=>{
   assert.match(recorderHtml,/data-record-now="CALL"[^>]*>[\s\S]*?タップCALL/);
   assert.match(recorderHtml,/data-record-now="VOICE_CALL"[^>]*>[\s\S]*?声だけCALL/);
   assert.match(recorderHtml,/採点タップなし/);
+});
+
+test('recorder holds prepared audio until the countdown finishes',()=>{
+  assert.doesNotMatch(recorderApp,/music\.prime\([^\n]+\.then\(\(\) => music\.resume\(\)\)/);
+  assert.match(recorderApp,/onReady: async \(\) => \{[\s\S]*?await music\.resume\(\)/);
+  assert.match(recorderHtml,/recorder-app\.js\?v=record12/);
 });
