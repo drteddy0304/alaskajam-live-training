@@ -5,7 +5,7 @@
 
 ## MVP
 
-- QUATTRO参戦予習のセットリストはCAT WALK LIFEとSNACK SNACKの2曲。両曲とも提供音源・公式Cheering Guide・ユーザー実演タイミングによるフル尺版を公開中。SNACK SNACKはタップCALL 45件と、採点から分離した声だけCALL 10件の両方へ公式ガイドの歌詞表記を反映し、動画同期も検証済みです。
+- QUATTRO参戦予習のセットリストはCAT WALK LIFEとSNACK SNACKの2曲。両曲とも提供音源・公式Cheering Guide・ユーザー実演タイミングによるフル尺版を公開中。SNACK SNACKはタップCALL 46件と、採点から分離した声だけCALL 10件の両方へ公式ガイドの歌詞表記を反映し、動画同期も検証済みです。
 - 提供されたCAT WALK LIFE.mp3を最後まで再生。公式Cheering Guideとユーザーの実演記録を反映しています。現在の採点譜面はCLAP 102件・WIPER 96件・タップCALL 30件です。
 - 音あり練習は開始タップで曲を再生、1.8秒前から予告、タイミングバー、PERFECT / GOOD / MISS。
 - CLAP / CALL / JUMP = 中央パッドをタップ。WIPER = 指示方向の左右専用ボタンをタップ。
