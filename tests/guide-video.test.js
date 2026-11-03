@@ -103,13 +103,13 @@ test('switching songs replaces the existing YouTube iframe mount', () => {
   assert.equal(replacement['aria-label'], 'old guide');
 });
 
-test('prime keeps muted playback authorized through countdown and resets its offset', () => {
+test('prime keeps the guide stopped at its mapped start through countdown', () => {
   const media = player(), guide = new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508}, {}, 10000, timers());
   guide.onReady(media); media.calls.length = 0;
   guide.prime(0);
-  assert.deepEqual(media.calls, [['mute'],['seekTo',8.2508,true],['playVideo']]);
+  assert.deepEqual(media.calls, [['seekTo',8.2508,true],['pauseVideo']]);
   guide.reset(0);
-  assert.deepEqual(media.calls.slice(-1), [['seekTo',8.2508,true]]);
+  assert.deepEqual(media.calls.slice(-2), [['seekTo',8.2508,true],['pauseVideo']]);
 });
 
 test('measured guide sync uses offset math and corrects drift above 1.25 seconds without forcing a new segment', () => {
