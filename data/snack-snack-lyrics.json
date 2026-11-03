@@ -5,7 +5,7 @@
   "source": {
     "name": "公式 SNACK SNACK Cheering Guide・ユーザー実演記録",
     "url": "https://www.youtube.com/watch?v=Y04dtYKy-rk",
-    "revision": "2026-11-03-official-guide-call-text-v4-opening-correction"
+    "revision": "2026-11-03-official-guide-call-text-v5-snack-53s"
   },
   "cues": [
     {"start":6.87,"end":7.67,"text":"SNACK!","kind":"scored-call","source":"user-recorded 0-10 second correction take","markers":[6.87]},
@@ -18,7 +18,7 @@
     {"start":40.98,"end":44.13,"text":"I I I I need a snack (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[40.98]},
     {"start":44.23,"end":47.478,"text":"な な な 何かない？ (Ho!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[44.23]},
     {"start":47.578,"end":50.78,"text":"お菓子な話 (Hey!)","kind":"voice-only","source":"official guide video; user-recorded voice-only marker","markers":[47.578]},
-    {"start":53.468,"end":54.668,"text":"Baby, I really want","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[53.468]},
+    {"start":53.468,"end":54.268,"text":"SNACK!","kind":"scored-call","source":"user-confirmed lyric; user-recorded CALL marker","markers":[53.468]},
     {"start":58.556,"end":59.997,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[58.556,58.763,59.006,59.214]},
     {"start":60.197,"end":60.997,"text":"SNACK!","kind":"scored-call","source":"official guide video; user-recorded CALL marker","markers":[60.197]},
     {"start":65.26,"end":66.671,"text":"Ha Ha Ha Ha","kind":"scored-call","source":"official guide video; user-recorded CALL markers","markers":[65.26,65.465,65.668,65.871]},

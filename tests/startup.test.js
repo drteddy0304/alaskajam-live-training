@@ -41,20 +41,20 @@ test('countdown overlay state is visible for ticks, switches to preparing, and h
   assert.equal(countdownOverlayState().hidden,true);
 });
 test('audio and guide are requested synchronously before audio readiness settles, then reset',async()=>{
-  const calls=[];let settle;
+  const calls=[];let settle,guideSettle;
   const audio={prime(){calls.push('audio-play');return new Promise(r=>settle=r);},reset(){calls.push('audio-reset');}};
-  const guide={prime(){calls.push('guide-play');},reset(){calls.push('guide-reset');}};
+  const guide={prime(){calls.push('guide-prime');},whenReady(){calls.push('guide-wait');return new Promise(r=>guideSettle=r);},reset(){calls.push('guide-reset');}};
   const ready=primeMedia(audio,guide,{src:'x',offset:0,duration:10});
-  assert.deepEqual(calls,['audio-play','guide-play']);settle();await ready;
-  assert.deepEqual(calls,['audio-play','guide-play','audio-reset','guide-reset']);
+  assert.deepEqual(calls,['audio-play','guide-prime','guide-wait']);settle();await Promise.resolve();
+  assert.deepEqual(calls,['audio-play','guide-prime','guide-wait']);guideSettle();await ready;
+  assert.deepEqual(calls,['audio-play','guide-prime','guide-wait','audio-reset','guide-reset']);
 });
 test('countdown completion starts both media in one task; video OFF/failure is non-blocking',async()=>{
   const calls=[];let settle;
   const audio={release(time){calls.push(['audio-release',time]);return new Promise(r=>settle=r);}};
   const guide={resume(){calls.push('guide-resume');return false;}};
   const started=startMediaTogether(audio,guide);
-  assert.deepEqual(calls,[['audio-release',0]]);settle();await started;
-  assert.deepEqual(calls,[['audio-release',0],'guide-resume']);
+  assert.deepEqual(calls,[['audio-release',0],'guide-resume']);settle();await started;
   await assert.doesNotReject(startMediaTogether(null,{resume(){calls.push('guide-off');return false;}}));
   await assert.doesNotReject(startMediaTogether(null,null));
 });

@@ -76,6 +76,7 @@ test('official API error, autoplay block, and ready timeout report real state wi
   class Player { constructor(id, config) { assert.equal(id,'guide-player'); options=config; } }
   await mountYouTubePlayer(guide, 'guide-player', 'video-id', {YT:{Player}}, {});
   assert.equal(options.playerVars.cc_load_policy,0);
+  assert.equal(options.playerVars.vq,'small');
   options.events.onAutoplayBlocked();
   options.events.onError({data:101});
   assert.deepEqual(reports, ['blocked','error:101']);
@@ -110,6 +111,15 @@ test('prime keeps the guide stopped at its mapped start through countdown', () =
   assert.deepEqual(media.calls, [['seekTo',8.2508,true],['pauseVideo']]);
   guide.reset(0);
   assert.deepEqual(media.calls.slice(-2), [['seekTo',8.2508,true],['pauseVideo']]);
+});
+
+test('preparation waits for YouTube ready and requests low playback quality', async () => {
+  const calls=[], guide=new GuidePlayback({}, {}, 10000, timers());
+  let settled=false;const waiting=guide.whenReady().then(value=>{settled=value;});
+  await Promise.resolve();assert.equal(settled,false);
+  const media={...player(),setPlaybackQuality:value=>calls.push(['quality',value])};
+  guide.onReady(media);await waiting;
+  assert.equal(settled,true);assert.deepEqual(calls,[['quality','small']]);
 });
 
 test('measured guide sync uses offset math and corrects drift above 1.25 seconds without forcing a new segment', () => {
