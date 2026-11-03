@@ -267,7 +267,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'recorded8');
+  url.searchParams.set('v', 'snack1');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
@@ -278,8 +278,9 @@ try {
     const row = document.createElement('div'); row.className = 'song';
     const number = document.createElement('span'); number.className = 'number'; number.textContent = String(index+1).padStart(2,'0');
     const name = document.createElement('span'); name.className = 'song-name'; name.textContent = song.title;
-    const end = document.createElement(song.chart ? 'button' : 'span'); end.textContent = song.chart ? 'DEMO →' : '準備中';
+    const end = document.createElement(song.chart || song.recorder ? 'button' : 'span'); end.textContent = '準備中';
     if (song.chart) { end.disabled = true; end.textContent = song.status === 'demo' ? 'DEMO →' : 'PLAY →'; end.setAttribute('aria-label', `${song.title} の練習を開始`); end.addEventListener('click', () => start(song)); }
+    else if (song.recorder) { end.disabled = true; end.textContent = 'RECORD →'; end.setAttribute('aria-label', `${song.title} のタイミングを記録`); end.addEventListener('click', () => { location.href = song.recorder; }); }
     else end.className = 'coming';
     row.append(number,name,end); $('songs').append(row);
   }

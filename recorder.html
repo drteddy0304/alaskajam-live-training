@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ecff62">
-  <meta name="description" content="CAT WALK LIFEを聴きながらライブアクションのタイミングを記録します。">
+  <meta name="description" content="Alaska Jamの曲を聴きながらライブアクションのタイミングを記録します。">
   <title>タイミング記録 | Alaska Jam LIVE TRAINING</title>
   <link rel="stylesheet" href="./style.css?v=record9">
-  <script type="module" src="./recorder-app.js?v=record9"></script>
+  <script type="module" src="./recorder-app.js?v=record10"></script>
 </head>
 <body data-page="recorder">
   <div id="record-countdown" class="countdown-overlay" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -17,15 +17,16 @@
     <header class="masthead"><a href="./" aria-label="Alaska Jam ホーム">AJ<span>ALASKA JAM<br>LIVE TRAINING</span></a><span class="edition">TIMING<br>RECORDER</span></header>
     <main>
       <section id="recorder-intro" aria-labelledby="recorder-title">
-        <div class="eyebrow"><span class="dot"></span> CAT WALK LIFE</div>
+        <div class="eyebrow"><span class="dot"></span><span id="record-song-label">CAT WALK LIFE</span></div>
         <h1 id="recorder-title">あなたの操作で、<br><span class="highlight">タイミングを記録。</span></h1>
         <div class="record-steps">
           <p><b>1</b><span>曲を聴きながら、クラップの瞬間に画面のCLAPかキーボードのSpaceを押す。</span></p>
           <p><b>2</b><span>ワイパーの瞬間は「WIPER ←／→」かキーボードの←／→キーを押す。</span></p>
           <p><b>3</b><span>CLAP、CALL、CLAP＋CALL、JUMPは、それぞれのボタンを直接押す。</span></p>
         </div>
-        <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。先頭の無音5秒で<strong>5・4・3・2・1</strong>を表示し、1の後から曲と記録が同時に始まります。</p>
+        <p class="notice">操作した瞬間の<strong>音源の再生時刻</strong>を保存します。開始前に<strong>5・4・3・2・1</strong>を表示し、1の後から曲と記録が同時に始まります。</p>
         <p class="notice"><strong>重ね録りできます。</strong>1周目はCLAP／WIPER、2周目はCALLのように分けて記録し、最後に1つのデータとしてコピーできます。</p>
+        <a id="record-guide-link" class="text-button" href="https://www.youtube.com/watch?v=1y5b0upSCjM" target="_blank" rel="noopener">公式Cheering Guideを別タブで見る ↗</a>
         <button id="record-start" class="primary">5秒カウントして記録開始 →</button>
         <p id="record-saved-status" class="micro" role="status"></p>
         <a class="text-button" href="./">通常のゲームへ戻る</a>
@@ -43,7 +44,7 @@
           <button type="button" data-record-wiper="left">← <strong>WIPER</strong><small>←キー対応</small></button>
           <button type="button" data-record-wiper="right">→ <strong>WIPER</strong><small>→キー対応</small></button>
         </fieldset>
-        <div class="progress-meta"><span id="record-elapsed">0:00.000</span><span id="record-note-count">0件</span><span>3:44</span></div>
+        <div class="progress-meta"><span id="record-elapsed">0:00.000</span><span id="record-note-count">0件</span><span id="record-duration">3:44</span></div>
         <progress id="record-progress" value="0" max="224.39" aria-label="曲の進み具合"></progress>
         <p class="micro record-tip">6つとも切替不要です。必要なボタンをそのまま押してください。</p>
         <div class="record-feedback"><strong id="record-last" role="status" aria-live="polite">曲に合わせて操作してください</strong></div>
