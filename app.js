@@ -1,15 +1,15 @@
-import { Session, validateChart, WINDOWS } from './engine.js?v=recorded7';
-import { Music } from './audio.js?v=recorded7';
-import { lyricAt, validateLyrics } from './lyrics.js?v=recorded7';
-import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded7';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded7';
-import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded7';
+import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
+import { Music } from './audio.js?v=recorded8';
+import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
+import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
+import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=recorded8';
+import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=recorded8';
 
 const charts = new Map();
 const lyrics = new Map();
 const $ = id => document.getElementById(id);
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
-const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印の向きにスワイプ！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
+const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印と同じ向きのWIPERボタンを押そう！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
 let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false;
 function showCountdown(value, preparing = false) {
@@ -67,6 +67,10 @@ function input(gesture) {
   if (result) flash(result);
   else { $('feedback').textContent = 'KEEP THE GROOVE'; $('feedback').dataset.grade = ''; feedbackUntil = performance.now() + 450; }
 }
+function setWiperCue(direction = '') {
+  $('wiper-left').classList.toggle('is-cue', direction === 'left');
+  $('wiper-right').classList.toggle('is-cue', direction === 'right');
+}
 function drawLane(time) {
   const items = visibleLaneNotes(chart.notes, time);
   const nodes = items.map(({note, index, x}) => {
@@ -96,6 +100,7 @@ function draw() {
   const index = chart.notes.findIndex((note,i) => !session.results[i]);
   const note = chart.notes[index];
   if (t < 0) {
+    setWiperCue();
     $('cue-label').textContent = 'READY?'; $('cue-action').textContent = Math.ceil(-t);
     $('cue-hint').textContent = 'スマホを持って、準備しよう';
   } else if (note && note.time - t <= chart.leadTime) {
@@ -104,7 +109,9 @@ function draw() {
     $('cue-action').textContent = note.action === 'WIPER' ? (note.direction === 'left' ? '← WIPER' : 'WIPER →') : note.action;
     $('cue-hint').textContent = note.hint || hints[note.action];
     document.querySelector('.pad-icon').textContent = symbols[note.action];
+    setWiperCue(note.action === 'WIPER' ? note.direction : '');
   } else {
+    setWiperCue();
     const section = chart.sections?.find(s => t >= s.start && t < s.end);
     $('cue-label').textContent = section?.label || 'KEEP THE GROOVE'; $('cue-action').textContent = 'GROOVE';
     $('cue-hint').textContent = '自由にノろう！ この間は採点なし';
@@ -136,7 +143,7 @@ async function start(song = null) {
   session = new Session(chart); pointer = null;
   drawLyrics(-Infinity);
   feedbackUntil = 0;
-  $('pause-panel').hidden = true; $('pad').disabled = true; $('pause').disabled = true;
+  $('pause-panel').hidden = true; $('pad').disabled = true; $('wiper-left').disabled = true; $('wiper-right').disabled = true; $('pause').disabled = true;
   $('play-title').textContent = chart.title; $('seek').max = chart.duration; $('seek').value = 0;
   $('elapsed').textContent = formatTime(0); $('duration').textContent = formatTime(chart.duration);
   $('play-edition').textContent = chart.kind === 'demo' ? (audio ? 'MUSIC ON / DEMO CHART' : 'SOUNDLESS DEMO') : 'LIVE TRAINING';
@@ -163,7 +170,7 @@ async function start(song = null) {
       hideCountdown(); $('load-status').textContent = '';
       startAt = performance.now(); phase = 'playing'; starting = false;
       $('try-demo').disabled = false; $('retry').disabled = false;
-      $('pad').disabled = false; $('pause').disabled = false; $('seek').disabled = false; $('seek-back').disabled = false; $('seek-forward').disabled = false;
+      $('pad').disabled = false; $('wiper-left').disabled = false; $('wiper-right').disabled = false; $('pause').disabled = false; $('seek').disabled = false; $('seek-back').disabled = false; $('seek-forward').disabled = false;
       const started = startMediaTogether(audio, guide, 0);
       $('pause').focus({preventScroll:true}); draw();
       started.catch(() => { if (phase === 'playing') pause(); document.querySelector('#pause-panel p').textContent = '音源を再生できません。曲一覧からもう一度お試しください。'; });
@@ -182,7 +189,7 @@ function pause() {
   if (phase === 'countdown') { home(); return; }
   if (phase !== 'playing') return;
   pausedAt = performance.now(); phase = 'paused'; cancelAnimationFrame(frame); audio?.pause().catch(() => {}); guide?.pause(); pointer = null;
-  $('pad').disabled = true; $('pause').disabled = true;
+  $('pad').disabled = true; $('wiper-left').disabled = true; $('wiper-right').disabled = true; $('pause').disabled = true;
   $('pause-panel').hidden = false; document.querySelector('#pause-panel p').textContent = '続きから再開できます。'; $('resume').focus();
 }
 function seekTo(time) {
@@ -204,7 +211,7 @@ async function resume() {
   }
   guide?.resume(clock());
   startAt += performance.now() - pausedAt;
-  phase = 'playing'; $('pause-panel').hidden = true; $('pad').disabled = false; $('pause').disabled = false;
+  phase = 'playing'; $('pause-panel').hidden = true; $('pad').disabled = false; $('wiper-left').disabled = false; $('wiper-right').disabled = false; $('pause').disabled = false;
   $('pause').focus({preventScroll:true}); draw();
 }
 function finish() {
@@ -241,12 +248,15 @@ $('pad').addEventListener('pointerdown', e => { if (phase !== 'playing' || !e.is
 $('pad').addEventListener('pointerup', e => {
   if (!pointer || pointer.id !== e.pointerId) return;
   const dx = e.clientX - pointer.x, dy = e.clientY - pointer.y, duration = performance.now() - pointer.t; pointer = null;
-  if (Math.abs(dx) >= 36 && Math.abs(dx) > Math.abs(dy) * 1.3 && duration < 800) input(dx < 0 ? 'left' : 'right');
-  else if (Math.hypot(dx,dy) < 20 && duration < 400) input('tap');
+  if (Math.hypot(dx,dy) < 20 && duration < 400) input('tap');
 });
 $('pad').addEventListener('pointercancel', () => { pointer = null; });
 $('pad').addEventListener('lostpointercapture', () => { pointer = null; });
 $('pad').addEventListener('contextmenu', e => e.preventDefault());
+for (const [id, gesture] of [['wiper-left','left'],['wiper-right','right']]) {
+  $(id).addEventListener('pointerdown', event => { if (!event.isPrimary || event.button !== 0) return; event.preventDefault(); input(gesture); });
+  $(id).addEventListener('click', event => { if (event.detail === 0) input(gesture); });
+}
 document.addEventListener('keydown', e => {
   if (phase !== 'playing' || e.repeat) return;
   if (e.code === 'Escape') { pause(); return; }
@@ -257,7 +267,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) retu
 window.addEventListener('pagehide', pause);
 async function json(path) {
   const url = new URL(path, document.baseURI);
-  url.searchParams.set('v', 'recorded7');
+  url.searchParams.set('v', 'recorded8');
   const response = await fetch(url, {cache:'no-store'});
   if (!response.ok) throw new Error('読み込み失敗');
   return response.json();
