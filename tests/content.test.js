@@ -28,11 +28,20 @@ test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
   assert.match(html,/02 TRACKS/);
   assert.match(html,/id="setlist"/);
   assert.match(html,/2曲から選択/);
+  assert.match(html,/参戦予習は皆にも沢山参加して欲しいこの2曲。/);
+  assert.doesNotMatch(html,/参戦予習はこの2曲。/);
   assert.match(app,/セットリストから曲を選ぶ ↓/);
   assert.match(app,/\$\('setlist'\)\.scrollIntoView/);
   assert.doesNotMatch(`${html}\n${app}`,/CATWALK LIFEで参戦予習/);
   assert.doesNotMatch(html,/その手で/);
   assert.doesNotMatch(html,/フロアを(?:<[^>]+>)*沸かせ/);
+});
+
+test('recorder stays implemented but its customer-facing home link is hidden',()=>{
+  assert.match(html,/<a class="record-link" href="\.\/recorder\.html" hidden>/);
+  assert.match(recorderHtml,/id="record-start"/);
+  assert.match(recorderApp,/const startButton = \$\('#record-start'\)/);
+  assert.match(recorderApp,/music = new Music\(\)/);
 });
 
 test('play screen uses dedicated left and right WIPER buttons instead of swipe instructions',()=>{
