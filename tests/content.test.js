@@ -37,6 +37,19 @@ test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
   assert.doesNotMatch(html,/フロアを(?:<[^>]+>)*沸かせ/);
 });
 
+test('HOW TO TRAIN matches the published charts and separates voice-only calls',()=>{
+  assert.match(html,/3 ACTIONS \+ VOICE/);
+  assert.match(html,/合図に合わせて中央をタップ/);
+  assert.match(html,/矢印と同じ方向のボタンを押す/);
+  assert.match(html,/CALL表示に合わせてタップ＋声を出そう/);
+  assert.match(html,/SING ALONG/);
+  assert.match(html,/歌詞だけの表示は声を出すだけ。タップ不要/);
+  assert.match(html,/声は出さなくても採点に影響しません。マイクは使いません。/);
+  assert.match(html,/aria-label="CLAP、CALL用アクションパッド"/);
+  assert.doesNotMatch(html,/>JUMP</);
+  assert.doesNotMatch(html,/4 ACTIONS/);
+});
+
 test('recorder stays implemented but its customer-facing home link is hidden',()=>{
   assert.match(html,/<a class="record-link" href="\.\/recorder\.html" hidden>/);
   assert.match(recorderHtml,/id="record-start"/);
