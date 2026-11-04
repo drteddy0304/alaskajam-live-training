@@ -45,7 +45,17 @@ test('play screen uses dedicated left and right WIPER buttons instead of swipe i
 test('smartphone play view keeps all controls inside the dynamic viewport',()=>{
   assert.match(css,/body\[data-page=play\]\{height:100dvh;overflow:hidden\}/);
   assert.match(css,/\.wiper-controls button\{min-height:clamp\(46px,8dvh,56px\)/);
-  assert.match(html,/style\.css\?v=record4/);
+  assert.match(html,/style\.css\?v=ticket1/);
+});
+
+test('official QUATTRO ticket links appear on home and result screens',()=>{
+  const eplus='https://eplus.jp/sf/detail/3909740001-P0030020\\?P6=001&amp;P1=0402&amp;P59=1';
+  assert.equal((html.match(new RegExp(eplus,'g'))||[]).length,2);
+  assert.equal((html.match(/https:\/\/l-tike\.com\/alaskajam\//g)||[]).length,2);
+  assert.equal((html.match(/>イープラス /g)||[]).length,2);
+  assert.equal((html.match(/>ローソンチケット /g)||[]).length,2);
+  assert.match(html,/QUATTRO参戦準備、完了。/);
+  assert.doesNotMatch(html,/公演・チケット情報のリンクは準備中/);
 });
 
 test('both songs confirm start before countdown and blocked mobile playback can ask again',()=>{
