@@ -250,8 +250,8 @@ function finish() {
   const result = session.summary();
   $('readiness').replaceChildren(document.createTextNode(result.readiness), Object.assign(document.createElement('span'), {textContent:'%'}));
   for (const grade of ['PERFECT','GOOD','MISS']) $(`${grade.toLowerCase()}-count`).textContent = result[grade];
-  $('result-message').textContent = result.readiness >= 85 ? 'QUATTRO参戦準備、できています！' : result.readiness >= 50 ? 'あと少し。もう一度確認しよう。' : 'ここから参戦予習を始めよう。';
-  $('result-detail').textContent = `最大 ${result.maxCombo} COMBO。${result.readiness >= 85 ? '次はライブ会場で、一緒に。' : 'ノーツがAJ判定ラインに重なる瞬間を狙おう。'}`;
+  $('result-message').textContent = result.readiness >= 85 ? 'QUATTRO参戦準備バッチリ！マイメン待ってるよ！' : result.readiness >= 50 ? 'あと少し！もうちょっと練習したらライブがもっと楽しいよ♪' : 'わかるよ...AJの曲やる事多いよね(笑)　でも一緒に出来たらライブがもっと楽しくなる！力を貸してー！';
+  $('result-detail').textContent = `最大 ${result.maxCombo} COMBO。`;
   let best = result.readiness, saved = false;
   try { const key = `aj-best:${chart.id}`; const previous = Number(localStorage.getItem(key)); best = Math.max(best, Number.isFinite(previous) && previous <= 100 ? previous : 0); localStorage.setItem(key, String(best)); saved = true; } catch {}
   $('best').textContent = saved ? `この端末のベスト準備度 ${best}%` : 'このブラウザでは記録を保存できません';

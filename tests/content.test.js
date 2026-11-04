@@ -50,6 +50,14 @@ test('HOW TO TRAIN matches the published charts and separates voice-only calls',
   assert.doesNotMatch(html,/4 ACTIONS/);
 });
 
+test('result screen uses the approved readiness messages at all three score tiers',()=>{
+  assert.match(app,/result\.readiness >= 85 \? 'QUATTRO参戦準備バッチリ！マイメン待ってるよ！'/);
+  assert.match(app,/result\.readiness >= 50 \? 'あと少し！もうちょっと練習したらライブがもっと楽しいよ♪'/);
+  assert.match(app,/'わかるよ\.\.\.AJの曲やる事多いよね\(笑\)　でも一緒に出来たらライブがもっと楽しくなる！力を貸してー！'/);
+  assert.match(app,/`最大 \$\{result\.maxCombo\} COMBO。`/);
+  assert.doesNotMatch(app,/QUATTRO参戦準備、できています！|あと少し。もう一度確認しよう。|ここから参戦予習を始めよう。/);
+});
+
 test('recorder stays implemented but its customer-facing home link is hidden',()=>{
   assert.match(html,/<a class="record-link" href="\.\/recorder\.html" hidden>/);
   assert.match(recorderHtml,/id="record-start"/);
