@@ -44,7 +44,14 @@ export class Music {
   reset() {
     this.media.currentTime = this.offset;
   }
-  time() { return this.media.ended ? this.duration : Math.max(0, this.media.currentTime - this.offset); }
+  time() {
+    const current = Number(this.media.currentTime);
+    if (!Number.isFinite(current)) return 0;
+    // Some iPhone browsers briefly keep `ended` true after rewinding an
+    // authorized media element. The actual position is the scoring clock;
+    // treating that stale flag as the chart duration ends the game at once.
+    return Math.max(0, Math.min(this.duration, current - this.offset));
+  }
   seek(time) {
     const target = Math.max(0, Math.min(Number(time) || 0, this.duration));
     this.media.currentTime = this.offset + target;
