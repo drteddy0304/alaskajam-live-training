@@ -15,7 +15,9 @@ test('native audio requests playback before load returns, and clock follows buff
  await m.pause();assert.equal(m.time(),61.2);await m.resume();assert.equal(m.media.paused,false);
  assert.equal(m.seek(170),170);assert.equal(m.media.currentTime,170);
  assert.equal(m.seek(999),224.39);assert.equal(m.media.currentTime,224.39);
- m.media.ended=true;assert.equal(m.time(),224.39);m.close();assert.equal(m.media.paused,true);
+ m.media.ended=true;assert.equal(m.time(),224.39);
+ m.media.currentTime=0;assert.equal(m.time(),0,'a stale mobile ended flag must not jump the scoring clock to the chart end');
+ m.close();assert.equal(m.media.paused,true);
 });
 test('countdown priming stays silent and paused until release',async()=>{
  const m=new Music();await m.prime('song.mp3',0,224.39);

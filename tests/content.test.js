@@ -17,7 +17,8 @@ test('QUATTRO training setlist contains only CATWALK LIFE and SNACK SNACK',()=>{
   assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=wiper1');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
   assert.match(app,/songs\.json\?v=wiper1/);
-  assert.match(html,/app\.js\?v=stability8/);
+  assert.match(html,/app\.js\?v=stability9/);
+  assert.match(app,/audio\.js\?v=countdown4/);
 });
 
 test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
