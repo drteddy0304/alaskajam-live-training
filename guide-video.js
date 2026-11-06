@@ -6,6 +6,12 @@ export function validGuideOffset(mapping) {
   return mapping?.syncStatus === 'verified' && Number.isFinite(mapping.audioToVideoOffset) && mapping.audioToVideoOffset >= 0;
 }
 
+export function requiresSingleMediaPlayback(nav = globalThis.navigator ?? {}) {
+  const userAgent = String(nav.userAgent || '');
+  return /iPad|iPhone|iPod/i.test(userAgent)
+    || (nav.platform === 'MacIntel' && Number(nav.maxTouchPoints) > 1);
+}
+
 export class GuidePlayback {
   constructor(mapping, callbacks = {}, timeoutMs = 10000, timers = globalThis) {
     this.mapping = mapping;

@@ -17,8 +17,9 @@ test('QUATTRO training setlist contains only CATWALK LIFE and SNACK SNACK',()=>{
   assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=wiper1');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
   assert.match(app,/songs\.json\?v=wiper1/);
-  assert.match(html,/app\.js\?v=stability9/);
+  assert.match(html,/app\.js\?v=stability10/);
   assert.match(app,/audio\.js\?v=countdown4/);
+  assert.match(app,/guide-video\.js\?v=smooth5/);
 });
 
 test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
@@ -97,6 +98,14 @@ test('both songs confirm start before countdown and blocked mobile playback can 
   assert.match(app,/requestStart[\s\S]*?askForStartTap\(\(\) => start\(\)/);
   assert.match(app,/guide\?\.requiresUserGesture\?\.\(\)/);
   assert.match(app,/askForStartTap\(beginPlayback\)/);
+});
+
+test('iPhone and iPad prioritize the scored audio instead of starting a competing YouTube stream',()=>{
+  assert.match(app,/const audioFirstDevice = requiresSingleMediaPlayback\(\)/);
+  assert.match(app,/videoEnabled = !audioFirstDevice/);
+  assert.match(app,/audioFirstDevice \? '曲を開始' : '動画と曲を開始'/);
+  assert.match(app,/iPhone・iPadは安定再生のため動画OFF/);
+  assert.match(html,/iPhone・iPadは音源停止を防ぐため、ゲーム中は動画をOFFにして曲を優先します。/);
 });
 
 test('recorder separates scored tap CALL from voice-only CALL',()=>{
