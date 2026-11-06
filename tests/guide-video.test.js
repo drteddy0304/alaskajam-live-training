@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { GuidePlayback, mountYouTubePlayer, resetYouTubeMount, validGuideOffset } from '../guide-video.js';
+import { GuidePlayback, mountYouTubePlayer, requiresSingleMediaPlayback, resetYouTubeMount, validGuideOffset } from '../guide-video.js';
 
 const timers = () => {
   const state = { callback: null, cleared: false };
@@ -10,6 +10,13 @@ const player = () => {
   const calls = [];
   return { calls, currentTime: 0, state: 1, mute: () => calls.push(['mute']), seekTo: (...args) => calls.push(['seekTo',...args]), playVideo: () => calls.push(['playVideo']), pauseVideo: () => calls.push(['pauseVideo']), getCurrentTime() { return this.currentTime; }, getPlayerState() { return this.state; } };
 };
+
+test('iPhone and iPadOS use one media stream while Android and desktop keep the guide', () => {
+  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)'}), true);
+  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0',platform:'MacIntel',maxTouchPoints:5}), true);
+  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0 (Linux; Android 15)',platform:'Linux armv8l',maxTouchPoints:5}), false);
+  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0 (Windows NT 10.0)',platform:'Win32',maxTouchPoints:0}), false);
+});
 
 test('start waits for official API ready, then rewinds, mutes, and plays', () => {
   const time = timers(), media = player(), statuses = [];

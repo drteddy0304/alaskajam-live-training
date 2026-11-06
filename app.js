@@ -2,7 +2,7 @@ import { Session, validateChart, WINDOWS } from './engine.js?v=recorded8';
 import { Music } from './audio.js?v=countdown4';
 import { lyricAt, validateLyrics } from './lyrics.js?v=recorded8';
 import { noteStyle, visibleLaneNotes } from './lane.js?v=recorded8';
-import { GuidePlayback, mountYouTubePlayer } from './guide-video.js?v=smooth4';
+import { GuidePlayback, mountYouTubePlayer, requiresSingleMediaPlayback } from './guide-video.js?v=smooth5';
 import { StartBarrier, countdownOverlayState, primeMedia, startMediaTogether } from './startup.js?v=countdown5';
 
 const charts = new Map();
@@ -11,7 +11,10 @@ const $ = id => document.getElementById(id);
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印と同じ向きのWIPERボタンを押そう！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
-let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false, pendingStart = null;
+const audioFirstDevice = requiresSingleMediaPlayback();
+const startHint = audioFirstDevice ? '曲が始まります' : '曲と公式動画が一緒に始まります';
+const preparingHint = audioFirstDevice ? '音源を準備中…' : '音源と動画を準備中…';
+let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = !audioFirstDevice, phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false, pendingStart = null;
 function showCountdown(value, preparing = false) {
   const state = countdownOverlayState(value, preparing);
   $('countdown-overlay').hidden = state.hidden;
@@ -24,6 +27,7 @@ function hideCountdown() { const state = countdownOverlayState(); $('countdown-o
 function askForStartTap(callback, message = '動画の再生にはタップが必要です') {
   pendingStart = callback;
   showCountdown(message, true);
+  $('countdown-start').textContent = audioFirstDevice ? '曲を開始' : '動画と曲を開始';
   $('countdown-start').hidden = false;
   $('countdown-start').focus({preventScroll:true});
 }
@@ -46,6 +50,11 @@ function drawLyrics(time) {
 }
 function configureGuide(mapping) {
   if (!mapping || mapping.provider !== 'youtube') { $('video-guide').hidden = true; return; }
+  if (audioFirstDevice) {
+    guide?.stop(); guide = null; guideVideoId = '';
+    $('video-guide').hidden = true;
+    return;
+  }
   $('video-guide').hidden = false;
   if (guide && guideVideoId === mapping.videoId) return;
   guide?.stop(); guideVideoId = mapping.videoId;
@@ -147,7 +156,7 @@ async function start(song = null) {
   configureGuide(chart.guideVideo);
   starting = true; phase = 'countdown';
   $('guide-details').open = false;
-  $('load-status').textContent = '音源と公式動画を準備中…';
+  $('load-status').textContent = preparingHint;
   $('try-demo').disabled = true; $('retry').disabled = true;
   let music;
   try { music = chart.audio ? new Music() : null; }
@@ -162,10 +171,10 @@ async function start(song = null) {
   $('play-title').textContent = chart.title; $('seek').max = chart.duration; $('seek').value = 0;
   $('elapsed').textContent = formatTime(0); $('duration').textContent = formatTime(chart.duration);
   $('play-edition').textContent = chart.kind === 'demo' ? (audio ? 'MUSIC ON / DEMO CHART' : 'SOUNDLESS DEMO') : 'LIVE TRAINING';
-  $('chart-source').textContent = chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : '実演記録反映 / フル尺 / 歌詞表示とCALL判定を分離';
+  $('chart-source').textContent = (chart.kind === 'demo' ? '操作体験用ダミー譜面・実曲とは異なります' : '実演記録反映 / フル尺 / 歌詞表示とCALL判定を分離') + (audioFirstDevice ? ' / iPhone・iPadは安定再生のため動画OFF' : '');
   $('combo').textContent = '0 COMBO'; $('next').textContent = 'NEXT —'; $('next-time').textContent = '開始後に採点します';
   $('cue-label').textContent = 'COUNTDOWN'; $('cue-action').textContent = '準備中';
-  $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
+  $('cue-hint').textContent = startHint;
   show('play');
 
   // Display immediately, then make both authorization-sensitive playback
@@ -177,9 +186,9 @@ async function start(song = null) {
     onTick: number => {
       showCountdown(number);
       $('cue-label').textContent = 'COUNTDOWN'; $('cue-action').textContent = number;
-      $('cue-hint').textContent = '曲と公式動画が一緒に始まります';
+      $('cue-hint').textContent = startHint;
     },
-    onPreparing: () => showCountdown('音源と動画を準備中…', true),
+    onPreparing: () => showCountdown(preparingHint, true),
     onReady: async () => {
       if (phase !== 'countdown' || document.hidden) { home(); return; }
       let releasing = false;
@@ -260,6 +269,7 @@ function finish() {
 function home() { countdown?.cancel(); countdown = null; hideCountdown(); starting = false; cancelAnimationFrame(frame); audio?.close(); guide?.stop(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
 function videoFailed() { $('video-status').textContent = '公式動画を再生できません。動画なしで練習を続けられます。'; $('video-status').dataset.error = 'true'; }
 $('video-toggle').addEventListener('click', () => {
+  if (audioFirstDevice) return;
   videoEnabled = !videoEnabled;
   $('video-wrap').hidden = !videoEnabled;
   $('video-toggle').textContent = videoEnabled ? '動画 OFF' : '動画 ON';
