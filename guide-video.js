@@ -6,12 +6,6 @@ export function validGuideOffset(mapping) {
   return mapping?.syncStatus === 'verified' && Number.isFinite(mapping.audioToVideoOffset) && mapping.audioToVideoOffset >= 0;
 }
 
-export function requiresSingleMediaPlayback(nav = globalThis.navigator ?? {}) {
-  const userAgent = String(nav.userAgent || '');
-  return /iPad|iPhone|iPod/i.test(userAgent)
-    || (nav.platform === 'MacIntel' && Number(nav.maxTouchPoints) > 1);
-}
-
 export class GuidePlayback {
   constructor(mapping, callbacks = {}, timeoutMs = 10000, timers = globalThis) {
     this.mapping = mapping;
@@ -21,6 +15,7 @@ export class GuidePlayback {
     this.failed = false;
     this.player = null;
     this.intent = 'stopped';
+    this.audible = false;
     this.audioTime = 0;
     this.restart = false;
     this.primed = false;
@@ -96,7 +91,7 @@ export class GuidePlayback {
   }
   apply() {
     if (!this.ready || this.failed) return false;
-    this.call('mute');
+    this.call(this.audible ? 'unMute' : 'mute');
     if (this.intent === 'priming') {
       const target = validGuideOffset(this.mapping) ? this.audioTime + this.mapping.audioToVideoOffset : 0;
       this.call('seekTo', target, true);
@@ -114,11 +109,30 @@ export class GuidePlayback {
     this.enabled = Boolean(enabled);
     return this.apply();
   }
+  setAudible(audible) {
+    this.audible = Boolean(audible);
+    return this.call(this.audible ? 'unMute' : 'mute');
+  }
+  useAsPrimaryAudio(audioTime = 0) {
+    if (!this.enabled || !this.ready || this.failed || !validGuideOffset(this.mapping)) return false;
+    this.audible = true;
+    this.intent = 'playing'; this.audioTime = audioTime; this.restart = true;
+    this.resetSyncSchedule(audioTime);
+    return this.apply();
+  }
+  time() {
+    if (!this.ready || this.failed || !validGuideOffset(this.mapping)) return NaN;
+    try {
+      const current = Number(this.player?.getCurrentTime?.());
+      return Number.isFinite(current) ? Math.max(0, current - this.mapping.audioToVideoOffset) : NaN;
+    } catch { return NaN; }
+  }
   prime(audioTime = 0) {
     // Start muted playback while the song-selection tap is still active. This
     // authorizes and buffers the iframe before the five-second countdown ends.
     if (!this.enabled || this.failed) return Promise.resolve(false);
     if (this.primeWait) return this.primeWait.promise;
+    this.audible = false;
     this.intent = 'priming'; this.audioTime = audioTime; this.restart = false;
     this.needsUserGesture = false;
     let resolve;
@@ -155,7 +169,7 @@ export class GuidePlayback {
     this.resetSyncSchedule(audioTime);
     const target = validGuideOffset(this.mapping) ? audioTime + this.mapping.audioToVideoOffset : audioTime;
     if (!this.enabled) return false;
-    this.call('mute');
+    this.call(this.audible ? 'unMute' : 'mute');
     const moved = this.call('seekTo', target, true);
     if (this.intent === 'playing') this.call('playVideo');
     else this.call('pauseVideo');

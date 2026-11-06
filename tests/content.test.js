@@ -17,9 +17,9 @@ test('QUATTRO training setlist contains only CATWALK LIFE and SNACK SNACK',()=>{
   assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=wiper1');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
   assert.match(app,/songs\.json\?v=wiper1/);
-  assert.match(html,/app\.js\?v=stability10/);
+  assert.match(html,/app\.js\?v=stability11/);
   assert.match(app,/audio\.js\?v=countdown4/);
-  assert.match(app,/guide-video\.js\?v=smooth5/);
+  assert.match(app,/guide-video\.js\?v=smooth6/);
 });
 
 test('home copy uses the approved AJ LIVE TRAINING hierarchy',()=>{
@@ -77,7 +77,7 @@ test('play screen uses dedicated left and right WIPER buttons instead of swipe i
 test('smartphone play view keeps all controls inside the dynamic viewport',()=>{
   assert.match(css,/body\[data-page=play\]\{height:100dvh;overflow:hidden\}/);
   assert.match(css,/\.wiper-controls button\{min-height:clamp\(46px,8dvh,56px\)/);
-  assert.match(html,/style\.css\?v=ticket1/);
+  assert.match(html,/style\.css\?v=feedback1/);
 });
 
 test('official QUATTRO ticket links appear on home and result screens',()=>{
@@ -100,12 +100,22 @@ test('both songs confirm start before countdown and blocked mobile playback can 
   assert.match(app,/askForStartTap\(beginPlayback\)/);
 });
 
-test('iPhone and iPad prioritize the scored audio instead of starting a competing YouTube stream',()=>{
-  assert.match(app,/const audioFirstDevice = requiresSingleMediaPlayback\(\)/);
-  assert.match(app,/videoEnabled = !audioFirstDevice/);
-  assert.match(app,/audioFirstDevice \? '曲を開始' : '動画と曲を開始'/);
-  assert.match(app,/iPhone・iPadは安定再生のため動画OFF/);
-  assert.match(html,/iPhone・iPadは音源停止を防ぐため、ゲーム中は動画をOFFにして曲を優先します。/);
+test('unstable simultaneous media keeps the video and switches its aligned audio dynamically',()=>{
+  assert.match(app,/function switchToGuideAudio\(\)/);
+  assert.match(app,/audio\.oninterrupt = \(\) => \{ if \(phase === 'playing'\) switchToGuideAudio\(\); \}/);
+  assert.match(app,/onPauseRequest: \(\) => \{ if \(phase === 'playing'\) switchToGuideAudio\(\); \}/);
+  assert.match(app,/guide\?\.useAsPrimaryAudio\(current\)/);
+  assert.match(app,/clockSource = 'guide'/);
+  assert.doesNotMatch(app,/requiresSingleMediaPlayback|audioFirstDevice/);
+  assert.match(html,/動画を残したまま同じ位置から動画音声へ切り替えて練習を続けます。/);
+});
+
+test('tap judgement uses a large shape, color and optional haptic cue in addition to text',()=>{
+  assert.match(html,/id="hit-flash" class="hit-flash" aria-hidden="true"/);
+  assert.match(app,/PERFECT:'◎ PERFECT',GOOD:'○ GOOD',MISS:'× MISS'/);
+  assert.match(app,/navigator\.vibrate\?\./);
+  assert.match(css,/\.hit-flash\[data-grade=PERFECT\]/);
+  assert.match(css,/@keyframes judgement-pop/);
 });
 
 test('recorder separates scored tap CALL from voice-only CALL',()=>{

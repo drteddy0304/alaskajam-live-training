@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { GuidePlayback, mountYouTubePlayer, requiresSingleMediaPlayback, resetYouTubeMount, validGuideOffset } from '../guide-video.js';
+import { GuidePlayback, mountYouTubePlayer, resetYouTubeMount, validGuideOffset } from '../guide-video.js';
 
 const timers = () => {
   const state = { callback: null, cleared: false };
@@ -8,14 +8,20 @@ const timers = () => {
 };
 const player = () => {
   const calls = [];
-  return { calls, currentTime: 0, state: 1, mute: () => calls.push(['mute']), seekTo: (...args) => calls.push(['seekTo',...args]), playVideo: () => calls.push(['playVideo']), pauseVideo: () => calls.push(['pauseVideo']), getCurrentTime() { return this.currentTime; }, getPlayerState() { return this.state; } };
+  return { calls, currentTime: 0, state: 1, mute: () => calls.push(['mute']), unMute: () => calls.push(['unMute']), seekTo: (...args) => calls.push(['seekTo',...args]), playVideo: () => calls.push(['playVideo']), pauseVideo: () => calls.push(['pauseVideo']), getCurrentTime() { return this.currentTime; }, getPlayerState() { return this.state; } };
 };
 
-test('iPhone and iPadOS use one media stream while Android and desktop keep the guide', () => {
-  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)'}), true);
-  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0',platform:'MacIntel',maxTouchPoints:5}), true);
-  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0 (Linux; Android 15)',platform:'Linux armv8l',maxTouchPoints:5}), false);
-  assert.equal(requiresSingleMediaPlayback({userAgent:'Mozilla/5.0 (Windows NT 10.0)',platform:'Win32',maxTouchPoints:0}), false);
+test('verified guide can become the audible scoring clock at the same chart position', () => {
+  const media=player(), guide=new GuidePlayback({syncStatus:'verified',audioToVideoOffset:8.2508},{},10000,timers());
+  guide.onReady(media);media.calls.length=0;
+  assert.equal(guide.useAsPrimaryAudio(12),true);
+  assert.equal(media.calls[0][0],'unMute');
+  assert.equal(media.calls[1][0],'seekTo');
+  assert.ok(Math.abs(media.calls[1][1]-20.2508)<1e-9);
+  assert.equal(media.calls[1][2],true);
+  assert.deepEqual(media.calls[2],['playVideo']);
+  media.currentTime=21.7508;
+  assert.ok(Math.abs(guide.time()-13.5)<1e-9);
 });
 
 test('start waits for official API ready, then rewinds, mutes, and plays', () => {
