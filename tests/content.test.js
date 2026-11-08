@@ -17,7 +17,7 @@ test('QUATTRO training setlist contains only CATWALK LIFE and SNACK SNACK',()=>{
   assert.equal(songs[1].chart,'./data/snack-snack-full.json?v=wiper1');
   assert.equal(songs[1].recorder,'./recorder.html?song=snack-snack');
   assert.match(app,/songs\.json\?v=wiper1/);
-  assert.match(html,/app\.js\?v=stability11/);
+  assert.match(html,/app\.js\?v=stability12/);
   assert.match(app,/audio\.js\?v=countdown4/);
   assert.match(app,/guide-video\.js\?v=smooth6/);
 });
@@ -106,6 +106,8 @@ test('unstable simultaneous media keeps the video and switches its aligned audio
   assert.match(app,/onPauseRequest: \(\) => \{ if \(phase === 'playing'\) switchToGuideAudio\(\); \}/);
   assert.match(app,/guide\?\.useAsPrimaryAudio\(current\)/);
   assert.match(app,/clockSource = 'guide'/);
+  assert.match(app,/!source\.hasAdvancedFrom\(0\)\) switchToGuideAudio\(\)/);
+  assert.match(app,/draw\(\); armStartupWatchdog\(\)/);
   assert.doesNotMatch(app,/requiresSingleMediaPlayback|audioFirstDevice/);
   assert.match(html,/動画を残したまま同じ位置から動画音声へ切り替えて練習を続けます。/);
 });

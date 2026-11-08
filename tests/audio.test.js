@@ -12,6 +12,10 @@ test('native audio requests playback before load returns, and clock follows buff
  const m=new Music();const loaded=m.prime('song.mp3',0,224.39);assert.deepEqual(m.media.calls,['play']);await loaded;assert.equal(m.media.paused,true);assert.equal(m.media.muted,true);assert.equal(m.media.currentTime,0);assert.deepEqual(m.media.calls,['play','pause']);
  m.media.currentTime=4;const released=m.release(0);m.media.dispatchEvent(new Event('seeked'));await released;assert.equal(m.media.currentTime,0);assert.equal(m.media.muted,false);assert.deepEqual(m.media.calls,['play','pause','play']);
  m.media.currentTime=61.2;assert.equal(m.time(),61.2);assert.equal(m.time(),61.2);
+ assert.equal(m.hasAdvancedFrom(0),true);
+ m.media.currentTime=.04;assert.equal(m.hasAdvancedFrom(0),false);
+ m.media.currentTime=1;m.media.paused=true;assert.equal(m.hasAdvancedFrom(0),false);
+ m.media.paused=false;m.media.currentTime=61.2;
  await m.pause();assert.equal(m.time(),61.2);await m.resume();assert.equal(m.media.paused,false);
  assert.equal(m.seek(170),170);assert.equal(m.media.currentTime,170);
  assert.equal(m.seek(999),224.39);assert.equal(m.media.currentTime,224.39);

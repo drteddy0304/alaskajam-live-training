@@ -11,7 +11,17 @@ const $ = id => document.getElementById(id);
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2,'0')}`;
 const hints = { CLAP:'合図に合わせてタップ！', WIPER:'矢印と同じ向きのWIPERボタンを押そう！', CALL:'タップ！ 声も出してみよう（無言でもOK）', JUMP:'タップでジャンプ！（実際に跳ばなくてOK）' };
 const symbols = { CLAP:'✳', WIPER:'↔', CALL:'〰', JUMP:'↑' };
-let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, clockSource = 'audio', phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false, pendingStart = null, switchingSource = false;
+let chart, session, audio = null, guide = null, guideVideoId = '', videoEnabled = true, clockSource = 'audio', phase = 'home', startAt = 0, pausedAt = 0, frame = 0, feedbackUntil = 0, pointer = null, starting = false, countdown = null, seeking = false, pendingStart = null, switchingSource = false, startupWatchdog = 0;
+function clearStartupWatchdog() { clearTimeout(startupWatchdog); startupWatchdog = 0; }
+function armStartupWatchdog() {
+  clearStartupWatchdog();
+  const source = audio;
+  if (!source) return;
+  startupWatchdog = setTimeout(() => {
+    startupWatchdog = 0;
+    if (phase === 'playing' && clockSource === 'audio' && audio === source && !source.hasAdvancedFrom(0)) switchToGuideAudio();
+  }, 900);
+}
 function showCountdown(value, preparing = false) {
   const state = countdownOverlayState(value, preparing);
   $('countdown-overlay').hidden = state.hidden;
@@ -47,6 +57,7 @@ function drawLyrics(time) {
 }
 function switchToGuideAudio() {
   if (phase !== 'playing' || switchingSource || clockSource === 'guide') return;
+  clearStartupWatchdog();
   switchingSource = true;
   const current = audio?.time() ?? 0;
   if (!guide?.useAsPrimaryAudio(current)) {
@@ -172,6 +183,7 @@ function draw() {
   frame = requestAnimationFrame(draw);
 }
 async function start(song = null) {
+  clearStartupWatchdog();
   if (!chart || starting) return;
   if (song?.chart) {
     const selected = charts.get(song.chart);
@@ -236,7 +248,7 @@ async function start(song = null) {
         startAt = performance.now(); phase = 'playing'; starting = false;
         $('try-demo').disabled = false; $('retry').disabled = false;
         $('pad').disabled = false; $('wiper-left').disabled = false; $('wiper-right').disabled = false; $('pause').disabled = false; $('seek').disabled = false; $('seek-back').disabled = false; $('seek-forward').disabled = false;
-        $('pause').focus({preventScroll:true}); draw();
+        $('pause').focus({preventScroll:true}); draw(); armStartupWatchdog();
       };
       if (guide?.requiresUserGesture?.()) { askForStartTap(beginPlayback); return; }
       await beginPlayback();
@@ -254,7 +266,7 @@ async function start(song = null) {
 function pause() {
   if (phase === 'countdown') { home(); return; }
   if (phase !== 'playing') return;
-  pausedAt = performance.now(); phase = 'paused'; cancelAnimationFrame(frame); audio?.pause().catch(() => {}); guide?.pause(); pointer = null;
+  clearStartupWatchdog(); pausedAt = performance.now(); phase = 'paused'; cancelAnimationFrame(frame); audio?.pause().catch(() => {}); guide?.pause(); pointer = null;
   $('pad').disabled = true; $('wiper-left').disabled = true; $('wiper-right').disabled = true; $('pause').disabled = true;
   $('pause-panel').hidden = false; document.querySelector('#pause-panel p').textContent = '続きから再開できます。'; $('resume').focus();
 }
@@ -281,7 +293,7 @@ async function resume() {
   $('pause').focus({preventScroll:true}); draw();
 }
 function finish() {
-  phase = 'result'; audio?.close(); guide?.stop(); cancelAnimationFrame(frame); $('seek').disabled = true; $('seek-back').disabled = true; $('seek-forward').disabled = true;
+  clearStartupWatchdog(); phase = 'result'; audio?.close(); guide?.stop(); cancelAnimationFrame(frame); $('seek').disabled = true; $('seek-back').disabled = true; $('seek-forward').disabled = true;
   const result = session.summary();
   $('readiness').replaceChildren(document.createTextNode(result.readiness), Object.assign(document.createElement('span'), {textContent:'%'}));
   for (const grade of ['PERFECT','GOOD','MISS']) $(`${grade.toLowerCase()}-count`).textContent = result[grade];
@@ -292,7 +304,7 @@ function finish() {
   $('best').textContent = saved ? `この端末のベスト準備度 ${best}%` : 'このブラウザでは記録を保存できません';
   show('result'); $('result-title').tabIndex = -1; $('result-title').focus({preventScroll:true});
 }
-function home() { countdown?.cancel(); countdown = null; hideCountdown(); starting = false; cancelAnimationFrame(frame); audio?.close(); guide?.stop(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
+function home() { clearStartupWatchdog(); countdown?.cancel(); countdown = null; hideCountdown(); starting = false; cancelAnimationFrame(frame); audio?.close(); guide?.stop(); phase = 'home'; pointer = null; $('pause-panel').hidden = true; show('home'); $('try-demo').focus({preventScroll:true}); }
 function videoFailed() { $('video-status').textContent = '公式動画を再生できません。動画なしで練習を続けられます。'; $('video-status').dataset.error = 'true'; }
 $('video-toggle').addEventListener('click', () => {
   videoEnabled = !videoEnabled;
