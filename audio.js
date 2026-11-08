@@ -52,6 +52,9 @@ export class Music {
     // treating that stale flag as the chart duration ends the game at once.
     return Math.max(0, Math.min(this.duration, current - this.offset));
   }
+  hasAdvancedFrom(time = 0, minimum = .08) {
+    return !this.media.paused && this.time() >= Math.max(0, Number(time) || 0) + minimum;
+  }
   seek(time) {
     const target = Math.max(0, Math.min(Number(time) || 0, this.duration));
     this.media.currentTime = this.offset + target;
